@@ -1545,7 +1545,7 @@
      <item>
       <widget class="QPushButton" name="rand_pres">
        <property name="text">
-        <string>Randomize Pressure Transdicers</string>
+        <string>Randomize Pressure Transducers</string>
        </property>
       </widget>
      </item>
