@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "about.h"
 #include "warning.h"
+#include "news.h"
 
 namespace Ui {
 class mainwindow;
@@ -22,6 +23,7 @@ private:
     void createActions();
     about *aboutPopup;
     warning *warningPopup;
+    news *newsPopup;
     int thermos[8];
     QString warningMessage;
     void showWarningBox(QString);
@@ -37,6 +39,7 @@ private slots:
     void on_ducer2_sliderMoved(int position);
     void on_ducer1_sliderMoved(int position);
     void on_checkBox_stateChanged(int arg1);
+    void on_actionWhats_New_triggered();
 };
 
 #endif // MAINWINDOW_H

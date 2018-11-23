@@ -28,17 +28,20 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     about.cpp \
-    warning.cpp
+    warning.cpp \
+    news.cpp
 
 HEADERS += \
         mainwindow.h \
     about.h \
-    warning.h
+    warning.h \
+    news.h
 
 FORMS += \
         mainwindow.ui \
     about.ui \
-    warning.ui
+    warning.ui \
+    news.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

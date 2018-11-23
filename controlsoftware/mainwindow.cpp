@@ -8,7 +8,6 @@ mainwindow::mainwindow(QWidget *parent) :
 {
     ui->setupUi(this);
     aboutPopup = new about();
-    warningPopup = new warning();
     for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
         thermos[i] = 0;
     }
@@ -104,4 +103,10 @@ void mainwindow::on_ducer1_sliderMoved(int position)
 void mainwindow::on_checkBox_stateChanged(int arg1)
 {
     suppressDucers = arg1;
+}
+
+void mainwindow::on_actionWhats_New_triggered()
+{
+    newsPopup = new news();
+    newsPopup->show();
 }

@@ -1596,6 +1596,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionWhats_New"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1630,6 +1631,11 @@
   <action name="actionMinimize">
    <property name="text">
     <string>Minimize</string>
+   </property>
+  </action>
+  <action name="actionWhats_New">
+   <property name="text">
+    <string>Whats New?</string>
    </property>
   </action>
  </widget>
