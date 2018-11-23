@@ -54,7 +54,8 @@ SOURCES       = main.cpp \
 		mainwindow.cpp \
 		about.cpp \
 		warning.cpp \
-		news.cpp moc_mainwindow.cpp \
+		news.cpp \
+		logger.cpp moc_mainwindow.cpp \
 		moc_about.cpp \
 		moc_warning.cpp \
 		moc_news.cpp
@@ -63,11 +64,13 @@ OBJECTS       = main.o \
 		about.o \
 		warning.o \
 		news.o \
+		logger.o \
 		moc_mainwindow.o \
 		moc_about.o \
 		moc_warning.o \
 		moc_news.o
-DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
+DIST          = qml.qml \
+		/usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
 		/usr/lib/qt/mkspecs/common/sanitize.conf \
@@ -255,6 +258,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -276,11 +280,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		controlsoftware.pro mainwindow.h \
 		about.h \
 		warning.h \
-		news.h main.cpp \
+		news.h \
+		logger.h main.cpp \
 		mainwindow.cpp \
 		about.cpp \
 		warning.cpp \
-		news.cpp
+		news.cpp \
+		logger.cpp
 QMAKE_TARGET  = controlsoftware
 DESTDIR       = 
 TARGET        = controlsoftware
@@ -480,6 +486,7 @@ Makefile: controlsoftware.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -691,6 +698,7 @@ Makefile: controlsoftware.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -728,8 +736,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h about.h warning.h news.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp about.cpp warning.cpp news.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h about.h warning.h news.h logger.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp about.cpp warning.cpp news.cpp logger.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui about.ui warning.ui news.ui $(DISTDIR)/
 
 
@@ -845,6 +853,9 @@ warning.o: warning.cpp warning.h \
 news.o: news.cpp news.h \
 		ui_news.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o news.o news.cpp
+
+logger.o: logger.cpp logger.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o logger.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
