@@ -20,9 +20,10 @@ private:
     Ui::mainwindow *ui;
     void createActions();
     about *aboutPopup;
-
+    int thermos[8];
 private slots:
     void on_actionAbout_triggered();
+    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H
