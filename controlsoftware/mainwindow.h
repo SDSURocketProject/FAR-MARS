@@ -19,9 +19,10 @@ public:
 private:
     Ui::mainwindow *ui;
     void createActions();
+    about *aboutPopup;
 
 private slots:
-    void about();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

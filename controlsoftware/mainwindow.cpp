@@ -7,6 +7,7 @@ mainwindow::mainwindow(QWidget *parent) :
     ui(new Ui::mainwindow)
 {
     ui->setupUi(this);
+    aboutPopup = new about();
 }
 
 mainwindow::~mainwindow()
@@ -14,5 +15,7 @@ mainwindow::~mainwindow()
     delete ui;
 }
 
-void mainwindow::about(){
+void mainwindow::on_actionAbout_triggered()
+{
+    aboutPopup->show();
 }
