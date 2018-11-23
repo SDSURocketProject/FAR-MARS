@@ -76,7 +76,7 @@ void mainwindow::on_ducer1_sliderPressed()
 void mainwindow::on_rand_pres_clicked()
 {
     for (int i = 0; i < 2; i++){
-        thermos[i] = rand() % 100 + 1;
+        ducers[i] = rand() % 100 + 1;
     }
     this->ui->ducer1->setValue(ducers[0]);
     this->ui->ducer1lcd->display(ducers[0]);
