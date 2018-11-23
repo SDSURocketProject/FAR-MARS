@@ -8,6 +8,7 @@ mainwindow::mainwindow(QWidget *parent) :
 {
     ui->setupUi(this);
     aboutPopup = new about();
+    warningPopup = new warning();
     for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
         thermos[i] = 0;
     }
@@ -44,4 +45,15 @@ void mainwindow::on_pushButton_clicked()
     this->ui->thermo7lcd->display(thermos[6]);
     this->ui->thermo8->setValue(thermos[7]);
     this->ui->thermo8lcd->display(thermos[7]);
+}
+
+void mainwindow::showWarningBox(QString message){
+    warning *warningPopup = new warning();
+    warningPopup->setWarning(message);
+    warningPopup->show();
+}
+
+void mainwindow::on_displaywarning_clicked()
+{
+    showWarningBox(this->ui->warningtext->displayText());
 }

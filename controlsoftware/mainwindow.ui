@@ -27,7 +27,7 @@
      <string>Randomize Thermocuples</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -1210,6 +1210,32 @@
        </property>
        <property name="format">
         <string>%p</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>310</y>
+      <width>351</width>
+      <height>74</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLineEdit" name="warningtext">
+       <property name="text">
+        <string>General Warning</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="displaywarning">
+       <property name="text">
+        <string>Display Warning</string>
        </property>
       </widget>
      </item>
