@@ -1,4 +1,3 @@
-build-controlsoftware-Desktop-Debug/
-controlsoftware/controlsoftware.pro.user
+*.pro.user
 *.o
-controlsoftware
+*.qmake.stash
