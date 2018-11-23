@@ -1224,7 +1224,7 @@
       <height>74</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="warningLayout">
      <item>
       <widget class="QLineEdit" name="warningtext">
        <property name="text">
@@ -1242,6 +1242,9 @@
     </layout>
    </widget>
    <widget class="QDial" name="ducer1">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1071</x>
@@ -1258,6 +1261,9 @@
     </property>
    </widget>
    <widget class="QDial" name="ducer2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>1071</x>
@@ -1265,6 +1271,43 @@
       <width>200</width>
       <height>200</height>
      </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="ToolTipText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
     </property>
     <property name="accessibleName">
      <string notr="true"/>
@@ -1532,16 +1575,16 @@
      </palette>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>860</x>
       <y>190</y>
-      <width>216</width>
+      <width>221</width>
       <height>64</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="warningSuppressLayout">
      <item>
       <widget class="QPushButton" name="rand_pres">
        <property name="text">
@@ -1625,17 +1668,17 @@
   </action>
   <action name="actionFullscreen">
    <property name="text">
-    <string>Fullscreen</string>
+    <string>&amp;Fullscreen</string>
    </property>
   </action>
   <action name="actionMinimize">
    <property name="text">
-    <string>Minimize</string>
+    <string>&amp;Minimize</string>
    </property>
   </action>
   <action name="actionWhats_New">
    <property name="text">
-    <string>Whats New?</string>
+    <string>&amp;Whats New?</string>
    </property>
   </action>
  </widget>

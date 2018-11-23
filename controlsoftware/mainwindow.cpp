@@ -110,4 +110,3 @@ void mainwindow::on_displaywarning_clicked()
 {
     showWarningBox(this->ui->warningtext->displayText());
 }
-

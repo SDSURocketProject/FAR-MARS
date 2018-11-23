@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     about.cpp \
     warning.cpp \
-    news.cpp
+    news.cpp \
+    logger.cpp
 
 HEADERS += \
         mainwindow.h \
     about.h \
     warning.h \
-    news.h
+    news.h \
+    logger.h
 
 FORMS += \
         mainwindow.ui \
@@ -47,3 +49,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    qml.qml
