@@ -25,10 +25,14 @@ private:
     int thermos[8];
     QString warningMessage;
     void showWarningBox(QString);
+    int ducers[2];
 private slots:
     void on_actionAbout_triggered();
-    void on_pushButton_clicked();
+    void on_rand_thermo_clicked();
     void on_displaywarning_clicked();
-    };
+    void on_ducer2_sliderPressed();
+    void on_ducer1_sliderPressed();
+    void on_rand_pres_clicked();
+};
 
 #endif // MAINWINDOW_H

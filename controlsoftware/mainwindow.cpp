@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "about.h"
 
@@ -12,6 +12,9 @@ mainwindow::mainwindow(QWidget *parent) :
     for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
         thermos[i] = 0;
     }
+    for (int i = 0; i <= int(sizeof(ducers)/sizeof(ducers[0])); i++){
+        ducers[i] = 0;
+    }
 }
 
 mainwindow::~mainwindow()
@@ -24,9 +27,9 @@ void mainwindow::on_actionAbout_triggered()
     aboutPopup->show();
 }
 
-void mainwindow::on_pushButton_clicked()
+void mainwindow::on_rand_thermo_clicked()
 {
-    for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
+    for (int i = 0; i < 8; i++){
         thermos[i] = rand() % 100 + 1;
     }
     this->ui->thermo1->setValue(thermos[0]);
@@ -56,4 +59,28 @@ void mainwindow::showWarningBox(QString message){
 void mainwindow::on_displaywarning_clicked()
 {
     showWarningBox(this->ui->warningtext->displayText());
+}
+
+void mainwindow::on_ducer2_sliderPressed()
+{
+    QString warning = "Hey! You cant move that!";
+    showWarningBox(warning);
+}
+
+void mainwindow::on_ducer1_sliderPressed()
+{
+    QString warning = "Hey! You cant move that!";
+    showWarningBox(warning);
+}
+
+void mainwindow::on_rand_pres_clicked()
+{
+    for (int i = 0; i < 2; i++){
+        thermos[i] = rand() % 100 + 1;
+    }
+    this->ui->ducer1->setValue(ducers[0]);
+    this->ui->ducer1lcd->display(ducers[0]);
+    this->ui->ducer2->setValue(ducers[1]);
+    this->ui->ducer2lcd->display(ducers[1]);
+    std::printf("Ducers Clicked");
 }
