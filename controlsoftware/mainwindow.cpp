@@ -54,7 +54,6 @@ void mainwindow::on_rand_pres_clicked()
     this->ui->ducer1lcd->display(ducers[0]);
     this->ui->ducer2->setValue(ducers[1]);
     this->ui->ducer2lcd->display(ducers[1]);
-    std::printf("Ducers Clicked");
 }
 
 void mainwindow::on_ducer1_sliderPressed()
