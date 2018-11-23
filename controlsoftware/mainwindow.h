@@ -26,6 +26,7 @@ private:
     QString warningMessage;
     void showWarningBox(QString);
     int ducers[2];
+    int suppressDucers;
 private slots:
     void on_actionAbout_triggered();
     void on_rand_thermo_clicked();
@@ -33,6 +34,9 @@ private slots:
     void on_ducer2_sliderPressed();
     void on_ducer1_sliderPressed();
     void on_rand_pres_clicked();
+    void on_ducer2_sliderMoved(int position);
+    void on_ducer1_sliderMoved(int position);
+    void on_checkBox_stateChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H

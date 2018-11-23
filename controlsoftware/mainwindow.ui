@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="rand_thermo">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>240</y>
+      <x>200</x>
+      <y>170</y>
       <width>181</width>
       <height>34</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>81</y>
+      <x>10</x>
+      <y>11</y>
       <width>588</width>
       <height>122</height>
      </rect>
@@ -1218,8 +1218,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>310</y>
+      <x>10</x>
+      <y>260</y>
       <width>351</width>
       <height>74</height>
      </rect>
@@ -1244,28 +1244,43 @@
    <widget class="QDial" name="ducer1">
     <property name="geometry">
      <rect>
-      <x>801</x>
-      <y>111</y>
+      <x>1071</x>
+      <y>11</y>
       <width>200</width>
       <height>200</height>
      </rect>
+    </property>
+    <property name="tracking">
+     <bool>false</bool>
+    </property>
+    <property name="notchesVisible">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QDial" name="ducer2">
     <property name="geometry">
      <rect>
-      <x>801</x>
-      <y>304</y>
+      <x>1071</x>
+      <y>204</y>
       <width>200</width>
       <height>200</height>
      </rect>
+    </property>
+    <property name="accessibleName">
+     <string notr="true"/>
+    </property>
+    <property name="tracking">
+     <bool>false</bool>
+    </property>
+    <property name="notchesVisible">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLCDNumber" name="ducer1lcd">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>200</y>
+      <x>1140</x>
+      <y>100</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -1392,8 +1407,8 @@
    <widget class="QLCDNumber" name="ducer2lcd">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>400</y>
+      <x>1140</x>
+      <y>300</y>
       <width>64</width>
       <height>23</height>
      </rect>
@@ -1517,18 +1532,31 @@
      </palette>
     </property>
    </widget>
-   <widget class="QPushButton" name="rand_pres">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>290</y>
-      <width>221</width>
-      <height>34</height>
+      <x>860</x>
+      <y>190</y>
+      <width>216</width>
+      <height>64</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Randomize Pressure Transdicers</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="rand_pres">
+       <property name="text">
+        <string>Randomize Pressure Transdicers</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>Disable Ducer Warning</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -1553,13 +1581,15 @@
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
-     <string>Tools</string>
+     <string>Tool&amp;s</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
      <string>Wi&amp;ndow</string>
     </property>
+    <addaction name="actionFullscreen"/>
+    <addaction name="actionMinimize"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1592,6 +1622,16 @@
     <string>&amp;About</string>
    </property>
   </action>
+  <action name="actionFullscreen">
+   <property name="text">
+    <string>Fullscreen</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -1601,6 +1641,38 @@
    <signal>triggered()</signal>
    <receiver>mainwindow</receiver>
    <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFullscreen</sender>
+   <signal>triggered()</signal>
+   <receiver>mainwindow</receiver>
+   <slot>showFullScreen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMinimize</sender>
+   <signal>triggered()</signal>
+   <receiver>mainwindow</receiver>
+   <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

@@ -63,12 +63,16 @@ void mainwindow::on_displaywarning_clicked()
 
 void mainwindow::on_ducer2_sliderPressed()
 {
+    if (suppressDucers)
+        return;
     QString warning = "Hey! You cant move that!";
     showWarningBox(warning);
 }
 
 void mainwindow::on_ducer1_sliderPressed()
 {
+    if (suppressDucers)
+        return;
     QString warning = "Hey! You cant move that!";
     showWarningBox(warning);
 }
@@ -83,4 +87,21 @@ void mainwindow::on_rand_pres_clicked()
     this->ui->ducer2->setValue(ducers[1]);
     this->ui->ducer2lcd->display(ducers[1]);
     std::printf("Ducers Clicked");
+}
+
+void mainwindow::on_ducer2_sliderMoved(int position)
+{
+    ducers[1] = position;
+    this->ui->ducer2lcd->display(ducers[1]);
+}
+
+void mainwindow::on_ducer1_sliderMoved(int position)
+{
+    ducers[0] = position;
+    this->ui->ducer1lcd->display(ducers[0]);
+}
+
+void mainwindow::on_checkBox_stateChanged(int arg1)
+{
+    suppressDucers = arg1;
 }
