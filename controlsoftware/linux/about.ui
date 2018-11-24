@@ -123,7 +123,7 @@
      <item row="1" column="1">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>2018.11.22</string>
+        <string>2018.XX.XX</string>
        </property>
       </widget>
      </item>
