@@ -148,10 +148,11 @@ void mainwindow::logData(){
 		const char *data = sdata.c_str();
         log.appendData(data, 0);
     }
-//    for (int i = 0; i < 2; i++){
-//        char *data;
-//        log.appendData(data, 0);
-//    }
+    for (int i = 0; i < 2; i++){
+		std::string sdata = std::to_string(ducers[i]);
+		const char *data = sdata.c_str();
+        log.appendData(data, 0);
+    }
 
     log.newLine();
 }
