@@ -1601,6 +1601,38 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>260</y>
+      <width>461</width>
+      <height>74</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="LogLayout">
+     <item row="0" column="0" colspan="2">
+      <widget class="QLineEdit" name="logData"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="logButton">
+       <property name="text">
+        <string>Log Data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="logCheckbox">
+       <property name="text">
+        <string>Append Newline</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

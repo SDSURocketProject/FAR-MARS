@@ -30,14 +30,14 @@ SOURCES += \
     about.cpp \
     warning.cpp \
     news.cpp \
-    logger.cpp
+    logger.cpp \
 
 HEADERS += \
         mainwindow.h \
     about.h \
     warning.h \
     news.h \
-    logger.h
+    logger.h \
 
 FORMS += \
         mainwindow.ui \

@@ -778,6 +778,7 @@ compiler_moc_header_clean:
 moc_mainwindow.cpp: about.h \
 		warning.h \
 		news.h \
+		logger.h \
 		mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -834,13 +835,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 main.o: main.cpp mainwindow.h \
 		about.h \
 		warning.h \
-		news.h
+		news.h \
+		logger.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
 		about.h \
 		warning.h \
 		news.h \
+		logger.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
@@ -856,7 +859,11 @@ news.o: news.cpp news.h \
 		ui_news.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o news.o news.cpp
 
-logger.o: logger.cpp logger.h
+logger.o: logger.cpp logger.h \
+		mainwindow.h \
+		about.h \
+		warning.h \
+		news.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o logger.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

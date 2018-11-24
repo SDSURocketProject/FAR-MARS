@@ -1,6 +1,5 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "about.h"
 
 mainwindow::mainwindow(QWidget *parent) :
     QMainWindow(parent),
@@ -109,4 +108,19 @@ void mainwindow::showWarningBox(QString message){
 void mainwindow::on_displaywarning_clicked()
 {
     showWarningBox(this->ui->warningtext->displayText());
+}
+
+void mainwindow::on_logButton_clicked()
+{
+    logger l;
+    QString qdata = this->ui->logData->displayText();
+    l.openFile();
+    const char *data = qPrintable(qdata);
+    l.appendData(data);
+    l.closeFile();
+}
+
+void mainwindow::on_logCheckbox_stateChanged(int arg1)
+{
+    appendNewline = arg1;
 }

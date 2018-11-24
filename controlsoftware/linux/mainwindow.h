@@ -5,6 +5,7 @@
 #include "about.h"
 #include "warning.h"
 #include "news.h"
+#include "logger.h"
 
 namespace Ui {
 class mainwindow;
@@ -16,11 +17,11 @@ class mainwindow : public QMainWindow
 
 public:
     explicit mainwindow(QWidget *parent = nullptr);
+    static void showWarningBox(QString);
     ~mainwindow();
 
 private:
     Ui::mainwindow *ui;
-    void showWarningBox(QString);
     void createActions();
 
     about *aboutPopup;
@@ -31,6 +32,7 @@ private:
     int ducers[2];
     int suppressDucers;
     QString warningMessage;
+    int appendNewline;
 
 private slots:
     void on_rand_thermo_clicked();
@@ -43,6 +45,8 @@ private slots:
     void on_displaywarning_clicked();
     void on_actionWhats_New_triggered();
     void on_actionAbout_triggered();
+    void on_logButton_clicked();
+    void on_logCheckbox_stateChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H
