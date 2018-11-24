@@ -1,4 +1,10 @@
-﻿#include "mainwindow.h"
+﻿/**
+ * Control Software Main
+ *
+ * @author Zack Mudd <zmudd@sdsu.edu>
+ */
+
+#include "mainwindow.h"
 #include "about.h"
 #include "warning.h"
 #include <QApplication>

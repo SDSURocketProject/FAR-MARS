@@ -1,3 +1,8 @@
+/**
+ * Generic Warning Popup Class
+ *
+ * @author Zack Mudd <zmudd@sdsu.edu>
+ */
 #include "warning.h"
 #include "ui_warning.h"
 

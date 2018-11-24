@@ -1,3 +1,9 @@
+/**
+ * Whats New Window
+ *
+ * @author Zack Mudd <zmudd@sdsu.edu>
+ */
+
 #include "news.h"
 #include "ui_news.h"
 
