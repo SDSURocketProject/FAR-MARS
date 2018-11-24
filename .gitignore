@@ -1,3 +1,5 @@
 *.pro.user
 *.o
 *.qmake.stash
+moc_*
+ui_*.h
