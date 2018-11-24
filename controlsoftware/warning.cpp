@@ -18,6 +18,11 @@ warning::~warning()
     delete ui;
 }
 
+/**
+ * Set text of warning popup
+ *
+ * @param QString text to display
+ */
 void warning::setWarning(QString message){
     this->ui->warningtext->setText(message);
 }

@@ -9,7 +9,7 @@
 /**
  * Mainwindow Constructor
  *
- * @param QWidget *parent parent QWidget
+ * @param QWidget* parent QWidget
  */
 mainwindow::mainwindow(QWidget *parent) :
     QMainWindow(parent),
@@ -113,7 +113,7 @@ void mainwindow::on_ducer2_sliderPressed()
  * Pressure Transducer 1 LCD Updater
  *
  * @trigger Pressure transducer 1 slider moving
- * @param int position new value of slider
+ * @param int new value of slider
  */
 void mainwindow::on_ducer1_sliderMoved(int position)
 {
@@ -125,7 +125,7 @@ void mainwindow::on_ducer1_sliderMoved(int position)
  * Pressure Transducer 2 LCD Updater
  *
  * @trigger Pressure transducer 2 slider moving
- * @param int position new value of slider
+ * @param int new value of slider
  */
 void mainwindow::on_ducer2_sliderMoved(int position)
 {
@@ -137,7 +137,7 @@ void mainwindow::on_ducer2_sliderMoved(int position)
  * Pressure Transducer Warning Suppression Slot
  *
  * @trigger state change of pressure transducer suppression checkbox
- * @param int arg1 bool value of checkbox
+ * @param int bool value of checkbox
  */
 void mainwindow::on_checkBox_stateChanged(int arg1)
 {
@@ -168,7 +168,7 @@ void mainwindow::on_actionWhats_New_triggered()
 /**
  * Popup Warning Box Generator
  *
- * @param QString message message to display on warning popup
+ * @param QString message to display on warning popup
  * @return Generates warning popup
  */
 void mainwindow::showWarningBox(QString message){
@@ -208,7 +208,7 @@ void mainwindow::on_logButton_clicked()
  * Manual Log Newline Checkbox
  *
  * @trigger State change of Append Newline checkbox
- * @param int arg1 bool value of checkbox
+ * @param int bool value of checkbox
  */
 void mainwindow::on_logCheckbox_stateChanged(int arg1)
 {
@@ -230,7 +230,7 @@ void mainwindow::onTimer(){
  * Global Log Data Checkbox
  *
  * @trigger state change of global log checkbox
- * @param int arg1 bool value of checkbox
+ * @param int bool value of checkbox
  */
 void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
@@ -256,6 +256,5 @@ void mainwindow::logData(){
 		const char *data = sdata.c_str();
         log.appendData(data, 0);
     }
-
     log.newLine(); /* append newline to end of thermocouples + ducers */
-}
+}:w

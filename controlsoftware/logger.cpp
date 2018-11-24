@@ -19,7 +19,7 @@ logger::logger(){
  * Set path to log file
  *
  * @since v0.2.0
- * @param char* newFileName path to be used
+ * @param char* path to be used as filename
  */
 void logger::setFile(char *newFilename){
     if (state) { mainwindow::showWarningBox("File open. Close before changing file"); return; }
@@ -28,8 +28,6 @@ void logger::setFile(char *newFilename){
 
 /**
  * Open log for writing
- *
- * @since v0.2.0
  */
 void logger::openFile(){
     if (state) { mainwindow::showWarningBox("File already open. Close before opening again"); return; }
@@ -39,8 +37,6 @@ void logger::openFile(){
 
 /**
  * Close file after writing
- *
- * @since v0.2.0
  */
 void logger::closeFile(){
     if (!state) { mainwindow::showWarningBox("File already closed"); return; }
@@ -51,7 +47,6 @@ void logger::closeFile(){
 /**
  * Check if log is currently opened
  *
- * @since v0.2.0
  * @return int 1 if open, else 0
  */
 int logger::isOpen(){
@@ -61,8 +56,7 @@ int logger::isOpen(){
 /**
  * Append data to file, generic
  *
- * @since v0.2.0
- * @param const char* data text to be appended to file
+ * @param const char* text to be appended to file
  * @return spawns warning popup if file not opened for writing
  */
 void logger::appendData(const char *data){
@@ -73,9 +67,8 @@ void logger::appendData(const char *data){
 /**
  * Append data to file, EOL-defined
  *
- * @since v0.2.0
- * @param const char* data text to be appended to file
- * @param int newLine append newline to end of data, 1 for yes 0 for no
+ * @param const char* text to be appended to file
+ * @param int append newline to end of data, 1 for yes 0 for no
  * @return spawns warning popup if file not opened for writing
  */
 void logger::appendData(const char *data, int newLine){
@@ -87,7 +80,6 @@ void logger::appendData(const char *data, int newLine){
 /**
  * Append newline to file
  *
- * @since v0.2.0
  * @return spawns warning window if file not opened for writing
  */
 void logger::newLine(){
