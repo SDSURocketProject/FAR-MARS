@@ -257,4 +257,4 @@ void mainwindow::logData(){
         log.appendData(data, 0);
     }
     log.newLine(); /* append newline to end of thermocouples + ducers */
-}:w
+}
