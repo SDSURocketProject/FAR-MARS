@@ -13,6 +13,7 @@ public:
     int  isOpen();
     void appendData(const char *data);
     void appendData(const char *data, int newLine);
+    void newLine();
 private:
     std::ofstream file;
     char *filename;

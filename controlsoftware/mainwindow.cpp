@@ -13,6 +13,10 @@ mainwindow::mainwindow(QWidget *parent) :
     for (int i = 0; i <= int(sizeof(ducers)/sizeof(ducers[0])); i++){
         ducers[i] = 0;
     }
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
+    timer->start(1000);
+	logDataBool = 0;
 }
 
 mainwindow::~mainwindow()
@@ -123,4 +127,31 @@ void mainwindow::on_logButton_clicked()
 void mainwindow::on_logCheckbox_stateChanged(int arg1)
 {
     appendNewline = arg1;
+}
+
+void mainwindow::onTimer(){
+    if (logDataBool){
+        logData();
+    }
+}
+
+void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
+{
+    logDataBool = arg1;
+    if (logDataBool) { log.openFile(); return; }
+    log.closeFile();
+}
+
+void mainwindow::logData(){
+    for (int i = 0; i < 8; i++){
+		std::string sdata = std::to_string(thermos[i]);
+		const char *data = sdata.c_str();
+        log.appendData(data, 0);
+    }
+//    for (int i = 0; i < 2; i++){
+//        char *data;
+//        log.appendData(data, 0);
+//    }
+
+    log.newLine();
 }

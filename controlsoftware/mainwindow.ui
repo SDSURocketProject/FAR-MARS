@@ -1601,7 +1601,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -1612,7 +1612,11 @@
     </property>
     <layout class="QGridLayout" name="LogLayout">
      <item row="0" column="0" colspan="2">
-      <widget class="QLineEdit" name="logData"/>
+      <widget class="QLineEdit" name="logData">
+       <property name="text">
+        <string>sample data</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="logButton">
@@ -1632,6 +1636,19 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QCheckBox" name="logDataCheckbox">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>430</y>
+      <width>88</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Log Data</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

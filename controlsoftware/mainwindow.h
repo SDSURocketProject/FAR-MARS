@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 #include "about.h"
 #include "warning.h"
 #include "news.h"
@@ -23,6 +24,7 @@ public:
 private:
     Ui::mainwindow *ui;
     void createActions();
+    void logData();
 
     about *aboutPopup;
     warning *warningPopup;
@@ -33,6 +35,10 @@ private:
     int suppressDucers;
     QString warningMessage;
     int appendNewline;
+    QTimer *timer;
+    int timerDelay;
+    int logDataBool;
+    logger log;
 
 private slots:
     void on_rand_thermo_clicked();
@@ -46,7 +52,9 @@ private slots:
     void on_actionWhats_New_triggered();
     void on_actionAbout_triggered();
     void on_logButton_clicked();
+    void onTimer();
     void on_logCheckbox_stateChanged(int arg1);
+    void on_logDataCheckbox_stateChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H

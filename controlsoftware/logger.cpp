@@ -37,3 +37,8 @@ void logger::appendData(const char *data, int newLine){
     file << data;
     if (newLine) { file << '\n'; }
 }
+
+void logger::newLine(){
+    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+    file << '\n';
+}
