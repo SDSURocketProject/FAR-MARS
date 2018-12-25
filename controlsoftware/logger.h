@@ -8,7 +8,7 @@
 class logger{
 public:
     logger();
-    void setFile(char *newfilename);
+    void setFile(const char *newfilename);
     void openFile();
     void closeFile();
     int  isOpen();

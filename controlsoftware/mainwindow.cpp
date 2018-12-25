@@ -209,7 +209,10 @@ void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
     logDataBool = arg1;
     if (logDataBool) {
-		start = std::chrono::high_resolution_clock::now();
+        QString qfilename = this->ui->logFileNameBox->displayText();
+		const char *filename = qfilename.toStdString().c_str();
+        log.setFile(filename);
+        start = std::chrono::high_resolution_clock::now();
 		log.openFile();
 		return;
 	}

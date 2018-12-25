@@ -21,9 +21,9 @@ logger::logger(){
  * @since v0.2.0
  * @param char* path to be used as filename
  */
-void logger::setFile(char *newFilename){
+void logger::setFile(const char *newFilename){
     if (state) { mainwindow::showWarningBox("File open. Close before changing file"); return; }
-    filename = newFilename;
+	filename = const_cast<char *>(newFilename);
 }
 
 /**

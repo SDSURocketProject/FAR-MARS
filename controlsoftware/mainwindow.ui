@@ -1871,18 +1871,31 @@
      </item>
     </layout>
    </widget>
-   <widget class="QCheckBox" name="logDataCheckbox">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>290</y>
-      <width>88</width>
-      <height>22</height>
+      <x>450</x>
+      <y>260</y>
+      <width>291</width>
+      <height>71</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Log Data</string>
-    </property>
+    <layout class="QVBoxLayout" name="logLayout">
+     <item>
+      <widget class="QLineEdit" name="logFileNameBox">
+       <property name="text">
+        <string>test.csv</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="logDataCheckbox">
+       <property name="text">
+        <string>Log Data</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
