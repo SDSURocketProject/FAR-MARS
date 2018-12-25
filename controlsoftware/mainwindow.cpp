@@ -27,7 +27,7 @@ mainwindow::mainwindow(QWidget *parent) :
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    timer->start(100);
+    timer->start(1);
 	logDataBool = 0;
 }
 
@@ -189,33 +189,6 @@ void mainwindow::on_displaywarning_clicked()
 }
 
 /**
- * Manual log user data
- *
- * @trigger User clock of Log Data button
- * @return logs user-specified data to default file of logger
- */
-void mainwindow::on_logButton_clicked()
-{
-    logger l;
-    l.openFile(); /* initialize new logger */
-    QString qdata = this->ui->logData->displayText(); /* take data from user input box */
-    const char *data = qPrintable(qdata);
-    l.appendData(data);
-    l.closeFile();
-}
-
-/**
- * Manual Log Newline Checkbox
- *
- * @trigger State change of Append Newline checkbox
- * @param int bool value of checkbox
- */
-void mainwindow::on_logCheckbox_stateChanged(int arg1)
-{
-    appendNewline = arg1;
-}
-
-/**
  * Main timer handler
  *
  * @trigger main trigger timeout()
@@ -235,7 +208,11 @@ void mainwindow::onTimer(){
 void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
     logDataBool = arg1;
-    if (logDataBool) { log.openFile(); return; }
+    if (logDataBool) {
+		start = std::chrono::high_resolution_clock::now();
+		log.openFile();
+		return;
+	}
     log.closeFile();
 }
 
@@ -246,15 +223,10 @@ void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
  * @return logs global data to file
  */
 void mainwindow::logData(){
-    for (int i = 0; i < 8; i++){
-		std::string sdata = std::to_string(thermos[i]);
-		const char *data = sdata.c_str();
-        log.appendData(data, 0); /* append thermocouple data with no newline */
-    }
-    for (int i = 0; i < 2; i++){
-		std::string sdata = std::to_string(ducers[i]);
-		const char *data = sdata.c_str();
-        log.appendData(data, 0);
-    }
-    log.newLine(); /* append newline to end of thermocouples + ducers */
+	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
+	int time[1] = { (timespan.count()*1000) };
+	log.appendData(time, 1, 0);
+    log.appendData(thermos, 8, 0); /* append thermocouple data with no newline */
+    log.appendData(ducers, 2, 1);
 }

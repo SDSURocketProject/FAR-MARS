@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "csv.h"
 
 class logger{
 public:
@@ -11,8 +12,8 @@ public:
     void openFile();
     void closeFile();
     int  isOpen();
-    void appendData(const char *data);
-    void appendData(const char *data, int newLine);
+    void appendData(int data[], int vals);
+    void appendData(int data[], int vals, int newLine);
     void newLine();
 private:
     std::ofstream file;

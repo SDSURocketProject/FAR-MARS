@@ -4,9 +4,12 @@
 #include <QMainWindow>
 #include <QTimer>
 #include "about.h"
+#include "csv.h"
 #include "warning.h"
 #include "news.h"
 #include "logger.h"
+#include <time.h>
+#include <chrono>
 
 namespace Ui {
 class mainwindow;
@@ -39,6 +42,7 @@ private:
     int timerDelay;
     int logDataBool;
     logger log;
+	std::chrono::high_resolution_clock::time_point start;
 
 private slots:
     void on_rand_thermo_clicked();
@@ -51,9 +55,7 @@ private slots:
     void on_displaywarning_clicked();
     void on_actionWhats_New_triggered();
     void on_actionAbout_triggered();
-    void on_logButton_clicked();
     void onTimer();
-    void on_logCheckbox_stateChanged(int arg1);
     void on_logDataCheckbox_stateChanged(int arg1);
 };
 

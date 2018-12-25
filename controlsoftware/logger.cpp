@@ -56,25 +56,26 @@ int logger::isOpen(){
 /**
  * Append data to file, generic
  *
- * @param const char* text to be appended to file
+ * @param int[] data to be appended to file
  * @return spawns warning popup if file not opened for writing
  */
-void logger::appendData(const char *data){
+void logger::appendData(int data[], int vals){
     if (!state) { mainwindow::showWarningBox("File not open"); return; }
-    file << data << '\n';
+	std::string str = csvformat(data, vals);
+    file << str.c_str();
 }
 
 /**
  * Append data to file, EOL-defined
  *
- * @param const char* text to be appended to file
+ * @param int[] data to be appended to file
  * @param int append newline to end of data, 1 for yes 0 for no
  * @return spawns warning popup if file not opened for writing
  */
-void logger::appendData(const char *data, int newLine){
+void logger::appendData(int data[], int vals, int newLine){
     if (!state) { mainwindow::showWarningBox("File not open"); return; }
-    file << data;
-    if (newLine) { file << '\n'; }
+	std::string str = csvformat(data, vals, newLine);
+    file << str.c_str();
 }
 
 /**
