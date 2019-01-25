@@ -71,12 +71,12 @@ loop(void){
 	read_igniter  = digitalRead(ignition);
 
 	/* read switches and actuate relays */
-	if (read_vents){
+	if (!read_vents){
 		digitalWrite(lox_vent, LOW);
 		digitalWrite(ch4_vent, LOW);
 	} else if (launchbool){
 		/* remove ability of switches to control vents during launch timer */
-	} else if (read_lox_vent || read_ch4_vent){
+	} else if (!(read_lox_vent || read_ch4_vent)){
 		digitalWrite(lox_vent, !read_lox_vent);
 		digitalWrite(ch4_vent, !read_ch4_vent);
 	} else {
@@ -84,10 +84,10 @@ loop(void){
 		digitalWrite(ch4_vent, HIGH);
 	}
 	
-	if (read_mpvs){
+	if (!read_mpvs){
 		digitalWrite(lox_mpv, LOW);
 		digitalWrite(ch4_mpv, LOW);
-	} else if (read_lox_mpv || read_ch4_mpv){
+	} else if (!(read_lox_mpv || read_ch4_mpv)){
 		digitalWrite(lox_mpv, !read_lox_mpv);
 		digitalWrite(ch4_mpv, !read_ch4_mpv);
 	} else {
@@ -95,7 +95,7 @@ loop(void){
 		digitalWrite(ch4_mpv, HIGH);
 	}
 
-	if (read_igniter){
+	if (!read_igniter){
 		digitalWrite(igniter, LOW);
 		time_now = millis();
 		if (hasPeriodPassed(1000) || launchbool){
@@ -110,6 +110,7 @@ loop(void){
 		launchbool = 0;
 		digitalWrite(igniter, HIGH);
 	}
+}
 
 int
 hasPeriodPassed(int mils){
