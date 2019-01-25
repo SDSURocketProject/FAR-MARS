@@ -16,13 +16,13 @@ static const int lox_mpv   = 11;
 static const int igniter   = 12;
 
 /* variables that read states of the inputs */
-static const int read_lox_vent;
-static const int read_ch4_vent;
-static const int read_vents;
-static const int read_lox_mpv;
-static const int read_ch4_mpv;
-static const int read_mpvs;
-static const int read_igniter;
+static int read_lox_vent;
+static int read_ch4_vent;
+static int read_vents;
+static int read_lox_mpv;
+static int read_ch4_mpv;
+static int read_mpvs;
+static int read_igniter;
 
 unsigned long time_now;
 
