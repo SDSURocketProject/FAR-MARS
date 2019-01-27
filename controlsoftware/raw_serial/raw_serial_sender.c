@@ -49,17 +49,22 @@ uart_init(){
 }
 
 void
-write_data(unsigned char cmd[]){
-	int n_written = 0, idx = 0;
-	do{
-		n_written = write(fd, &cmd[idx], 1);
-		idx += n_written;
-	}while(cmd[idx-1] != '\r' && n_written > 0);
+write_data(){
+	for (int i = 0; i < 7; i++){
+		u_int8_t val = (u_int8_t)(rand()%26 + 65);
+		int n_written = write(fd, &val, 1);
+		printf("%c", (char)val);
+	}
 }
 
 int
 main(int argc, char *argv[]){
 	uart_init();
-	write_data();
+	time_t t;
+	srand((unsigned)time(&t));
+	while(1){
+		write_data();
+		printf("\n");
+	}
 	return 0;
 }

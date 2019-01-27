@@ -52,13 +52,13 @@ void
 read_data(){
 	int n = 0, idx = 0;
 	char buf = '\0';
-	char response[1024];
+	char response[7];
 	memset(response, '\0', sizeof response);
 	do{
 		n = read(fd, &buf, 1);
 		sprintf(&response[idx], "%c", buf);
-		idx += n;
-	}while(buf != '\r' && n > 0);
+		idx ++;
+	}while(idx < 7 && n > 0);
 
 	if (n<0){
 		printf("Error reading: %d\n", errno);
