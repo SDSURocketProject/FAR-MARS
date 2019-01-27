@@ -51,9 +51,9 @@ uart_init(){
 void
 write_data(){
 	for (int i = 0; i < 7; i++){
-		u_int8_t val = (u_int8_t)(rand()%26 + 65);
+		u_int8_t val = (u_int8_t)(rand()%100);
 		int n_written = write(fd, &val, 1);
-		printf("%c", (char)val);
+		printf("%u", (char)val);
 	}
 }
 
@@ -62,9 +62,7 @@ main(int argc, char *argv[]){
 	uart_init();
 	time_t t;
 	srand((unsigned)time(&t));
-	while(1){
-		write_data();
-		printf("\n");
-	}
+	write_data();
+	printf("\n");
 	return 0;
 }

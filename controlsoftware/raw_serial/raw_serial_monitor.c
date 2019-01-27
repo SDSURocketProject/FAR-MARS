@@ -51,8 +51,8 @@ uart_init(){
 void
 read_data(){
 	int n = 0, idx = 0;
-	char buf = '\0';
-	char response[7];
+	unsigned char buf = '\0';
+	unsigned char response[7];
 	memset(response, '\0', sizeof response);
 	do{
 		n = read(fd, &buf, 1);
@@ -65,7 +65,11 @@ read_data(){
 	}else if (n==0){
 		printf("Read nothing");
 	}else{
-		printf("Response:\n%s\n", response);
+		printf("Response:\n");
+		for (int i = 0; i < 7; i++){
+			printf("%u", (u_int8_t)response[i]);
+		}
+		printf("\n");
 	}
 }
 
