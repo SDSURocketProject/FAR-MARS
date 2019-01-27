@@ -17,13 +17,9 @@ mainwindow::mainwindow(QWidget *parent) :
 {
     ui->setupUi(this);
     aboutPopup = new about();
-    for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
-        thermos[i] = 0; /* Set thermocouple values to zero */
+    for (int i = 0; i <= int(sizeof(data)/sizeof(data[0])); i++){
+        data[i] = 0; /* Set data values to zero */
     }
-    for (int i = 0; i <= int(sizeof(ducers)/sizeof(ducers[0])); i++){
-        ducers[i] = 0; /* Set pressure transducer values to zero */
-    }
-
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
@@ -40,108 +36,33 @@ mainwindow::~mainwindow()
 }
 
 /**
- * Randomize Thermocouples Button Slot
+ * Randomize Data Button Slot
  *
  * @trigger User Press on button
  */
-void mainwindow::on_rand_thermo_clicked()
+void mainwindow::on_rand_data_clicked()
 {
-    for (int i = 0; i < 8; i++){ /* Set thermocouples to random values from 0 to 100 */
-        thermos[i] = rand() % 100 + 1;
+    for (int i = 0; i < 7; i++){ /* Set data to random values from 0 to 100 */
+        data[i] = rand() % 100 + 1;
     }
-    this->ui->thermo1->setValue(thermos[0]);
-    this->ui->thermo1lcd->display(thermos[0]);
-    this->ui->thermo2->setValue(thermos[1]);
-    this->ui->thermo2lcd->display(thermos[1]);
-    this->ui->thermo3->setValue(thermos[2]);
-    this->ui->thermo3lcd->display(thermos[2]);
-    this->ui->thermo4->setValue(thermos[3]);
-    this->ui->thermo4lcd->display(thermos[3]);
-    this->ui->thermo5->setValue(thermos[4]);
-    this->ui->thermo5lcd->display(thermos[4]);
-    this->ui->thermo6->setValue(thermos[5]);
-    this->ui->thermo6lcd->display(thermos[5]);
-    this->ui->thermo7->setValue(thermos[6]);
-    this->ui->thermo7lcd->display(thermos[6]);
-    this->ui->thermo8->setValue(thermos[7]);
-    this->ui->thermo8lcd->display(thermos[7]);
+	update_data();
 }
 
-/**
- * Randomize Pressure Transducers Button Slot
- *
- * @trigger User Press on button
- */
-void mainwindow::on_rand_pres_clicked()
-{
-    for (int i = 0; i < 2; i++){ /* Set pressure transducers to random values from 0 to 100 */
-        ducers[i] = rand() % 100 + 1;
-    }
-    this->ui->ducer1->setValue(ducers[0]);
-    this->ui->ducer1lcd->display(ducers[0]);
-    this->ui->ducer2->setValue(ducers[1]);
-    this->ui->ducer2lcd->display(ducers[1]);
-}
-
-/**
- * Pressure Transducer 1 Move Warning
- *
- * @trigger User Click on slider
- */
-void mainwindow::on_ducer1_sliderPressed()
-{
-    if (suppressDucers)
-        return;
-    QString warning = "Hey! You cant move that!";
-    showWarningBox(warning);
-}
-
-/**
- * Pressure Transducer 2 Move Warning
- *
- * @trigger User Click on slider
- */
-void mainwindow::on_ducer2_sliderPressed()
-{
-    if (suppressDucers)
-        return;
-    QString warning = "Hey! You cant move that!";
-    showWarningBox(warning);
-}
-
-/**
- * Pressure Transducer 1 LCD Updater
- *
- * @trigger Pressure transducer 1 slider moving
- * @param int new value of slider
- */
-void mainwindow::on_ducer1_sliderMoved(int position)
-{
-    ducers[0] = position;
-    this->ui->ducer1lcd->display(ducers[0]);
-}
-
-/**
- * Pressure Transducer 2 LCD Updater
- *
- * @trigger Pressure transducer 2 slider moving
- * @param int new value of slider
- */
-void mainwindow::on_ducer2_sliderMoved(int position)
-{
-    ducers[1] = position;
-    this->ui->ducer2lcd->display(ducers[1]);
-}
-
-/**
- * Pressure Transducer Warning Suppression Slot
- *
- * @trigger state change of pressure transducer suppression checkbox
- * @param int bool value of checkbox
- */
-void mainwindow::on_checkBox_stateChanged(int arg1)
-{
-    suppressDucers = arg1;
+void mainwindow::update_data(){
+    this->ui->data1->setValue(data[0]);
+    this->ui->data1lcd->display(data[0]);
+    this->ui->data2->setValue(data[1]);
+    this->ui->data2lcd->display(data[1]);
+    this->ui->data3->setValue(data[2]);
+    this->ui->data3lcd->display(data[2]);
+    this->ui->data4->setValue(data[3]);
+    this->ui->data4lcd->display(data[3]);
+    this->ui->data5->setValue(data[4]);
+    this->ui->data5lcd->display(data[4]);
+    this->ui->data6->setValue(data[5]);
+    this->ui->data6lcd->display(data[5]);
+    this->ui->data7->setValue(data[6]);
+    this->ui->data7lcd->display(data[6]);
 }
 
 /**
@@ -209,6 +130,12 @@ void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
     logDataBool = arg1;
     if (logDataBool) {
+		int u = uart_init();
+		if (u != 0){
+			showWarningBox("Serial Connection Not Opened");
+			logDataBool = 0;
+			return;
+		}
         QString qfilename = this->ui->logFileNameBox->displayText();
 		const char *filename = qfilename.toStdString().c_str();
         log.setFile(filename);
@@ -229,7 +156,22 @@ void mainwindow::logData(){
 	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
 	int time[1] = { (timespan.count()*1000) };
+	getData();
 	log.appendData(time, 1, 0);
-    log.appendData(thermos, 8, 0); /* append thermocouple data with no newline */
-    log.appendData(ducers, 2, 1);
+	log.appendData(data, 7, 1);
+	
+}
+
+void mainwindow::getData(){
+	char *send[7];
+	int n = read_data(send);
+	if (n < 0){
+		showWarningBox("Serial Read Error");
+		logDataBool = 0;
+		return;
+	}
+	for (int i = 0; i < 7; i++){
+		data[i] = (int)send[i];
+	}
+	update_data();
 }

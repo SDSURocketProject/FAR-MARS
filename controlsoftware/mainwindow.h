@@ -10,6 +10,7 @@
 #include "logger.h"
 #include <time.h>
 #include <chrono>
+#include "serial.h"
 
 namespace Ui {
 class mainwindow;
@@ -28,14 +29,14 @@ private:
     Ui::mainwindow *ui;
     void createActions();
     void logData();
+	void getData();
+	void update_data();
 
     about *aboutPopup;
     warning *warningPopup;
     news *newsPopup;
 
-    int thermos[8];
-    int ducers[2];
-    int suppressDucers;
+    int data[7];
     QString warningMessage;
     int appendNewline;
     QTimer *timer;
@@ -45,13 +46,7 @@ private:
 	std::chrono::high_resolution_clock::time_point start;
 
 private slots:
-    void on_rand_thermo_clicked();
-    void on_rand_pres_clicked();
-    void on_ducer1_sliderPressed();
-    void on_ducer2_sliderPressed();
-    void on_ducer1_sliderMoved(int position);
-    void on_ducer2_sliderMoved(int position);
-    void on_checkBox_stateChanged(int arg1);
+    void on_rand_data_clicked();
     void on_displaywarning_clicked();
     void on_actionWhats_New_triggered();
     void on_actionAbout_triggered();

@@ -1,20 +1,44 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <termios.h>
+#include "serial.h"
 
-static int fd;
+int
+read_data(char *data[]){
+	int n = 0;
+	char buf = '\0';
+	char response[7];
+	memset(response, '\0', sizeof response);
+	for (int i = 0; i < 7; i++){
+		n = read(fd, &buf, 1);
+		sprintf(&response[i], "%c", buf);
+	}
 
-void
-uart_init(){
-	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_SYNC);
-	if (fd < 0){
-		printf("error opening ttyUSB0: %d\n", fd);
+	if (n<0){
+		char str[1000];
+		sprintf(str, "Error reading: %d\n", errno);
+		warning *warningPopup = new warning();
+		warningPopup->setWarning(str);
+		warningPopup->show();
+		return -1;
+	}else if (n==0){
+		warning *warningPopup = new warning();
+		warningPopup->setWarning("Read nothing");
+		warningPopup->show();
+		return -2;
 	}else{
-		printf("ttyUSB0 opened successfully\n");
+		for (int i = 0; i < 7; i++){
+			data[i] = response[ i ];
+		}
+	}
+	return 0;
+}
+
+int
+uart_init(){
+	fd = open("/dev/ttyUSB1", O_RDWR | O_NOCTTY | O_SYNC);
+	if (fd < 0){
+		printf("error opening ttyUSB1: %d\n", fd);
+		return fd;
+	}else{
+		printf("ttyUSB1 opened successfully\n");
 	}
 
 	struct termios tty;
@@ -45,27 +69,8 @@ uart_init(){
 	tcflush(fd, TCIFLUSH);
 	if (tcsetattr(fd, ICANON, &tty) < 0){
 		printf("error from tcgetattr: %d\n", errno);
-	}
-}
-
-void
-write_data(){
-	for (int i = 0; i < 7; i++){
-		u_int8_t val = (u_int8_t)(rand()%100);
-		int n_written = write(fd, &val, 1);
-		printf("%u", (char)val);
-	}
-}
-
-int
-main(int argc, char *argv[]){
-	uart_init();
-	time_t t;
-	while(1){
-		srand((unsigned)time(&t));
-		write_data();
-		printf("\n");
-		sleep(1);
+		return errno;
 	}
 	return 0;
 }
+
