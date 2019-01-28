@@ -1,0 +1,7 @@
+Operation of controlsoftware:
+
+1. ensure serial cable is available as /dev/ttyUSB1
+2. run controlsoftware binary as root
+3. put desired filename into box above log data checkbox
+4. click 'log data' checkbox
+5. to close filebuffer and ensure data is written, unplug serial cable and wait 5 seconds for checkbox to uncheck itself
