@@ -23,8 +23,9 @@ mainwindow::mainwindow(QWidget *parent) :
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    timer->start(1);
+    timer->start(50);
 	logDataBool = 0;
+	serial_timeout = 0;
 }
 
 /**
@@ -116,7 +117,12 @@ void mainwindow::on_displaywarning_clicked()
  */
 void mainwindow::onTimer(){
     if (logDataBool){
-        logData();
+        if (serial_timeout > 50){
+			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
+			return;
+		}
+		logData();
+
     }
 }
 
@@ -165,9 +171,9 @@ void mainwindow::logData(){
 void mainwindow::getData(){
 	char *send[7];
 	int n = read_data(send);
+	printf("read_data returns: %d\n", n);
 	if (n < 0){
-		showWarningBox("Serial Read Error");
-		logDataBool = 0;
+		serial_timeout++;
 		return;
 	}
 	for (int i = 0; i < 7; i++){

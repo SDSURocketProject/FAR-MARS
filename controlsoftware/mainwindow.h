@@ -42,6 +42,7 @@ private:
     QTimer *timer;
     int timerDelay;
     int logDataBool;
+	int serial_timeout;
     logger log;
 	std::chrono::high_resolution_clock::time_point start;
 

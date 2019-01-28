@@ -1,5 +1,11 @@
 #include "serial.h"
 
+/**
+ * Serial Data reader
+ *
+ * @param pointed to char[] to put data in
+ * @return int return code. 0: ran correctly, -1: error reading, -2: read nothing
+ */
 int
 read_data(char *data[]){
 	int n = 0;
@@ -12,16 +18,8 @@ read_data(char *data[]){
 	}
 
 	if (n<0){
-		char str[1000];
-		sprintf(str, "Error reading: %d\n", errno);
-		warning *warningPopup = new warning();
-		warningPopup->setWarning(str);
-		warningPopup->show();
 		return -1;
 	}else if (n==0){
-		warning *warningPopup = new warning();
-		warningPopup->setWarning("Read nothing");
-		warningPopup->show();
 		return -2;
 	}else{
 		for (int i = 0; i < 7; i++){
