@@ -31,7 +31,8 @@ SOURCES += \
     warning.cpp \
     news.cpp \
     logger.cpp \
-    csv.cpp
+    csv.cpp \
+    serial.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     warning.h \
     news.h \
     logger.h \
-    csv.h
+    csv.h \
+    serial.h
 
 FORMS += \
         mainwindow.ui \
