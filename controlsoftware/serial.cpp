@@ -49,8 +49,8 @@ uart_init(){
 
 	tty_old = tty;
 
-	cfsetospeed(&tty, (speed_t)B9600);
-	cfsetispeed(&tty, (speed_t)B9600);
+	cfsetospeed(&tty, (speed_t)B38400);
+	cfsetispeed(&tty, (speed_t)B38400);
 
 	tty.c_cflag     &=  ~PARENB;            // Make 8n1
 	tty.c_cflag     &=  ~CSTOPB;
