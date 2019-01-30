@@ -5,16 +5,17 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <termios.h>
+#include "raw_serial.h"
 
 static int fd;
 
 void
 uart_init(){
-	fd = open("/dev/ttyUSB1", O_RDWR | O_NOCTTY | O_SYNC);
+	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_SYNC);
 	if (fd < 0){
-		printf("error opening ttyUSB1: %d\n", fd);
+		printf("error opening ttyUSB0: %d\n", fd);
 	}else{
-		printf("ttyUSB1 opened successfully\n");
+		printf("ttyUSB0 opened successfully\n");
 	}
 
 	struct termios tty;
@@ -27,8 +28,8 @@ uart_init(){
 
 	tty_old = tty;
 
-	cfsetospeed(&tty, (speed_t)B9600);
-	cfsetispeed(&tty, (speed_t)B9600);
+	cfsetospeed(&tty, (speed_t)B38400);
+	cfsetispeed(&tty, (speed_t)B38400);
 
 	tty.c_cflag     &=  ~PARENB;            // Make 8n1
 	tty.c_cflag     &=  ~CSTOPB;
@@ -48,35 +49,84 @@ uart_init(){
 	}
 }
 
+float
+rawToPressure(u_int16_t rawData, int reading){
+	//return (float)rawData;
+	float pressure;
+	switch (reading){
+		case METHANE_READING:
+			pressure = (float)rawData;
+			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
+			pressure = (pressure/4.0f)*PRESSURE_METHANE_MAX_PRESSURE;
+			break;
+		case LOX_READING:
+			pressure = (float)rawData;
+			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
+			pressure = (pressure/4.0f)*PRESSURE_LOX_MAX_PRESSURE;
+			break;
+		case HELIUM_READING:
+			pressure = (((float)rawData)/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE;
+			break;
+		default:
+			printf("\tpressure conversion error\t");
+			return 0.0f;
+	}
+	return pressure;
+}
+
 void
 read_data(){
-	int n = 0, idx = 0;
+	int n = 0, idx = 0, headerCheck = 0;
 	unsigned char buf = '\0';
-	unsigned char response[7];
+	unsigned char response[14];
 	memset(response, '\0', sizeof response);
-	do{
+	while(1)  {
 		n = read(fd, &buf, 1);
-		sprintf(&response[idx], "%c", buf);
-		idx ++;
-	}while(idx < 7 && n > 0);
-
+		if ( buf == (headerCheck+'A')){
+			headerCheck++;
+			if (headerCheck == 3){
+				break;
+			}
+		}
+		else {
+			headerCheck = 0;
+		}
+	}
 	if (n<0){
 		printf("Error reading: %d\n", errno);
 	}else if (n==0){
-		printf("Read nothing");
+		printf("Read nothing\n");
 	}else{
-		printf("Response:\n");
-		for (int i = 0; i < 7; i++){
-			printf("%u", (u_int8_t)response[i]);
+
+		n = read(fd, response, 11);
+		for (int i = 0; i < 3; i++){
+			
+			int reading;
+			if (i == 0){
+				reading = METHANE_READING;
+			}else if(i == 1){
+				reading = LOX_READING;
+			}else if (i == 2){
+				reading = HELIUM_READING;
+			}
+			float pressure = rawToPressure(*(u_int16_t *)(response+5+2*i), reading);
+			printf("%010f\t", pressure);
+			fprintf(f, "%010f", pressure);
+			if(i<2){
+				fprintf(f, ",");
+			}
 		}
-		printf("\n");
+		fprintf(f, "\n");
+		printf("\r");
 	}
 }
 
 int
 main(int argc, char *argv[]){
 	uart_init();
+	f = fopen("log.txt", "a");
 	while(1){
+		fprintf(f, "%d,", (int)clock());
 		read_data();
 	}
 	return 0;
