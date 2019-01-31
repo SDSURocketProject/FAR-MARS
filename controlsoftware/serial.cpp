@@ -7,36 +7,82 @@
  * @return int return code. 0: ran correctly, -1: error reading, -2: read nothing
  */
 int
-read_data(char *data[]){
-	int n = 0;
-	char buf = '\0';
-	char response[7];
+read_data(float *data){
+	int n = 0, idx = 0, headerCheck = 0;
+	unsigned char buf = '\0';
+	unsigned char response[14];
 	memset(response, '\0', sizeof response);
-	for (int i = 0; i < 7; i++){
+	while(1)  {
 		n = read(fd, &buf, 1);
-		sprintf(&response[i], "%c", buf);
+		if ( buf == (headerCheck+'A')){
+			headerCheck++;
+			if (headerCheck == 3){
+				break;
+			}
+		}
+		else {
+			headerCheck = 0;
+		}
 	}
-
 	if (n<0){
 		return -1;
 	}else if (n==0){
 		return -2;
 	}else{
-		for (int i = 0; i < 7; i++){
-			data[i] = response[ i ];
+
+		n = read(fd, response, 11);
+		for (int i = 0; i < 3; i++){
+			
+			int reading;
+			if (i == 0){
+				reading = METHANE_READING;
+			}else if(i == 1){
+				reading = LOX_READING;
+			}else if (i == 2){
+				reading = HELIUM_READING;
+			}
+			float pressure = rawToPressure(*(u_int16_t *)(response+5+2*i), reading);
+			data[i] = pressure;
 		}
 	}
-	return 0;
+}
+
+float
+rawToPressure(u_int16_t rawData, int reading){
+	float pressure;
+	switch (reading){
+		case METHANE_READING:
+			//retVal = ((float)rawData)-PRESSURE_DIVISION_CONSTANT*.1f; /* remove 0.5v bias */
+			//retVal = (retVal/PRESSURE_DIVISION_CONSTANT)*PRESSURE_METHANE_MAX_PRESSURE;
+			pressure = (float)rawData;
+			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
+			pressure = (pressure/4.0f)*PRESSURE_METHANE_MAX_PRESSURE;
+			printf("doing methane");
+			break;
+		case LOX_READING:
+			pressure = (float)rawData;
+			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
+			pressure = (pressure/4.0f)*PRESSURE_LOX_MAX_PRESSURE;
+			printf("doing lox");
+			break;
+		case HELIUM_READING:
+			pressure = (((float)rawData)/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE;
+			break;
+		default:
+			printf("\tpressure conversion error\t");
+			return 0.0f;
+	}
+	return pressure;
 }
 
 int
 uart_init(){
-	fd = open("/dev/ttyUSB1", O_RDWR | O_NOCTTY | O_SYNC);
+	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_SYNC);
 	if (fd < 0){
-		printf("error opening ttyUSB1: %d\n", fd);
+		printf("error opening ttyUSB0: %d\n", fd);
 		return fd;
 	}else{
-		printf("ttyUSB1 opened successfully\n");
+		printf("ttyUSB0 opened successfully\n");
 	}
 
 	struct termios tty;

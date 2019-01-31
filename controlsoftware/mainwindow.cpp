@@ -43,27 +43,17 @@ mainwindow::~mainwindow()
  */
 void mainwindow::on_rand_data_clicked()
 {
-    for (int i = 0; i < 7; i++){ /* Set data to random values from 0 to 100 */
-        data[i] = rand() % 100 + 1;
-    }
+	showWarningBox("depreciated function");
 	update_data();
 }
 
 void mainwindow::update_data(){
-    this->ui->data1->setValue(data[0]);
-    this->ui->data1lcd->display(data[0]);
-    this->ui->data2->setValue(data[1]);
-    this->ui->data2lcd->display(data[1]);
-    this->ui->data3->setValue(data[2]);
-    this->ui->data3lcd->display(data[2]);
-    this->ui->data4->setValue(data[3]);
-    this->ui->data4lcd->display(data[3]);
-    this->ui->data5->setValue(data[4]);
-    this->ui->data5lcd->display(data[4]);
-    this->ui->data6->setValue(data[5]);
-    this->ui->data6lcd->display(data[5]);
-    this->ui->data7->setValue(data[6]);
-    this->ui->data7lcd->display(data[6]);
+    this->ui->data1->setValue(ceil(data[0]));
+    this->ui->data1lcd->display((double)data[0]);
+    this->ui->data2->setValue(ceil(data[1]));
+    this->ui->data2lcd->display((double)data[1]);
+    this->ui->data3->setValue(ceil(data[2]));
+    this->ui->data3lcd->display((double)data[2]);
 }
 
 /**
@@ -164,20 +154,20 @@ void mainwindow::logData(){
 	int time[1] = { (timespan.count()*1000) };
 	getData();
 	log.appendData(time, 1, 0);
-	log.appendData(data, 7, 1);
+	log.appendData(data, 3, 1);
 	
 }
 
 void mainwindow::getData(){
-	char *send[7];
+	float send[3];
 	int n = read_data(send);
 	printf("read_data returns: %d\n", n);
 	if (n < 0){
 		serial_timeout++;
 		return;
 	}
-	for (int i = 0; i < 7; i++){
-		data[i] = (int)send[i];
+	for (int i = 0; i < 3; i++){
+		data[i] = send[i];
 	}
 	update_data();
 }

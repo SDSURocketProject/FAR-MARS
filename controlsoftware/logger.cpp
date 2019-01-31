@@ -59,7 +59,7 @@ int logger::isOpen(){
  * @param int[] data to be appended to file
  * @return spawns warning popup if file not opened for writing
  */
-void logger::appendData(int data[], int vals){
+void logger::appendData(float data[], int vals){
     if (!state) { mainwindow::showWarningBox("File not open"); return; }
 	std::string str = csvformat(data, vals);
     file << str.c_str();
@@ -72,6 +72,12 @@ void logger::appendData(int data[], int vals){
  * @param int append newline to end of data, 1 for yes 0 for no
  * @return spawns warning popup if file not opened for writing
  */
+void logger::appendData(float data[], int vals, int newLine){
+    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	std::string str = csvformat(data, vals, newLine);
+    file << str.c_str();
+}
+
 void logger::appendData(int data[], int vals, int newLine){
     if (!state) { mainwindow::showWarningBox("File not open"); return; }
 	std::string str = csvformat(data, vals, newLine);

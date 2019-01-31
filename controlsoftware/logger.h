@@ -12,7 +12,8 @@ public:
     void openFile();
     void closeFile();
     int  isOpen();
-    void appendData(int data[], int vals);
+    void appendData(float data[], int vals);
+    void appendData(float data[], int vals, int newLine);
     void appendData(int data[], int vals, int newLine);
     void newLine();
 private:

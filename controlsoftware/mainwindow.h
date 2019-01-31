@@ -11,6 +11,7 @@
 #include <time.h>
 #include <chrono>
 #include "serial.h"
+#include <math.h>
 
 namespace Ui {
 class mainwindow;
@@ -36,7 +37,7 @@ private:
     warning *warningPopup;
     news *newsPopup;
 
-    int data[7];
+    float data[3];
     QString warningMessage;
     int appendNewline;
     QTimer *timer;
