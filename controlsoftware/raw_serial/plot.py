@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import matplotlib as mpl
 import numpy as np
