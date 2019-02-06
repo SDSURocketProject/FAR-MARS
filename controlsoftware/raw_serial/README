@@ -12,8 +12,7 @@
 - numpy (plotter)
 
 1. Go to `<project-root>/controlsoftware/raw_serial`
-1. create a new directory named `build`
-1. run `cmake ..`
+1. run `cmake .`
 1. run `make`
 
 ## Instructions
