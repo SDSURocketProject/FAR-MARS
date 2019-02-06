@@ -109,11 +109,14 @@ main(int argc, char* argv[]){
 	static char message[11];
 	static float pressures[3];
 	static u_int32_t timestamp;
+	f = fopen("log.txt", "a");
+	fprintf(f, "TIME,CH4,LOX,HEL\n");
 	uart_init();
 	while (1){
 		readMessage(message);
 		parseMessage(message, pressures, &timestamp);
 		printf("%u:\t%f\t%f\t%f\n", timestamp, pressures[0], pressures[1], pressures[2]);
+		fprintf(f, "%u,%f,%f,%f\n", timestamp, pressures[0], pressures[1], pressures[2]);
 	}
 }
 
