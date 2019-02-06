@@ -1,5 +1,4 @@
 cmake_minimum_required (VERSION 2.6)
 project (raw_serial)
 set(CMAKE_C_FLAGS "-g")
-add_executable(send raw_serial_sender.c)
-add_executable(read raw_serial_monitor.c)
+add_executable(read pressuretest.c)
