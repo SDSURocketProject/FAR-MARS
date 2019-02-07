@@ -1,6 +1,18 @@
-Operation of controlsoftware:
+# GUI Control Software
 
-1. ensure serial cable is available as /dev/ttyUSB1
+## Linux Build Instructions
+
+1. go to <projectroot>/controlsoftware
+1. run `qmake`
+1. run `make`
+
+## Windows Build Instructions
+
+1. Coming Soon (maybe)
+
+## Operation of controlsoftware:
+
+1. ensure serial cable is available as /dev/ttyUSB0
 2. run controlsoftware binary as root
 3. put desired filename into box above log data checkbox
 4. click 'log data' checkbox
