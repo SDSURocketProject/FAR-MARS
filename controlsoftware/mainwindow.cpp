@@ -155,19 +155,20 @@ void mainwindow::logData(){
 	getData();
 	log.appendData(time, 1, 0);
 	log.appendData(data, 3, 1);
-	
 }
 
 void mainwindow::getData(){
-	float send[3];
-	int n = read_data(send);
-	printf("read_data returns: %d\n", n);
+	char message[11];
+	float pressures[3];
+	u_int32_t timestamp;
+	int n = readMessage(message);
 	if (n < 0){
 		serial_timeout++;
 		return;
 	}
+	parseMessage(message, pressures, &timestamp);
 	for (int i = 0; i < 3; i++){
-		data[i] = send[i];
+		data[i] = pressures[i];
 	}
 	update_data();
 }
