@@ -100,17 +100,50 @@
       </property>
       <column>
        <property name="text">
-        <string>v0.1.0</string>
+        <string>Releases</string>
+       </property>
+       <property name="foreground">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
        </property>
       </column>
       <item>
        <property name="text">
-        <string>Initial Release</string>
+        <string>v0.2.0</string>
        </property>
+       <property name="foreground">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </property>
+       <item>
+        <property name="text">
+         <string>Logging to CSV file</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Plot CSV file with external python script</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Add doxygen HTML documentation</string>
+        </property>
+       </item>
       </item>
       <item>
        <property name="text">
-        <string>Basic Functionalities for testing</string>
+        <string>v0.1.0</string>
        </property>
        <item>
         <property name="text">

@@ -1,59 +1,109 @@
-static const int LOXs = 7;
-static const int CH4s = 6;
-static const int LAUNCH = 5;
-static const int LOX = 2;
-static const int CH4 = 4;
-static const int IGNITE = 3;
-unsigned long time_now = 0;
-static int LAUNCHBOOL = 0;
+/* inputs */
+static const int lox_vent_s = 0;
+static const int ch4_vent_s = 1;
+static const int vents      = 2;
+static const int lox_mpv_s  = 3;
+static const int ch4_mpv_s  = 4;
+static const int mpvs       = 5;
+static const int ignition   = 6; 
+static const int launch    = 7;
 
-int hasPeriodPassed(int);
+/* outputs */
+static const int lox_vent  = 8;
+static const int ch4_vent  = 9;
+static const int ch4_mpv   = 10;
+static const int lox_mpv   = 11;
+static const int igniter   = 12;
+
+/* variables that read states of the inputs */
+static int read_lox_vent;
+static int read_ch4_vent;
+static int read_vents;
+static int read_lox_mpv;
+static int read_ch4_mpv;
+static int read_mpvs;
+static int read_igniter;
+static int read_launch;
 
 void
 setup(void){
-	pinMode(LOX, OUTPUT);
-	pinMode(CH4, OUTPUT);
-	pinMode(IGNITE, OUTPUT);
-	pinMode(LOXs, INPUT);
-	pinMode(CH4s, INPUT);
-	pinMode(LAUNCH, INPUT);
-	
-	digitalWrite(LOX, HIGH);
-	digitalWrite(CH4, HIGH);
-	digitalWrite(IGNITE, HIGH);
+  /* inputs */
+  pinMode(lox_vent_s, INPUT);
+  pinMode(ch4_vent_s, INPUT);
+  pinMode(vents, INPUT);
+  pinMode(lox_mpv_s, INPUT);
+  pinMode(ch4_mpv_s, INPUT);
+  pinMode(mpvs, INPUT);
+  pinMode(ignition, INPUT);
+  pinMode(launch, OUTPUT);
+
+  /* outputs */
+  pinMode(lox_vent, OUTPUT);
+  pinMode(ch4_vent, OUTPUT);
+  pinMode(ch4_mpv, OUTPUT);
+  pinMode(lox_mpv, OUTPUT);
+  pinMode(igniter, OUTPUT);
+
+  /* write outputs to high except for ground */
+  digitalWrite(lox_vent, HIGH);
+  digitalWrite(ch4_vent, HIGH);
+  digitalWrite(ch4_mpv, HIGH);
+  digitalWrite(lox_mpv, HIGH);
+  digitalWrite(igniter, HIGH);
+  digitalWrite(launch, HIGH);
 }
 
 void
 loop(void){
-	int vLAUNCH = digitalRead(LAUNCH);
-	int vLOX = digitalRead(LOXs);
-	int vCH4 = digitalRead(CH4s);
-	
-	if (vLAUNCH){
-		digitalWrite(IGNITE, LOW);
-		time_now = millis();
-		if (hasPeriodPassed(1000) || LAUNCHBOOL){
-			digitalWrite(CH4, LOW);
-			time_now = millis();
-			LAUNCHBOOL = 1;
-			if (hasPeriodPassed(250)){
-				digitalWrite(LOX, LOW);
-			}
-		}
-	}
-	else if (! (vLOX || vCH4)){
-		digitalWrite(LOX, HIGH);
-		digitalWrite(CH4, HIGH);
-		digitalWrite(IGNITE, HIGH);
-	}
-	if (vLOX){
-		digitalWrite(LOX, LOW);
-	}
-	if (vCH4){
-		digitalWrite(CH4, LOW);
-	}
-}
+  /* reading the switches */
+  read_lox_vent = digitalRead(lox_vent_s);
+  read_ch4_vent = digitalRead(ch4_vent_s);
+  read_vents    = digitalRead(vents);
+  read_lox_mpv  = digitalRead(lox_mpv_s);
+  read_ch4_mpv  = digitalRead(ch4_mpv_s);
+  read_mpvs     = digitalRead(mpvs);
+  read_igniter  = digitalRead(ignition);
+  read_launch   = digitalRead(launch);
 
-int hasPeriodPassed(int mils){
-	return millis() > time_now + mils ? 1 : 0;
+  /* read switches and actuate relays */
+  if (!read_vents){
+    digitalWrite(lox_vent, LOW);
+    digitalWrite(ch4_vent, LOW);
+  } else if (!read_lox_vent || !read_ch4_vent){
+    digitalWrite(lox_vent, read_lox_vent);
+    digitalWrite(ch4_vent, read_ch4_vent);
+  } else {
+    digitalWrite(lox_vent, HIGH);
+    digitalWrite(ch4_vent, HIGH);
+  }
+
+  if (!read_mpvs){
+    digitalWrite(lox_mpv, LOW);
+    digitalWrite(ch4_mpv, LOW);
+  } else if (launchbool){
+    /* remove ability of switches to control mpvs during launch timer */
+  } else if (!read_lox_mpv || !read_ch4_mpv){
+    digitalWrite(lox_mpv, read_lox_mpv);
+    digitalWrite(ch4_mpv, read_ch4_mpv);
+  } else {
+    digitalWrite(lox_mpv, HIGH);
+    digitalWrite(ch4_mpv, HIGH);
+  }
+
+  if(!read_launch){
+    digitalWrite(igniter, LOW);
+    delay(1000);
+    digitalWrite(ch4_mpv, LOW);
+    delay(250);
+    digitalWrite(lox_mpv, LOW);
+    while(1){
+    }
+  }
+
+  if(igniterbool){
+  }else if (!read_igniter){
+    digitalWrite(igniter, LOW);
+  }else{
+    digitalWrite(igniter, HIGH);
+  }
 }

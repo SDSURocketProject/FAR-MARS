@@ -1,0 +1,14 @@
+digraph "logger::appendData"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6 [label="logger::appendData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mainwindow::showWarningBox",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmainwindow.html#a8841948aafd1e4c30d46e60ef2dbb4d6"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="warning::setWarning",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classwarning.html#a81dadd00d0568986c68b9a21793441ab"];
+  Node6 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="logger::newLine",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classlogger.html#a3efa363e127b361b0d94f907e27ab6e6"];
+  Node9 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

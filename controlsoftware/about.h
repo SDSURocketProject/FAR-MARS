@@ -1,3 +1,9 @@
+/**
+ * About Page Header
+ *
+ * @author Zack Mudd <zmudd@sdsu.edu>
+ */
+
 #ifndef ABOUT_H
 #define ABOUT_H
 
