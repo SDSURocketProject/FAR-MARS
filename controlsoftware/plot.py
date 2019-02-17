@@ -12,9 +12,9 @@ except IndexError:
 
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
-ax1.plot(data['time'], data['CH4'], label='CH4')
-ax1.plot(data['time'], data['LOX'], label='LOX')
-ax1.plot(data['time'], data['HEL'], label='HEL')
+ax1.plot(data['TIME'], data['CH4'], label='CH4')
+ax1.plot(data['TIME'], data['LOX'], label='LOX')
+ax1.plot(data['TIME'], data['HEL'], label='HEL')
 plt.xlabel('Time (ms)')
 plt.ylabel('Pressure (psi)')
 plt.legend(loc='best')
