@@ -8,30 +8,22 @@
  */
 int
 readMessage(char *message){
-	int n, idx = 0;
-	char in;
-	static char header[] = {'A', 'B', 'C'};
-	while (1){
-		n = read(fd, (void*)&in, 1);
-		if (n == 0){ /* if no byte is read in */
-			return -2;
-		}else if (n < 0){ /* if read returns an error */
-			return -1;
-		}
-		if (in == header[idx]){
-			idx++;
-			if (idx == 3){
-				break;
-			}
-		}
-	}
-	n = read(fd, message, 11);
-	if (n == 0){ /* if no byte is read in */
-		return -2;
-	}else if (n < 0){ /* if read returns an error */
+	DWORD dwRead;
+	BOOL fWaitingOnRead = FALSE;
+	OVERLAPPED osReader = {0};
+
+	osReader.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+	if (osReader.hEvent == NULL){
 		return -1;
 	}
-	return 1;
+	if (!fWaitingOnRead){
+		if (!ReadFile(hcom, message, 14, &dwRead, &osReader)){
+			return -2;
+		}else{
+			fWaitingOnRead = TRUE;
+		}
+	}
+	return 0;
 }
 
 /**
@@ -42,19 +34,19 @@ readMessage(char *message){
  * @param[out] timestamp pointer to uint32 to put timestamp in
  */
 void
-parseMessage(char *message, float *output, u_int32_t *timestamp){
+parseMessage(char *message, float *output, uint32_t *timestamp){
 	//printf("%u\n", (u_int32_t)*(message+1));
 	*timestamp = 0;
 	//*timestamp = *(u_int32_t*)message+1;
-	*timestamp |= *(u_int8_t*)(message+1);
-	*timestamp |= *(u_int8_t*)(message+2)<<8;
-	*timestamp |= *(u_int8_t*)(message+3)<<16;
-	*timestamp |= *(u_int8_t*)(message+4)<<24;
+	*timestamp |= *(uint8_t*)(message+1);
+	*timestamp |= *(uint8_t*)(message+2)<<8;
+	*timestamp |= *(uint8_t*)(message+3)<<16;
+	*timestamp |= *(uint8_t*)(message+4)<<24;
 	
 	float methane = 0, lox = 0, helium = 0;
-	methane = (float)*(u_int16_t*)(message+5);
-	lox = (float)*(u_int16_t*)(message+7);
-	helium = (float)*(u_int16_t*)(message+9);
+	methane = (float)*(uint16_t*)(message+5);
+	lox = (float)*(uint16_t*)(message+7);
+	helium = (float)*(uint16_t*)(message+9);
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	output[0] = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
@@ -70,41 +62,15 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
  */
 int
 uart_init(){
-	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_SYNC);
-	if (fd < 0){
+	hcom = CreateFile( L"COM1",
+						GENERIC_READ,
+						0,
+						0,
+						OPEN_EXISTING,
+						FILE_FLAG_OVERLAPPED,
+						0);
+	if (hcom == INVALID_HANDLE_VALUE){
 		return -1;
-	}else{
-		printf("ttyUSB0 opened successfully\n");
-	}
-
-	struct termios tty;
-	struct termios tty_old;
-	memset(&tty, 0, sizeof tty);
-
-	if (tcgetattr(fd, &tty) < 0){
-		return -2;
-	}
-
-	tty_old = tty;
-
-	cfsetospeed(&tty, (speed_t)B38400);
-	cfsetispeed(&tty, (speed_t)B38400);
-
-	tty.c_cflag     &=  ~PARENB;            // Make 8n1
-	tty.c_cflag     &=  ~CSTOPB;
-	tty.c_cflag     &=  ~CSIZE;
-	tty.c_cflag     |=  CS8;
-
-	tty.c_cflag     &=  ~CRTSCTS;           // no flow control
-	tty.c_cc[VMIN]   =  1;                  // read doesn't block
-	tty.c_cc[VTIME]  =  5;                  // 0.5 seconds read timeout
-	tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
-	
-	cfmakeraw(&tty);
-
-	tcflush(fd, TCIFLUSH);
-	if (tcsetattr(fd, ICANON, &tty) < 0){
-		return -3;
 	}
 	return 0;
 }

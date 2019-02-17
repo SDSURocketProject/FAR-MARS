@@ -116,7 +116,7 @@ void mainwindow::logData(){
 void mainwindow::getData(){
 	char message[11];
 	float pressures[3];
-	u_int32_t timestamp;
+	uint32_t timestamp;
 	int n = readMessage(message);
 	if (n < 0){
 		serial_timeout++;

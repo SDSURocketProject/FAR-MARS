@@ -4,8 +4,9 @@
  * @author Zack Mudd <zmudd@sdsu.edu>
  */
 
-#include "mainwindow.h"
 #include <QApplication>
+#include <windows.h>
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {

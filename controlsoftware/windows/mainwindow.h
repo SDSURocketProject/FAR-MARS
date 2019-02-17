@@ -10,6 +10,7 @@
 #include <chrono>
 #include "serial.h"
 #include <math.h>
+#include <windows.h>
 
 namespace Ui {
 class mainwindow;

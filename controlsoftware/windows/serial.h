@@ -3,12 +3,13 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <termios.h>
 #include <string>
 #include <cstring>
+#include <windows.h>
 
 static int fd;
 static int rate = 0;
+static HANDLE hcom;
 
 #define PRESSURE_DIVISION_CONSTANT 4095.0f
 #define PRESSURE_METHANE_MAX_PRESSURE 1500.0f
