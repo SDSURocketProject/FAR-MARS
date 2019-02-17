@@ -16,7 +16,6 @@ mainwindow::mainwindow(QWidget *parent) :
     ui(new Ui::mainwindow)
 {
     ui->setupUi(this);
-    aboutPopup = new about();
     for (int i = 0; i <= int(sizeof(data)/sizeof(data[0])); i++){
         data[i] = 0; /* Set data values to zero */
     }
@@ -36,17 +35,6 @@ mainwindow::~mainwindow()
     delete ui;
 }
 
-/**
- * Randomize Data Button Slot
- *
- * @trigger User Press on button
- */
-void mainwindow::on_rand_data_clicked()
-{
-	showWarningBox("depreciated function");
-	update_data();
-}
-
 void mainwindow::update_data(){
     this->ui->data1->setValue(ceil(data[0]));
     this->ui->data1lcd->display((double)data[0]);
@@ -54,27 +42,6 @@ void mainwindow::update_data(){
     this->ui->data2lcd->display((double)data[1]);
     this->ui->data3->setValue(ceil(data[2]));
     this->ui->data3lcd->display((double)data[2]);
-}
-
-/**
- * About Page Menu Slot
- *
- * @trigger Trigger of About action in application menu
- */
-void mainwindow::on_actionAbout_triggered()
-{
-    aboutPopup->show();
-}
-
-/**
- * Whats New Menu Slot
- *
- * @trigger Trigger of Whats New action in application menu
- */
-void mainwindow::on_actionWhats_New_triggered()
-{
-    newsPopup = new news();
-    newsPopup->show();
 }
 
 /**
@@ -87,17 +54,6 @@ void mainwindow::showWarningBox(QString message){
     warning *warningPopup = new warning();
     warningPopup->setWarning(message);
     warningPopup->show();
-}
-
-/**
- * Display user-generated warning popup
- *
- * @trigger User click of Display Warning button
- * @return Generates warning popup with text specified by user
- */
-void mainwindow::on_displaywarning_clicked()
-{
-    showWarningBox(this->ui->warningtext->displayText());
 }
 
 /**

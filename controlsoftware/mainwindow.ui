@@ -6,32 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>828</width>
-    <height>487</height>
+    <width>629</width>
+    <height>338</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Lady Elizabeth Control Software</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="rand_thermo">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>190</y>
-      <width>181</width>
-      <height>34</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Randomize Data</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>40</y>
+      <x>20</x>
+      <y>30</y>
       <width>588</width>
       <height>122</height>
      </rect>
@@ -531,34 +518,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>320</y>
-      <width>351</width>
-      <height>74</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="warningLayout">
-     <item>
-      <widget class="QLineEdit" name="warningtext">
-       <property name="text">
-        <string>General Warning</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="displaywarning">
-       <property name="text">
-        <string>Display Warning</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>320</y>
+      <x>170</x>
+      <y>190</y>
       <width>291</width>
       <height>71</height>
      </rect>
@@ -567,11 +528,11 @@
      <item>
       <widget class="QLineEdit" name="logFileNameBox">
        <property name="text">
-        <string>test.csv</string>
+        <string>log_data.csv</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignHCenter">
       <widget class="QCheckBox" name="logDataCheckbox">
        <property name="text">
         <string>Log Data</string>
@@ -580,51 +541,6 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>828</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>Fi&amp;le</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Tool&amp;s</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>Wi&amp;ndow</string>
-    </property>
-    <addaction name="actionFullscreen"/>
-    <addaction name="actionMinimize"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-    <addaction name="actionWhats_New"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
-   <addaction name="menuTools"/>
-   <addaction name="menuWindow"/>
-   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

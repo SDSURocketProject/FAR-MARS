@@ -3,10 +3,8 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "about.h"
 #include "csv.h"
 #include "warning.h"
-#include "news.h"
 #include "logger.h"
 #include <time.h>
 #include <chrono>
@@ -33,12 +31,9 @@ private:
 	void getData();
 	void update_data();
 
-    about *aboutPopup;
     warning *warningPopup;
-    news *newsPopup;
 
     float data[3];
-    QString warningMessage;
     int appendNewline;
     QTimer *timer;
     int timerDelay;
@@ -48,10 +43,6 @@ private:
 	std::chrono::high_resolution_clock::time_point start;
 
 private slots:
-    void on_rand_data_clicked();
-    void on_displaywarning_clicked();
-    void on_actionWhats_New_triggered();
-    void on_actionAbout_triggered();
     void onTimer();
     void on_logDataCheckbox_stateChanged(int arg1);
 };
