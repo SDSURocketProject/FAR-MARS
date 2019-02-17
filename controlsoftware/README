@@ -1,7 +1,24 @@
-Operation of controlsoftware:
+# GUI Control Software
 
-1. ensure serial cable is available as /dev/ttyUSB1
+## Linux Build Instructions
+
+1. go to <projectroot>/controlsoftware
+1. run `qmake`
+1. run `make`
+
+## Windows Build Instructions
+
+1. Coming Soon (maybe)
+
+## Operation of controlsoftware:
+
+1. ensure serial cable is available as /dev/ttyUSB0
 2. run controlsoftware binary as root
 3. put desired filename into box above log data checkbox
 4. click 'log data' checkbox
-5. to close filebuffer and ensure data is written, unplug serial cable and wait 5 seconds for checkbox to uncheck itself
+5. uncheck the box when you are done. The log can be restarted, and the program will append new data to the end. This will not effect the plotter
+
+## Operation of python plotter:
+
+1. create a new line at the top of the log file, with the following: `TIME,CH4,LOX,HEL`
+1. `python plot.py /path/to/logfile.csv`

@@ -27,27 +27,21 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    about.cpp \
     warning.cpp \
-    news.cpp \
     logger.cpp \
     csv.cpp \
     serial.cpp
 
 HEADERS += \
         mainwindow.h \
-    about.h \
     warning.h \
-    news.h \
     logger.h \
     csv.h \
     serial.h
 
 FORMS += \
         mainwindow.ui \
-    about.ui \
-    warning.ui \
-    news.ui
+    warning.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

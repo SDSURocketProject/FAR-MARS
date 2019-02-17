@@ -7,80 +7,72 @@
  * @return int return code. 0: ran correctly, -1: error reading, -2: read nothing
  */
 int
-read_data(float *data){
-	int n = 0, idx = 0, headerCheck = 0;
-	unsigned char buf = '\0';
-	unsigned char response[14];
-	memset(response, '\0', sizeof response);
-	while(1)  {
-		n = read(fd, &buf, 1);
-		if ( buf == (headerCheck+'A')){
-			headerCheck++;
-			if (headerCheck == 3){
+readMessage(char *message){
+	int n, idx = 0;
+	char in;
+	static char header[] = {'A', 'B', 'C'};
+	while (1){
+		n = read(fd, (void*)&in, 1);
+		if (n == 0){ /* if no byte is read in */
+			return -2;
+		}else if (n < 0){ /* if read returns an error */
+			return -1;
+		}
+		if (in == header[idx]){
+			idx++;
+			if (idx == 3){
 				break;
 			}
 		}
-		else {
-			headerCheck = 0;
-		}
 	}
-	if (n<0){
-		return -1;
-	}else if (n==0){
+	n = read(fd, message, 11);
+	if (n == 0){ /* if no byte is read in */
 		return -2;
-	}else{
-
-		n = read(fd, response, 11);
-		for (int i = 0; i < 3; i++){
-			
-			int reading;
-			if (i == 0){
-				reading = METHANE_READING;
-			}else if(i == 1){
-				reading = LOX_READING;
-			}else if (i == 2){
-				reading = HELIUM_READING;
-			}
-			float pressure = rawToPressure(*(u_int16_t *)(response+5+2*i), reading);
-			data[i] = pressure;
-		}
+	}else if (n < 0){ /* if read returns an error */
+		return -1;
 	}
+	return 1;
 }
 
-float
-rawToPressure(u_int16_t rawData, int reading){
-	float pressure;
-	switch (reading){
-		case METHANE_READING:
-			//retVal = ((float)rawData)-PRESSURE_DIVISION_CONSTANT*.1f; /* remove 0.5v bias */
-			//retVal = (retVal/PRESSURE_DIVISION_CONSTANT)*PRESSURE_METHANE_MAX_PRESSURE;
-			pressure = (float)rawData;
-			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
-			pressure = (pressure/4.0f)*PRESSURE_METHANE_MAX_PRESSURE;
-			printf("doing methane");
-			break;
-		case LOX_READING:
-			pressure = (float)rawData;
-			pressure = (pressure/PRESSURE_DIVISION_CONSTANT)*5-0.5f;
-			pressure = (pressure/4.0f)*PRESSURE_LOX_MAX_PRESSURE;
-			printf("doing lox");
-			break;
-		case HELIUM_READING:
-			pressure = (((float)rawData)/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE;
-			break;
-		default:
-			printf("\tpressure conversion error\t");
-			return 0.0f;
-	}
-	return pressure;
+/**
+ * Serial Data Parser
+ *
+ * @param[in] message pointer to message to parse
+ * @param[out] output pointer to float array to put values in
+ * @param[out] timestamp pointer to uint32 to put timestamp in
+ */
+void
+parseMessage(char *message, float *output, u_int32_t *timestamp){
+	//printf("%u\n", (u_int32_t)*(message+1));
+	*timestamp = 0;
+	//*timestamp = *(u_int32_t*)message+1;
+	*timestamp |= *(u_int8_t*)(message+1);
+	*timestamp |= *(u_int8_t*)(message+2)<<8;
+	*timestamp |= *(u_int8_t*)(message+3)<<16;
+	*timestamp |= *(u_int8_t*)(message+4)<<24;
+	
+	float methane = 0, lox = 0, helium = 0;
+	methane = (float)*(u_int16_t*)(message+5);
+	lox = (float)*(u_int16_t*)(message+7);
+	helium = (float)*(u_int16_t*)(message+9);
+
+	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	output[0] = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
+	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	output[1] = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
+	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	return;
 }
 
+/**
+ * UART Init
+ * Initializes rs485 serial connection on ttyUSB0
+ */
 int
 uart_init(){
 	fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_SYNC);
 	if (fd < 0){
-		printf("error opening ttyUSB0: %d\n", fd);
-		return fd;
+		return -1;
 	}else{
 		printf("ttyUSB0 opened successfully\n");
 	}
@@ -90,7 +82,7 @@ uart_init(){
 	memset(&tty, 0, sizeof tty);
 
 	if (tcgetattr(fd, &tty) < 0){
-		printf("error from tcgetattr: %d\n", errno);
+		return -2;
 	}
 
 	tty_old = tty;
@@ -112,9 +104,7 @@ uart_init(){
 
 	tcflush(fd, TCIFLUSH);
 	if (tcsetattr(fd, ICANON, &tty) < 0){
-		printf("error from tcgetattr: %d\n", errno);
-		return errno;
+		return -3;
 	}
 	return 0;
 }
-

@@ -7,12 +7,8 @@ mainwindow::mainwindow(QWidget *parent) :
     ui(new Ui::mainwindow)
 {
     ui->setupUi(this);
-    aboutPopup = new about();
-    for (int i = 0; i <= int(sizeof(thermos)/sizeof(thermos[0])); i++){
-        thermos[i] = 0;
-    }
-    for (int i = 0; i <= int(sizeof(ducers)/sizeof(ducers[0])); i++){
-        ducers[i] = 0;
+    for (int i = 0; i <= int(sizeof(data)/sizeof(data[0])); i++){
+        data[i] = 0; /* Set data values to zero */
     }
 }
 
@@ -21,93 +17,96 @@ mainwindow::~mainwindow()
     delete ui;
 }
 
-
-void mainwindow::on_rand_thermo_clicked()
-{
-    for (int i = 0; i < 8; i++){
-        thermos[i] = rand() % 100 + 1;
-    }
-    this->ui->thermo1->setValue(thermos[0]);
-    this->ui->thermo1lcd->display(thermos[0]);
-    this->ui->thermo2->setValue(thermos[1]);
-    this->ui->thermo2lcd->display(thermos[1]);
-    this->ui->thermo3->setValue(thermos[2]);
-    this->ui->thermo3lcd->display(thermos[2]);
-    this->ui->thermo4->setValue(thermos[3]);
-    this->ui->thermo4lcd->display(thermos[3]);
-    this->ui->thermo5->setValue(thermos[4]);
-    this->ui->thermo5lcd->display(thermos[4]);
-    this->ui->thermo6->setValue(thermos[5]);
-    this->ui->thermo6lcd->display(thermos[5]);
-    this->ui->thermo7->setValue(thermos[6]);
-    this->ui->thermo7lcd->display(thermos[6]);
-    this->ui->thermo8->setValue(thermos[7]);
-    this->ui->thermo8lcd->display(thermos[7]);
-}
-void mainwindow::on_rand_pres_clicked()
-
-{
-    for (int i = 0; i < 2; i++){
-        ducers[i] = rand() % 100 + 1;
-    }
-    this->ui->ducer1->setValue(ducers[0]);
-    this->ui->ducer1lcd->display(ducers[0]);
-    this->ui->ducer2->setValue(ducers[1]);
-    this->ui->ducer2lcd->display(ducers[1]);
+void mainwindow::update_data(){
+    this->ui->data1->setValue(ceil(data[0]));
+    this->ui->data1lcd->display((double)data[0]);
+    this->ui->data2->setValue(ceil(data[1]));
+    this->ui->data2lcd->display((double)data[1]);
+    this->ui->data3->setValue(ceil(data[2]));
+    this->ui->data3lcd->display((double)data[2]);
 }
 
-void mainwindow::on_ducer1_sliderPressed()
-{
-    if (suppressDucers)
-        return;
-    QString warning = "Hey! You cant move that!";
-    showWarningBox(warning);
-}
-
-void mainwindow::on_ducer2_sliderPressed()
-{
-    if (suppressDucers)
-        return;
-    QString warning = "Hey! You cant move that!";
-    showWarningBox(warning);
-}
-
-void mainwindow::on_ducer1_sliderMoved(int position)
-{
-    ducers[0] = position;
-    this->ui->ducer1lcd->display(ducers[0]);
-}
-
-void mainwindow::on_ducer2_sliderMoved(int position)
-{
-    ducers[1] = position;
-    this->ui->ducer2lcd->display(ducers[1]);
-}
-
-void mainwindow::on_checkBox_stateChanged(int arg1)
-{
-    suppressDucers = arg1;
-}
-
-void mainwindow::on_actionAbout_triggered()
-{
-    aboutPopup->show();
-}
-
-void mainwindow::on_actionWhats_New_triggered()
-{
-    newsPopup = new news();
-    newsPopup->show();
-}
-
+/**
+ * Popup Warning Box Generator
+ *
+ * @param QString message to display on warning popup
+ * @return Generates warning popup
+ */
 void mainwindow::showWarningBox(QString message){
     warning *warningPopup = new warning();
     warningPopup->setWarning(message);
     warningPopup->show();
 }
 
-void mainwindow::on_displaywarning_clicked()
-{
-    showWarningBox(this->ui->warningtext->displayText());
+/**
+ * Main timer handler
+ *
+ * @trigger main trigger timeout()
+ */
+void mainwindow::onTimer(){
+    if (logDataBool){
+        if (serial_timeout > 50){
+			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
+			return;
+		}
+		logData();
+
+    }
 }
 
+/**
+ * Global Log Data Checkbox
+ *
+ * @trigger state change of global log checkbox
+ * @param int bool value of checkbox
+ */
+void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
+{
+    logDataBool = arg1;
+    if (logDataBool) {
+		int u = uart_init();
+		if (u != 0){
+			showWarningBox("Serial Connection Not Opened");
+			logDataBool = 0;
+			return;
+		}
+        QString qfilename = this->ui->logFileNameBox->displayText();
+		const char *filename = qfilename.toStdString().c_str();
+        log.setFile(filename);
+        start = std::chrono::high_resolution_clock::now();
+		log.openFile();
+		return;
+	}
+    log.closeFile();
+}
+
+/**
+ * Global Log Data Handler
+ *
+ * @trigger onTimer()
+ * @return logs global data to file
+ */
+void mainwindow::logData(){
+	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
+	int time[1] = { (timespan.count()*1000) };
+	getData();
+	log.appendData(time, 1, 0);
+	log.appendData(data, 3, 1);
+}
+
+void mainwindow::getData(){
+	char message[11];
+	float pressures[3];
+	u_int32_t timestamp;
+	int n = readMessage(message);
+	if (n < 0){
+		serial_timeout++;
+		return;
+	}
+	parseMessage(message, pressures, &timestamp);
+	for (int i = 0; i < 3; i++){
+		data[i] = pressures[i];
+	}
+	update_data();
+}
