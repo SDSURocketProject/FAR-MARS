@@ -64,6 +64,6 @@
 1. `<mxe root>/usr/bin/i686-w64-mingw32.static-qmake-qt5`
 1. `make`
 
-This provides a 32-bit executable. For a 64-bit executable, build qt with `make MXE_TARGETS=x86_64-w64-mingw32.static qtbase`
+This provides a 32-bit executable. For a 64-bit executable, build qt with `make MXE_TARGETS=x86_64-w64-mingw32.static qtbase` and change the qmake call accordingly.
 
 These are generic build instructions for Qt5 applications, cross-compiled on Linux targeting Windows. There has been minimal testing with the windows binary, and is not guaranteed to work and is not reccomended.
