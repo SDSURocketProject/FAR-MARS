@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger',['logger',['../classlogger.html',1,'']]]
+  ['mainwindow',['mainwindow',['../classmainwindow.html',1,'mainwindow'],['../class_ui_1_1mainwindow.html',1,'Ui::mainwindow']]]
 ];
