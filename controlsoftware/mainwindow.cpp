@@ -35,7 +35,12 @@ mainwindow::~mainwindow()
     delete ui;
 }
 
-void mainwindow::update_data(){
+/**
+ * GUI Data Updater
+ * Sets GUI Elements to display values in static data array
+ */
+void
+mainwindow::update_data(){
     this->ui->data1->setValue(ceil(data[0]));
     this->ui->data1lcd->display((double)data[0]);
     this->ui->data2->setValue(ceil(data[1]));
@@ -46,11 +51,12 @@ void mainwindow::update_data(){
 
 /**
  * Popup Warning Box Generator
+ * Generates a popup displaying the QString supplied
  *
  * @param QString message to display on warning popup
- * @return Generates warning popup
  */
-void mainwindow::showWarningBox(QString message){
+void
+mainwindow::showWarningBox(QString message){
     warning *warningPopup = new warning();
     warningPopup->setWarning(message);
     warningPopup->show();
@@ -58,10 +64,10 @@ void mainwindow::showWarningBox(QString message){
 
 /**
  * Main timer handler
- *
- * @trigger main trigger timeout()
+ * Runs whenever the main timer timeouts to run repeating tasks
  */
-void mainwindow::onTimer(){
+void
+mainwindow::onTimer(){
     if (logDataBool){
         if (serial_timeout > 50){
 			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
@@ -73,12 +79,15 @@ void mainwindow::onTimer(){
 }
 
 /**
- * Global Log Data Checkbox
- *
- * @trigger state change of global log checkbox
- * @param int bool value of checkbox
+ * Global Log Data Checkbox handler
+ * Triggered by state change of Log Data checkbox
+ * Initiates UART connection and opens log file
+ * @see uart_init()
+ * @see openFile()
+ * @param int new value of checkbox
  */
-void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
+void
+mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
     logDataBool = arg1;
     if (logDataBool) {
@@ -100,11 +109,11 @@ void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 
 /**
  * Global Log Data Handler
- *
- * @trigger onTimer()
- * @return logs global data to file
+ * Logs data from static data array, with timestamp
+ * @see appendData()
  */
-void mainwindow::logData(){
+void
+mainwindow::logData(){
 	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
 	int time[1] = { (timespan.count()*1000) };
@@ -113,7 +122,15 @@ void mainwindow::logData(){
 	log.appendData(data, 3, 1);
 }
 
-void mainwindow::getData(){
+/**
+ * Data Retrieval Routine
+ * Recieves data from UART connection, updates static data array, and updates GUI to reflect changes
+ * @see readMessage()
+ * @see parseMessage()
+ * @see updateData()
+ */
+void
+mainwindow::getData(){
 	char message[11];
 	float pressures[3];
 	u_int32_t timestamp;

@@ -1,11 +1,15 @@
+#include <cstring>
+#include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <termios.h>
 #include <string>
-#include <cstring>
+#include <termios.h>
+#include <unistd.h>
+
+void parseMessage(char *message, float *output, uint32_t *timestamp);
+int readMessage(char *message);
+int uart_init(void);
 
 static int fd;
 static int rate = 0;
@@ -24,6 +28,3 @@ enum reading {
 	HELIUM_READING = 2,
 };
 
-void parseMessage(char *message, float *output, uint32_t *timestamp);
-int readMessage(char *message);
-int uart_init(void);
