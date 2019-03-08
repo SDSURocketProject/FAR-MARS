@@ -23,9 +23,20 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "controlsoftware", "index.html", [
+  [ "FAR-MARS Control Software", "index.html", [
+    [ "Summary", "md_docs_api.html", [
+      [ "class <tt>about</tt>", "md_docs_api.html#classabout", null ],
+      [ "class <tt>logger</tt>", "md_docs_api.html#classlogger", null ],
+      [ "class <tt>mainwindow</tt>", "md_docs_api.html#classmainwindow", null ],
+      [ "class <tt>news</tt>", "md_docs_api.html#classnews", null ],
+      [ "class <tt>warning</tt>", "md_docs_api.html#classwarning", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Variables", "namespacemembers_vars.html", null ]
+      ] ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -33,14 +44,19 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ]
+        [ "All", "globals.html", "globals_dup" ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ],
+        [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
   ] ]
@@ -48,7 +64,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"about_8cpp.html"
+"annotated.html",
+"moc__predefs_8h.html#a61c258ffad919b338b83e1401265f671",
+"structqt__meta__stringdata__mainwindow__t.html#a073aaf094b883fea8f20c806f984dcd4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

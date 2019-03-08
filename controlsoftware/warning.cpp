@@ -6,6 +6,9 @@
 #include "warning.h"
 #include "ui_warning.h"
 
+/**
+ * Warning class constructor
+ */
 warning::warning(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::warning)
@@ -13,6 +16,9 @@ warning::warning(QWidget *parent) :
     ui->setupUi(this);
 }
 
+/**
+ * Warning class destructor
+ */
 warning::~warning()
 {
     delete ui;
@@ -23,6 +29,7 @@ warning::~warning()
  *
  * @param QString text to display
  */
-void warning::setWarning(QString message){
+void
+warning::setWarning(QString message){
     this->ui->warningtext->setText(message);
 }

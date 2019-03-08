@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['about',['about',['../classabout.html#a860b15d9fedd569d066998ca10596fc0',1,'about']]],
-  ['appenddata',['appendData',['../classlogger.html#a6a88a186a97af2aec42abd1ff03fe821',1,'logger::appendData(const char *data)'],['../classlogger.html#ae8678e52b408e2a62986167d8aee8691',1,'logger::appendData(const char *data, int newLine)']]]
+  ['appenddata',['appendData',['../classlogger.html#af41f1ff93325f10fd64a4e5ed8e0c91f',1,'logger::appendData(float data[], int vals)'],['../classlogger.html#a5943e223dcd1dd2a6979ae69b680ef54',1,'logger::appendData(float data[], int vals, int newLine)'],['../classlogger.html#a02e44b0a62db94989779fe7a53e6cc7d',1,'logger::appendData(int data[], int vals, int newLine)']]]
 ];

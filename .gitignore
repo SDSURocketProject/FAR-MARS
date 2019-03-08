@@ -3,3 +3,4 @@
 *.qmake.stash
 moc_*
 ui_*.h
+Makefile

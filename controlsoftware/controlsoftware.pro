@@ -30,14 +30,16 @@ SOURCES += \
     warning.cpp \
     logger.cpp \
     csv.cpp \
-    serial.cpp
+    serial.cpp \
+    qcgaugewidget.cpp
 
 HEADERS += \
         mainwindow.h \
     warning.h \
     logger.h \
     csv.h \
-    serial.h
+    serial.h \
+    qcgaugewidget.h
 
 FORMS += \
         mainwindow.ui \
