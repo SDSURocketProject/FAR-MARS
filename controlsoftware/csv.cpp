@@ -1,16 +1,14 @@
 /**
  * CSV Formatting functions
- *
- * @author Zack Mudd <zmudd@sdsu.edu>
  */
 
 #include "csv.h"
 
 /**
- * Format integers as csv with no newline
+ * Format floats as csv with no newline
  *
  * @since v0.2.0
- * @param int[] integers to format
+ * @param float[] floats to format
  * @param int number of values to process
  * @return csv formatted string
  */
@@ -30,6 +28,14 @@ csvformat(float data[], int vals){
 	return csv;
 }
 
+/**
+ * Format integers as csv with no newline
+ *
+ * @since v0.3.2
+ * @param int[] integers to format
+ * @param int number of values to process
+ * @return csv formatted string
+ */
 std::string
 csvformat(int data[], int vals){
 	std::string csv;
@@ -48,10 +54,10 @@ csvformat(int data[], int vals){
 
 
 /**
- * Format integers as csv with no newline
+ * Format floats as csv with no newline
  *
- * @since v0.2.0
- * @param int[] integers to format
+ * @since v0.3.2
+ * @param float[] integers to format
  * @param int number of values to process
  * @param bool whether to append newline
  * @return csv formatted string
@@ -68,6 +74,15 @@ csvformat(float data[], int vals, bool newline){
 	return csv;
 }
 
+/**
+ * Format integers as csv with no newline
+ *
+ * @since v0.2.0
+ * @param int[] integers to format
+ * @param int number of values to process
+ * @param bool whether to append newline
+ * @return csv formatted string
+ */
 std::string
 csvformat(int data[], int vals, bool newline){
 	std::string csv = csvformat(data, vals);

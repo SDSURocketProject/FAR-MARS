@@ -1,21 +1,21 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include "csv.h"
 
 class logger{
 public:
     logger();
-    void setFile(const char *newfilename);
-    void openFile();
-    void closeFile();
-    int  isOpen();
     void appendData(float data[], int vals);
     void appendData(float data[], int vals, int newLine);
     void appendData(int data[], int vals, int newLine);
+    void closeFile();
+    int  isOpen();
     void newLine();
+    void openFile();
+    void setFile(const char *newfilename);
 private:
     std::ofstream file;
     char *filename;

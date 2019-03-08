@@ -1,15 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <chrono>
+#include <math.h>
 #include <QMainWindow>
 #include <QTimer>
-#include "csv.h"
-#include "warning.h"
-#include "logger.h"
+#include <qcgaugewidget.h>
 #include <time.h>
-#include <chrono>
+#include "csv.h"
+#include "logger.h"
 #include "serial.h"
-#include <math.h>
+#include "warning.h"
 
 namespace Ui {
 class mainwindow;
@@ -27,19 +28,26 @@ public:
 private:
     Ui::mainwindow *ui;
     void createActions();
-    void logData();
 	void getData();
+    void logData();
 	void update_data();
 
     warning *warningPopup;
 
     float data[3];
     int appendNewline;
-    QTimer *timer;
-    int timerDelay;
+	int logCount = 0;
     int logDataBool;
+    int timerDelay;
 	int serial_timeout;
     logger log;
+    QTimer *timer;
+	QcGaugeWidget *helGauge;
+	QcGaugeWidget *loxGauge;
+	QcGaugeWidget *ch4Gauge;
+	QcNeedleItem *helNeedle;
+	QcNeedleItem *loxNeedle;
+	QcNeedleItem *ch4Needle;
 	std::chrono::high_resolution_clock::time_point start;
 
 private slots:

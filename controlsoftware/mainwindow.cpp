@@ -25,6 +25,61 @@ mainwindow::mainwindow(QWidget *parent) :
     timer->start(50);
 	logDataBool = 0;
 	serial_timeout = 0;
+
+	helGauge = new QcGaugeWidget;
+	loxGauge = new QcGaugeWidget;
+	ch4Gauge = new QcGaugeWidget;
+
+	ch4Gauge->addArc(55);
+	ch4Gauge->addDegrees(65)->setValueRange(0,2000);
+	QcColorBand *ch4ClrBand = ch4Gauge->addColorBand(100, 0);
+	ch4ClrBand->setValueRange(0,2000);
+	ch4Gauge->addValues(80, 0)->setValueRange(0,2000);
+	ch4Gauge->addLabel(70)->setText("Methane");
+	QcLabelItem *ch4Label = ch4Gauge->addLabel(40);
+	ch4Label->setText("0");
+	ch4Needle = ch4Gauge->addNeedle(60);
+	ch4Needle->setLabel(ch4Label);
+	ch4Needle->setColor(Qt::blue);
+	ch4Needle->setValueRange(0,2000);
+	//ch4Needle->addBackground(7);
+	ui->data->addWidget(ch4Gauge);
+
+	QSpacerItem *spacer1 = new QSpacerItem(5, 1);
+	ui->data->addItem(spacer1);
+
+	loxGauge->addArc(55);
+	loxGauge->addDegrees(65)->setValueRange(0,2000);
+	QcColorBand *loxClrBand = loxGauge->addColorBand(100, 0);
+	loxClrBand->setValueRange(0,2000);
+	loxGauge->addValues(80, 0)->setValueRange(0,2000);
+	loxGauge->addLabel(70)->setText("LOX");
+	QcLabelItem *loxLabel = loxGauge->addLabel(40);
+	loxLabel->setText("0");
+	loxNeedle = loxGauge->addNeedle(60);
+	loxNeedle->setLabel(loxLabel);
+	loxNeedle->setColor(Qt::blue);
+	loxNeedle->setValueRange(0,2000);
+	//loxNeedle->addBackground(7);
+	ui->data->addWidget(loxGauge);
+
+	QSpacerItem *spacer2 = new QSpacerItem(5, 1);
+	ui->data->addItem(spacer2);
+
+	helGauge->addArc(55);
+	helGauge->addDegrees(65)->setValueRange(0,6000);
+	QcColorBand *helClrBand = helGauge->addColorBand(100, 1);
+	helClrBand->setValueRange(0,6000);
+	helGauge->addValues(80, 1)->setValueRange(0,6000);
+	helGauge->addLabel(70)->setText("Helium");
+	QcLabelItem *helLabel = helGauge->addLabel(40);
+	helLabel->setText("0");
+	helNeedle = helGauge->addNeedle(60);
+	helNeedle->setLabel(helLabel);
+	helNeedle->setColor(Qt::blue);
+	helNeedle->setValueRange(0,6000);
+	//helNeedle->addBackground(7);
+	ui->data->addWidget(helGauge);
 }
 
 /**
@@ -35,22 +90,30 @@ mainwindow::~mainwindow()
     delete ui;
 }
 
-void mainwindow::update_data(){
-    this->ui->data1->setValue(ceil(data[0]));
-    this->ui->data1lcd->display((double)data[0]);
-    this->ui->data2->setValue(ceil(data[1]));
-    this->ui->data2lcd->display((double)data[1]);
-    this->ui->data3->setValue(ceil(data[2]));
-    this->ui->data3lcd->display((double)data[2]);
+/**
+ * GUI Data Updater
+ * Sets GUI Elements to display values in static data array
+ */
+void
+mainwindow::update_data(){
+	if (logCount++ < 5){
+		return;
+	}
+	logCount = 0;
+    ch4Needle->setCurrentValue(ceil(data[0]));
+    loxNeedle->setCurrentValue(ceil(data[1]));
+    helNeedle->setCurrentValue(ceil(data[2]));
 }
+
 
 /**
  * Popup Warning Box Generator
+ * Generates a popup displaying the QString supplied
  *
  * @param QString message to display on warning popup
- * @return Generates warning popup
  */
-void mainwindow::showWarningBox(QString message){
+void
+mainwindow::showWarningBox(QString message){
     warning *warningPopup = new warning();
     warningPopup->setWarning(message);
     warningPopup->show();
@@ -58,10 +121,10 @@ void mainwindow::showWarningBox(QString message){
 
 /**
  * Main timer handler
- *
- * @trigger main trigger timeout()
+ * Runs whenever the main timer timeouts to run repeating tasks
  */
-void mainwindow::onTimer(){
+void
+mainwindow::onTimer(){
     if (logDataBool){
         if (serial_timeout > 50){
 			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
@@ -73,12 +136,15 @@ void mainwindow::onTimer(){
 }
 
 /**
- * Global Log Data Checkbox
- *
- * @trigger state change of global log checkbox
- * @param int bool value of checkbox
+ * Global Log Data Checkbox handler
+ * Triggered by state change of Log Data checkbox
+ * Initiates UART connection and opens log file
+ * @see uart_init()
+ * @see openFile()
+ * @param int new value of checkbox
  */
-void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
+void
+mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
     logDataBool = arg1;
     if (logDataBool) {
@@ -100,11 +166,11 @@ void mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 
 /**
  * Global Log Data Handler
- *
- * @trigger onTimer()
- * @return logs global data to file
+ * Logs data from static data array, with timestamp
+ * @see appendData()
  */
-void mainwindow::logData(){
+void
+mainwindow::logData(){
 	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
 	int time[1] = { (timespan.count()*1000) };
@@ -113,7 +179,15 @@ void mainwindow::logData(){
 	log.appendData(data, 3, 1);
 }
 
-void mainwindow::getData(){
+/**
+ * Data Retrieval Routine
+ * Recieves data from UART connection, updates static data array, and updates GUI to reflect changes
+ * @see readMessage()
+ * @see parseMessage()
+ * @see updateData()
+ */
+void
+mainwindow::getData(){
 	char message[11];
 	float pressures[3];
 	u_int32_t timestamp;

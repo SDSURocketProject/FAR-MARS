@@ -3,8 +3,9 @@
 /**
  * Serial Data reader
  *
- * @param pointed to char[] to put data in
- * @return int return code. 0: ran correctly, -1: error reading, -2: read nothing
+ * @param[in] char* array of length 11
+ * @param[out] char* array containing data from UART
+ * @return 0: ran correctly, -1: error reading, -2: read nothing
  */
 int
 readMessage(char *message){
@@ -37,9 +38,9 @@ readMessage(char *message){
 /**
  * Serial Data Parser
  *
- * @param[in] message pointer to message to parse
- * @param[out] output pointer to float array to put values in
- * @param[out] timestamp pointer to uint32 to put timestamp in
+ * @param[in] char* message to parse
+ * @param[out] float* array to put values in
+ * @param[out] u_int32_t* uint32 to put timestamp in
  */
 void
 parseMessage(char *message, float *output, u_int32_t *timestamp){
@@ -67,6 +68,11 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 /**
  * UART Init
  * Initializes rs485 serial connection on ttyUSB0
+ * @return
+ 	0: Device opened successfully
+ 	-1: Device could not be opened
+ 	-2: tcgetattr failed before configuration
+	-3: tcgetattr failed after configuration
  */
 int
 uart_init(){

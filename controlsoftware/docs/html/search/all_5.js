@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['newline',['newLine',['../classlogger.html#a3efa363e127b361b0d94f907e27ab6e6',1,'logger']]],
-  ['news',['news',['../classnews.html',1,'news'],['../classnews.html#a8f333292753e37dc3bc02de8648c4167',1,'news::news()']]],
-  ['news_2ecpp',['news.cpp',['../news_8cpp.html',1,'']]],
-  ['news_2eh',['news.h',['../news_8h.html',1,'']]]
+  ['header',['Header',['../class_ui__warning.html#a1c1570fc77ed24f7f870cf08982dd059',1,'Ui_warning']]],
+  ['helium_5freading',['HELIUM_READING',['../raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b',1,'HELIUM_READING():&#160;raw_serial.h'],['../serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b',1,'HELIUM_READING():&#160;serial.h']]]
 ];
