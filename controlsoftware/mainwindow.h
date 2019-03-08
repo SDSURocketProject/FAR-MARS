@@ -5,6 +5,7 @@
 #include <math.h>
 #include <QMainWindow>
 #include <QTimer>
+#include <qcgaugewidget.h>
 #include <time.h>
 #include "csv.h"
 #include "logger.h"
@@ -41,6 +42,12 @@ private:
 	int serial_timeout;
     logger log;
     QTimer *timer;
+	QcGaugeWidget *helGauge;
+	QcGaugeWidget *loxGauge;
+	QcGaugeWidget *ch4Gauge;
+	QcNeedleItem *helNeedle;
+	QcNeedleItem *loxNeedle;
+	QcNeedleItem *ch4Needle;
 	std::chrono::high_resolution_clock::time_point start;
 
 private slots:

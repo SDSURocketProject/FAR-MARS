@@ -25,6 +25,61 @@ mainwindow::mainwindow(QWidget *parent) :
     timer->start(50);
 	logDataBool = 0;
 	serial_timeout = 0;
+
+	helGauge = new QcGaugeWidget;
+	loxGauge = new QcGaugeWidget;
+	ch4Gauge = new QcGaugeWidget;
+
+	ch4Gauge->addArc(55);
+	ch4Gauge->addDegrees(65)->setValueRange(0,2000);
+	QcColorBand *ch4ClrBand = ch4Gauge->addColorBand(100, 0);
+	ch4ClrBand->setValueRange(0,2000);
+	ch4Gauge->addValues(80, 0)->setValueRange(0,2000);
+	ch4Gauge->addLabel(70)->setText("Methane");
+	QcLabelItem *ch4Label = ch4Gauge->addLabel(40);
+	ch4Label->setText("0");
+	ch4Needle = ch4Gauge->addNeedle(60);
+	ch4Needle->setLabel(ch4Label);
+	ch4Needle->setColor(Qt::blue);
+	ch4Needle->setValueRange(0,2000);
+	//ch4Needle->addBackground(7);
+	ui->data->addWidget(ch4Gauge);
+
+	QSpacerItem *spacer1 = new QSpacerItem(5, 1);
+	ui->data->addItem(spacer1);
+
+	loxGauge->addArc(55);
+	loxGauge->addDegrees(65)->setValueRange(0,2000);
+	QcColorBand *loxClrBand = loxGauge->addColorBand(100, 0);
+	loxClrBand->setValueRange(0,2000);
+	loxGauge->addValues(80, 0)->setValueRange(0,2000);
+	loxGauge->addLabel(70)->setText("LOX");
+	QcLabelItem *loxLabel = loxGauge->addLabel(40);
+	loxLabel->setText("0");
+	loxNeedle = loxGauge->addNeedle(60);
+	loxNeedle->setLabel(loxLabel);
+	loxNeedle->setColor(Qt::blue);
+	loxNeedle->setValueRange(0,2000);
+	//loxNeedle->addBackground(7);
+	ui->data->addWidget(loxGauge);
+
+	QSpacerItem *spacer2 = new QSpacerItem(5, 1);
+	ui->data->addItem(spacer2);
+
+	helGauge->addArc(55);
+	helGauge->addDegrees(65)->setValueRange(0,6000);
+	QcColorBand *helClrBand = helGauge->addColorBand(100, 1);
+	helClrBand->setValueRange(0,6000);
+	helGauge->addValues(80, 1)->setValueRange(0,6000);
+	helGauge->addLabel(70)->setText("Helium");
+	QcLabelItem *helLabel = helGauge->addLabel(40);
+	helLabel->setText("0");
+	helNeedle = helGauge->addNeedle(60);
+	helNeedle->setLabel(helLabel);
+	helNeedle->setColor(Qt::blue);
+	helNeedle->setValueRange(0,6000);
+	//helNeedle->addBackground(7);
+	ui->data->addWidget(helGauge);
 }
 
 /**
@@ -45,13 +100,11 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    this->ui->data1->setValue(ceil(data[0]));
-    this->ui->data1lcd->display((int)data[0]);
-    this->ui->data2->setValue(ceil(data[1]));
-    this->ui->data2lcd->display((int)data[1]);
-    this->ui->data3->setValue(ceil(data[2]));
-    this->ui->data3lcd->display((int)data[2]);
+    ch4Needle->setCurrentValue(ceil(data[0]));
+    loxNeedle->setCurrentValue(ceil(data[1]));
+    helNeedle->setCurrentValue(ceil(data[2]));
 }
+
 
 /**
  * Popup Warning Box Generator
