@@ -35,8 +35,9 @@ private:
 
     float data[3];
     int appendNewline;
-    int timerDelay;
+	int logCount = 0;
     int logDataBool;
+    int timerDelay;
 	int serial_timeout;
     logger log;
     QTimer *timer;

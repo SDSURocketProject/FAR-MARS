@@ -41,6 +41,10 @@ mainwindow::~mainwindow()
  */
 void
 mainwindow::update_data(){
+	if (logCount++ < 5){
+		return;
+	}
+	logCount = 0;
     this->ui->data1->setValue(ceil(data[0]));
     this->ui->data1lcd->display((double)data[0]);
     this->ui->data2->setValue(ceil(data[1]));
