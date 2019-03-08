@@ -46,11 +46,11 @@ mainwindow::update_data(){
 	}
 	logCount = 0;
     this->ui->data1->setValue(ceil(data[0]));
-    this->ui->data1lcd->display((double)data[0]);
+    this->ui->data1lcd->display((int)data[0]);
     this->ui->data2->setValue(ceil(data[1]));
-    this->ui->data2lcd->display((double)data[1]);
+    this->ui->data2lcd->display((int)data[1]);
     this->ui->data3->setValue(ceil(data[2]));
-    this->ui->data3lcd->display((double)data[2]);
+    this->ui->data3lcd->display((int)data[2]);
 }
 
 /**
