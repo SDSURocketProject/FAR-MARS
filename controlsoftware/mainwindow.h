@@ -33,12 +33,9 @@ private:
     void logData();
 	void update_data();
 	void updatePlots();
-	void fakegetData();
 
     warning *warningPopup;
 	livePlot *plot;
-
-	int fakeCounter = 0;
 
     float data[3];
     int appendNewline;

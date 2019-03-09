@@ -168,14 +168,6 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
     log.closeFile();
 }
 
-void mainwindow::fakegetData(){
-	timestamp = (uint32_t)(fakeCounter++);
-	data[0] = (float)(std::rand()%2000);
-	data[1] = (float)(std::rand()%2000);
-	data[2] = (float)(std::rand()%6000);
-	update_data();
-}
-
 /**
  * Global Log Data Handler
  * Logs data from static data array, with timestamp
