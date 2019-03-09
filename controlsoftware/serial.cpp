@@ -31,6 +31,8 @@ readMessage(char *message){
 		return -2;
 	}else if (n < 0){ /* if read returns an error */
 		return -1;
+	}else if (n != 11){/* if an incorrect number of bytes is read in */
+		return -3;
 	}
 	return 1;
 }
