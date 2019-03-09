@@ -8,6 +8,7 @@
 #include <qcgaugewidget.h>
 #include <time.h>
 #include "csv.h"
+#include "liveplot.h"
 #include "logger.h"
 #include "serial.h"
 #include "warning.h"
@@ -31,14 +32,21 @@ private:
 	void getData();
     void logData();
 	void update_data();
+	void updatePlots();
+	void fakegetData();
 
     warning *warningPopup;
+	livePlot *plot;
+
+	int fakeCounter = 0;
 
     float data[3];
     int appendNewline;
 	int logCount = 0;
     int logDataBool;
+	int plotBool;
     int timerDelay;
+	uint32_t timestamp;
 	int serial_timeout;
     logger log;
     QTimer *timer;
@@ -53,6 +61,7 @@ private:
 private slots:
     void onTimer();
     void on_logDataCheckbox_stateChanged(int arg1);
+    void on_livePlotButton_clicked();
 };
 
 #endif // MAINWINDOW_H

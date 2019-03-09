@@ -24,6 +24,7 @@ mainwindow::mainwindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(50);
 	logDataBool = 0;
+	plotBool = 0;
 	serial_timeout = 0;
 
 	helGauge = new QcGaugeWidget;
@@ -100,9 +101,9 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    ch4Needle->setCurrentValue(ceil(data[0]));
-    loxNeedle->setCurrentValue(ceil(data[1]));
-    helNeedle->setCurrentValue(ceil(data[2]));
+    ch4Needle->setCurrentValue((data[0]));
+    loxNeedle->setCurrentValue((data[1]));
+    helNeedle->setCurrentValue((data[2]));
 }
 
 
@@ -133,6 +134,9 @@ mainwindow::onTimer(){
 		logData();
 
     }
+	if (plotBool){
+		updatePlots();
+	}
 }
 
 /**
@@ -164,6 +168,14 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
     log.closeFile();
 }
 
+void mainwindow::fakegetData(){
+	timestamp = (uint32_t)(fakeCounter++);
+	data[0] = (float)(std::rand()%2000);
+	data[1] = (float)(std::rand()%2000);
+	data[2] = (float)(std::rand()%6000);
+	update_data();
+}
+
 /**
  * Global Log Data Handler
  * Logs data from static data array, with timestamp
@@ -190,7 +202,6 @@ void
 mainwindow::getData(){
 	char message[11];
 	float pressures[3];
-	u_int32_t timestamp;
 	int n = readMessage(message);
 	if (n < 0){
 		serial_timeout++;
@@ -201,4 +212,26 @@ mainwindow::getData(){
 		data[i] = pressures[i];
 	}
 	update_data();
+}
+
+/**
+ * Handler for live plot button
+ * @param bool value of button
+ * @see liveplot.h
+ */
+void
+mainwindow::on_livePlotButton_clicked()
+{
+	plot = new livePlot();
+	plot->setupPlot();
+	plot->show();
+	plotBool = plotBool ? 0 : 1;
+}
+
+/**
+ * Update plots with new data[] values
+ */
+void
+mainwindow::updatePlots(){
+	plot->appendData(data, &timestamp);
 }

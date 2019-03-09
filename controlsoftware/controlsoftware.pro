@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +31,8 @@ SOURCES += \
     logger.cpp \
     csv.cpp \
     serial.cpp \
-    qcgaugewidget.cpp
+    qcgaugewidget.cpp \
+    liveplot.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,11 +40,13 @@ HEADERS += \
     logger.h \
     csv.h \
     serial.h \
-    qcgaugewidget.h
+    qcgaugewidget.h \
+    liveplot.h
 
 FORMS += \
         mainwindow.ui \
-    warning.ui
+    warning.ui \
+    liveplot.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
