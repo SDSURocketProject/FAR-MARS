@@ -73,9 +73,16 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	QPointF ch4Point(*timestamp, (int)data[0]);
 	QPointF loxPoint(*timestamp, (int)data[1]);
 	QPointF helPoint(*timestamp, (int)data[2]);
+
 	ch4Series->append(ch4Point);
 	loxSeries->append(loxPoint);
 	helSeries->append(helPoint);
+
+	if (ch4Series->count() > 600){
+		ch4Series->remove(0);
+		loxSeries->remove(0);
+		helSeries->remove(0);
+	}
 
 	ch4Chart->removeSeries(ch4Series);
 	loxChart->removeSeries(loxSeries);
