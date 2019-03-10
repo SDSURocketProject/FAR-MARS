@@ -196,7 +196,7 @@ mainwindow::getData(){
 	float pressures[3];
 	int n = readMessage(message);
 	if (n < 0){
-		serial_timeout++;
+		//serial_timeout++;
 		return;
 	}
 	parseMessage(message, pressures, &timestamp);

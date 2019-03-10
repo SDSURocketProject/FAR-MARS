@@ -132,7 +132,7 @@ public:
     explicit QcScaleItem(QObject *parent = 0);
 
     void setValueRange(float minValue,float maxValue);
-    void setDgereeRange(float minDegree,float maxDegree);
+    void setDegreeRange(float minDegree,float maxDegree);
     void setMinValue(float minValue);
     void setMaxValue(float maxValue);
     void setMinDegree(float minDegree);

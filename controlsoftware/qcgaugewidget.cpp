@@ -257,7 +257,7 @@ void QcScaleItem::setValueRange(float minValue, float maxValue)
 
 }
 
-void QcScaleItem::setDgereeRange(float minDegree, float maxDegree)
+void QcScaleItem::setDegreeRange(float minDegree, float maxDegree)
 {
     if(!(minDegree<maxDegree))
         throw( InvalidValueRange);
@@ -667,7 +667,7 @@ void QcNeedleItem::setCurrentValue(float value)
         mCurrentValue = value;
 
     if(mLabel!=0)
-        mLabel->setText(QString::number(mCurrentValue),false);
+        mLabel->setText(QString::number((int)mCurrentValue),false);
 
 /// This pull request is not working properly
 //    if(mLabel!=0){

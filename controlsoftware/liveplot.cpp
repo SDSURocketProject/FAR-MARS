@@ -70,9 +70,9 @@ livePlot::setupPlot(){
  */
 void
 livePlot::appendData(float *data, uint32_t *timestamp){
-	QPointF ch4Point(*timestamp, data[0]);
-	QPointF loxPoint(*timestamp, data[1]);
-	QPointF helPoint(*timestamp, data[2]);
+	QPointF ch4Point(*timestamp, (int)data[0]);
+	QPointF loxPoint(*timestamp, (int)data[1]);
+	QPointF helPoint(*timestamp, (int)data[2]);
 	ch4Series->append(ch4Point);
 	loxSeries->append(loxPoint);
 	helSeries->append(helPoint);
