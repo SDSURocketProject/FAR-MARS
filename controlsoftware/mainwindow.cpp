@@ -214,10 +214,15 @@ mainwindow::getData(){
 void
 mainwindow::on_livePlotButton_clicked()
 {
-	plot = new livePlot();
-	plot->setupPlot();
-	plot->show();
-	plotBool = plotBool ? 0 : 1;
+	if (plotBool){
+		plot->close();
+		plotBool = 0;
+	}else{
+		plot = new livePlot();
+		plot->setupPlot();
+		plot->show();
+		plotBool = 1;
+	}
 }
 
 /**
