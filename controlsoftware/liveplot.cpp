@@ -115,8 +115,8 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	helChart->axisY()->setMin(0.0);
 
 	ch4Chart->axisY()->setMax(ch4Max);
-	loxChart->axisY()->setMax(ch4Max);
-	helChart->axisY()->setMax(ch4Max);
+	loxChart->axisY()->setMax(loxMax);
+	helChart->axisY()->setMax(helMax);
 
 	ch4View->repaint();
 	loxView->repaint();
