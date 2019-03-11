@@ -44,6 +44,10 @@ private:
 	QValueAxis *ch4ValueAxis;
 	QValueAxis *loxValueAxis;
 	QValueAxis *helValueAxis;
+
+	qreal ch4Max;
+	qreal loxMax;
+	qreal helMax;
 };
 
 #endif // LIVEPLOT_H

@@ -82,7 +82,17 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	loxSeries->append(loxPoint);
 	helSeries->append(helPoint);
 
-	if (ch4Series->count() > 600){
+	if ((double)data[0] > ch4Max){
+		ch4Max = (double)data[0];
+	}
+	if ((double)data[1] > loxMax){
+		loxMax = (double)data[1];
+	}
+	if ((double)data[2] > helMax){
+		helMax = (double)data[2];
+	}
+
+	if (ch4Series->count() > 1200){
 		ch4Series->remove(0);
 		loxSeries->remove(0);
 		helSeries->remove(0);
@@ -103,6 +113,10 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	ch4Chart->axisY()->setMin(0.0);
 	loxChart->axisY()->setMin(0.0);
 	helChart->axisY()->setMin(0.0);
+
+	ch4Chart->axisY()->setMax(ch4Max);
+	loxChart->axisY()->setMax(ch4Max);
+	helChart->axisY()->setMax(ch4Max);
 
 	ch4View->repaint();
 	loxView->repaint();
