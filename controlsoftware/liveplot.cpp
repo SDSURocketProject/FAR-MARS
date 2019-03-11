@@ -45,15 +45,9 @@ livePlot::setupPlot(){
 	loxChart->createDefaultAxes();
 	helChart->createDefaultAxes();
 
-	ch4ValueAxis = new QValueAxis();
-	ch4ValueAxis->setMin(0);
-	ch4Chart->setAxisY(ch4ValueAxis);
-	loxValueAxis = new QValueAxis();
-	loxValueAxis->setMin(0);
-	loxChart->setAxisY(loxValueAxis);
-	helValueAxis = new QValueAxis();
-	helValueAxis->setMin(0);
-	helChart->setAxisY(helValueAxis);
+	ch4Chart->axisY()->setMin(0.0);
+	loxChart->axisY()->setMin(0.0);
+	helChart->axisY()->setMin(0.0);
 
 	ch4Chart->legend()->hide();
 	loxChart->legend()->hide();
@@ -106,12 +100,9 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	loxChart->createDefaultAxes();
 	helChart->createDefaultAxes();
 
-	ch4ValueAxis->setMin(0);
-	ch4Chart->setAxisY(ch4ValueAxis);
-	loxValueAxis->setMin(0);
-	loxChart->setAxisY(loxValueAxis);
-	helValueAxis->setMin(0);
-	helChart->setAxisY(helValueAxis);
+	ch4Chart->axisY()->setMin(0.0);
+	loxChart->axisY()->setMin(0.0);
+	helChart->axisY()->setMin(0.0);
 
 	ch4View->repaint();
 	loxView->repaint();
