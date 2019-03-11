@@ -323,9 +323,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>704</x>
+      <x>699</x>
       <y>145</y>
-      <width>55</width>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -542,8 +542,8 @@
    <widget class="QGraphicsView" name="Alert1">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>100</y>
+      <x>210</x>
+      <y>120</y>
       <width>461</width>
       <height>331</height>
      </rect>
@@ -555,8 +555,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>160</y>
+      <x>220</x>
+      <y>210</y>
       <width>451</width>
       <height>171</height>
      </rect>
