@@ -12,9 +12,13 @@ except IndexError:
 
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
-ax1.plot(data['TIME'], data['CH4'], label='CH4')
-ax1.plot(data['TIME'], data['LOX'], label='LOX')
-ax1.plot(data['TIME'], data['HEL'], label='HEL')
+try:
+    ax1.plot(data['TIME'], data['CH4'], label='CH4')
+    ax1.plot(data['TIME'], data['LOX'], label='LOX')
+    ax1.plot(data['TIME'], data['HEL'], label='HEL')
+except ValueError:
+    print('CSV headers not prepended. Run the data_preparation.py script to fix this.')
+    quit()
 plt.xlabel('Time (ms)')
 plt.ylabel('Pressure (psi)')
 plt.legend(loc='best')
