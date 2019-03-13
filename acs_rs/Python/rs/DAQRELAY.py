@@ -200,8 +200,9 @@ while(1):
 		r6 = compare(1, DAQC.getADC(1,6) - i6)
 
 		f.write('{}, {}, {}, {}, {}, {}, {}, {}, {}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),r0,r1,r2,r3,r4,r5,r6))
-		client.publish(TOPIC_3,b'{},{},{},{},{},{},{}'.format(r0,r1,r2,r3,r4,r5,r6))
+		x = client.publish(TOPIC_3,b'{},{},{},{},{},{},{}'.format(r0,r1,r2,r3,r4,r5,r6), qos = 2)
 		print('{}, {}, {}, {}, {}, {}, {}\r'.format(r0,r1,r2,r3,r4,r5,r6))
+		x.wait_for_publish()
 
 		#Pressure 0 Formula
 		v0 = DAQC.getADC(0,0)
@@ -233,10 +234,11 @@ while(1):
 
 
 		f2.write('{}, {}, {}, {}, {}, {}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),pressure_0,pressure_1,pressure_2,pressure_3))
-		client.publish(TOPIC_2,b'{},{},{},{}'.format(pressure_0,pressure_1,pressure_2,pressure_3))
+		y = client.publish(TOPIC_2,b'{},{},{},{}'.format(pressure_0,pressure_1,pressure_2,pressure_3), qos=2)
 		print('{}, {}, {}, {}\r'.format(pressure_0,pressure_1,pressure_2,pressure_3))
+		y.wait_for_publish()
 
-		time.sleep(0.1)
+		time.sleep(0.2)
 
 	except:
 		print('error')
