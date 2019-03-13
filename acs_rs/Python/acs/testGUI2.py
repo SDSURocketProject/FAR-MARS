@@ -147,35 +147,35 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p2 = self.Pressure_Key.palette()
                 p2.setColor(self.Pressure_Key.backgroundRole(), Qt.white)
                 self.Pressure_Key.setPalette(p2)
-            if int(A[0]) == 1:
+            if int(A[6]) == 1:
                 p1 = self.Ign_Safety.palette()
                 p1.setColor(self.Ign_Safety.backgroundRole(), Qt.red)
                 self.Ign_Safety.setPalette(p1)
-            if int(A[0]) == 0:
+            if int(A[6]) == 0:
                 p2 = self.Ign_Safety.palette()
                 p2.setColor(self.Ign_Safety.backgroundRole(), Qt.white)
                 self.Ign_Safety.setPalette(p2)
-            if int(A[3]) == 1:
+            if int(A[4]) == 1:
                 p1 = self.MPV_Safety.palette()
                 p1.setColor(self.MPV_Safety.backgroundRole(), Qt.red)
                 self.MPV_Safety.setPalette(p1)
-            if int(A[3]) == 0:
+            if int(A[4]) == 0:
                 p2 = self.MPV_Safety.palette()
                 p2.setColor(self.MPV_Safety.backgroundRole(), Qt.white)
                 self.MPV_Safety.setPalette(p2)
-            if int(A[4]) == 1:
+            if int(A[3]) == 1:
                 p1 = self.MPV_Key.palette()
                 p1.setColor(self.MPV_Key.backgroundRole(), Qt.red)
                 self.MPV_Key.setPalette(p1)
-            if int(A[4]) == 0:
+            if int(A[3]) == 0:
                 p2 = self.MPV_Key.palette()
                 p2.setColor(self.MPV_Key.backgroundRole(), Qt.white)
                 self.MPV_Key.setPalette(p2)
-            if int(A[6]) == 1:
+            if int(A[0]) == 1:
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
                 self.Ign_Key.setPalette(p1)
-            if int(A[6]) == 0:
+            if int(A[0]) == 0:
                 p2 = self.Ign_Key.palette()
                 p2.setColor(self.Key.backgroundRole(), Qt.white)
                 self.Ign_Key.setPalette(p2)
@@ -195,7 +195,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(4500)
-            if 3000 <= float(C[1]) <=3500:
+            if 4000 <= float(C[1]) < 4500:
                 self.Readout0.setAutoFillBackground(True)
                 p = self.Readout0.palette()
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
@@ -214,7 +214,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
-            if 3000 <= float(C[0]) <=3500:
+            if 3000 <= float(C[0]) < 4500:
                 self.Readout1.setAutoFillBackground(True)
                 c = self.Readout1.palette()
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
@@ -254,7 +254,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 k = self.Readout3.palette()
                 k.setColor(self.Readout3.backgroundRole(), Qt.red)
                 self.Readout3.setPalette(k)
-                self.progressBar3.setValue(150)
+                self.progressBar3.setValue(4500)
             if float(C[3]) < 4500:
                 self.Readout3.setAutoFillBackground(True)
                 k = self.Readout3.palette()
@@ -263,7 +263,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.progressBar3.setValue(float(C[3]))
         except:
             pass
-'''
+
 #------Radio button functions (no need for SHF)----------
     def radio1(self):
         self.progressBar0.setMaximum(300)
@@ -276,7 +276,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def radio3(self):
         self.progressBar0.setMaximum(500)
         self.label_2.setText('500 PSI')
-'''
+
 #------Check Box Functions--------
     def radio4(self):
         self.progressBar3.hide()
@@ -291,6 +291,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar1.move(130, 265)
         self.label_3.move(130, 245)
         self.Readout1.move(20, 250)
+        self.label_7.move(707, 245)
+        self.label_8.move(707, 325)
         if self.checkBox.isChecked() == False:
             self.radio5()
 
@@ -307,11 +309,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar1.move(130, 245)
         self.label_3.move(130, 225)
         self.Readout1.move(20, 230)
-'''
+        self.label_7.move(707, 225)
+        self.label_8.move(707, 305)
+
     def alert(self):
         self.Alert1.show()
         self.label_6.show()
-'''
+
 def main():
     app = QApplication(sys.argv)
     window = MainApp()
