@@ -9,9 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
-import threading
 from PyQt5.QtCore import QThread, pyqtSignal, QPropertyAnimation
-import RPi.GPIO as GPIO
 
 qtCreatorFile = "RocketGUI1.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -21,64 +19,6 @@ port = 1883
 TOPIC_1 = "RELAY"
 TOPIC_2 = "DATA"
 TOPIC_3 = "STATE"
-
-mqtt_client = mqtt.Client()
-mqtt_client.connect(HOST, port=port, keepalive=60)
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(12, GPIO.IN)
-GPIO.setup(16, GPIO.IN)
-GPIO.setup(18, GPIO.IN)
-GPIO.setup(36, GPIO.IN)
-
-#def switch(channel):
-#    if channel == 36:
-#        if GPIO.input(36):
-#            mqtt_client.publish(TOPIC_1,b'LOX_MPV_OPEN')
-#        else:
-#            mqtt_client.publish(TOPIC_1,b'LOX_MPV_CLOSE')
-#    if channel == 18:
-#        if GPIO.input(18):
-#            mqtt_client.publish(TOPIC_1,b'CH4_MPV_OPEN')
-#        else:
-#            mqtt_client.publish(TOPIC_1,b'CH4_MPV_CLOSE')
-#    if channel == 12:
-#        if GPIO.input(12):
-#            mqtt_client.publish(TOPIC_1,b'LAUNCH')
-#        else:
-#            mqtt_client.publish(TOPIC_1,b'ABORT')
-#    if channel == 16:
-#        if GPIO.input(16):
-#            mqtt_client.publish(TOPIC_1,b'IGNITOR_ON')
-#        else:
-#            mqtt_client.publish(TOPIC_1,b'IGNITOR_OFF')
-#    time.sleep(0.2)
-
-
-def switch_loop(channel):
-    while(1):
-        if (GPIO.input(36) == True):
-            mqtt_client.publish(TOPIC_1,b'LOX_MPV_OPEN')
-        else:
-            mqtt_client.publish(TOPIC_1,b'LOX_MPV_CLOSE')
-        if (GPIO.input(18) == True):
-            mqtt_client.publish(TOPIC_1,b'CH4_MPV_OPEN')
-        else:
-            mqtt_client.publish(TOPIC_1,b'CH4_MPV_CLOSE')
-        if (GPIO.input(16) == True):
-            mqtt_client.publish(TOPIC_1,b'IGNITOR_ON')
-        else:
-            mqtt_client.publish(TOPIC_1,b'IGNITOR_OFF')
-        if (GPIO.input(12) == True):
-            mqtt_client.publish(TOPIC_1,b'LAUNCH')
-        while (GPIO.input(12) == True):
-            pass
-        time.sleep(0.2)
-
-#GPIO.add_event_detect(12, GPIO.BOTH, callback=switch)
-#GPIO.add_event_detect(16, GPIO.BOTH, callback=switch)
-#GPIO.add_event_detect(18, GPIO.BOTH, callback=switch)
-#GPIO.add_event_detect(36, GPIO.BOTH, callback=switch)
 
 class mainthread(QThread):
     STATEsignal = pyqtSignal('PyQt_PyObject')
@@ -98,17 +38,20 @@ class mainthread(QThread):
         print("connected")
 
     def subscrib1(self, mqtt_client, userdata, msg):
-        if msg.topic == "DATA":
-            D = str(msg.payload)[2:-1]
-            C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3])
-            C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3])
-            self.DATAsignal.emit(C)
-            print(C)
-        if msg.topic == "STATE":
-            B = str(msg.payload)[2:-1]
-            A = (B.split(',')[0], B.split(',')[1], B.split(',')[2], B.split(',')[3], B.split(',')[4], B.split(',')[5], B.split(',')[6])
-            A = ('%4s' % A[0], '%4s' % A[1], '%4s' % A[2], '%4s' % A[3], '%4s' % A[4], '%4s' % A[5], '%4s' % A[6],)
-            self.STATEsignal.emit(A)
+        try:
+            if msg.topic == "DATA":
+                D = str(msg.payload)[2:-1]
+                C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3])
+                C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3])
+                self.DATAsignal.emit(C)
+                print(C)
+            if msg.topic == "STATE":
+                B = str(msg.payload)[2:-1]
+                A = (B.split(',')[0], B.split(',')[1], B.split(',')[2], B.split(',')[3], B.split(',')[4], B.split(',')[5], B.split(',')[6])
+                A = ('%4s' % A[0], '%4s' % A[1], '%4s' % A[2], '%4s' % A[3], '%4s' % A[4], '%4s' % A[5], '%4s' % A[6],)
+                self.STATEsignal.emit(A)
+        except:
+            print('Missed Data')
 
 class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -177,7 +120,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.Ign_Key.setPalette(p1)
             if int(A[0]) == 0:
                 p2 = self.Ign_Key.palette()
-                p2.setColor(self.Key.backgroundRole(), Qt.white)
+                p2.setColor(self.Ign_Key.backgroundRole(), Qt.white)
                 self.Ign_Key.setPalette(p2)
         except:
             pass
@@ -195,13 +138,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(4500)
-            if 4000 <= float(C[1]) < 4500:
+            if 3500 <= float(C[1]) < 4500:
                 self.Readout0.setAutoFillBackground(True)
                 p = self.Readout0.palette()
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
-            if float(C[1]) < 4500:
+            if float(C[1]) < 3500:
                 self.Readout0.setAutoFillBackground(True)
                 p = self.Readout0.palette()
                 p.setColor(self.Readout0.backgroundRole(), Qt.white)
@@ -214,35 +157,32 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
-            if 3000 <= float(C[0]) < 4500:
+            if 3500 <= float(C[0]) < 4500:
                 self.Readout1.setAutoFillBackground(True)
                 c = self.Readout1.palette()
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
-            if float(C[0]) < 4500:
+            if float(C[0]) < 3500:
                 self.Readout1.setAutoFillBackground(True)
                 c = self.Readout1.palette()
                 c.setColor(self.Readout1.backgroundRole(), Qt.white)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
 #------PNU-------
-            if float(C[2]) > 165:
+            if float(C[2]) > 150:
                 self.Readout2.setAutoFillBackground(True)
                 h = self.Readout2.palette()
                 h.setColor(self.Readout2.backgroundRole(), Qt.red)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
-            if 135 <= float(C[2]) <= 165:
+            if 135 <= float(C[2]) <= 150:
                 self.Readout2.setAutoFillBackground(True)
                 h = self.Readout2.palette()
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
-                if float(C[2]) >= 150:
-                    self.progressBar2.setValue(150)
-                else:
-                    self.progressBar2.setValue(float(C[2]))
-            if float(C[2]) < 150:
+                self.progressBar2.setValue(float(C[2]))
+            if float(C[2]) < 135:
                 self.Readout2.setAutoFillBackground(True)
                 h = self.Readout2.palette()
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
@@ -276,7 +216,6 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def radio3(self):
         self.progressBar0.setMaximum(500)
         self.label_2.setText('500 PSI')
-
 #------Check Box Functions--------
     def radio4(self):
         self.progressBar3.hide()
@@ -311,7 +250,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Readout1.move(20, 230)
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
-
+#------Disconnected alert -------
     def alert(self):
         self.Alert1.show()
         self.label_6.show()
