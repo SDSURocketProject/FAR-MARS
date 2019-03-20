@@ -74,7 +74,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def init_ui(self):
         self.mythread1.start()
-#------State color set-----------
+#------State color set----------
     def progress1(self, A):
         self.Pressure_Key.setAutoFillBackground(True)
         self.Ign_Safety.setAutoFillBackground(True)
