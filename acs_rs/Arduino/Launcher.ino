@@ -30,7 +30,7 @@ void loop() {
   readign = digitalRead(igniter_in);
   readlox = digitalRead(lox_mpv_in);
   readch4 = digitalRead(ch4_mpv_in);
-  if(readlaunch == HIGH){
+  if(readlaunch){
       Serial.println(readlaunch);
       Serial.println("Launch");
       digitalWrite(igniter_out, LOW);
@@ -38,7 +38,7 @@ void loop() {
       digitalWrite(ch4_mpv_out, LOW);
       delay(250);
       digitalWrite(lox_mpv_out, LOW);
-      while(readlaunch == HIGH){
+      while(readlaunch){
         digitalWrite(igniter_out, LOW);
         digitalWrite(ch4_mpv_out, LOW);
         digitalWrite(lox_mpv_out, LOW);
@@ -50,21 +50,21 @@ void loop() {
       digitalWrite(ch4_mpv_out, HIGH);
       digitalWrite(lox_mpv_out, HIGH);
   }
-    if(readign == HIGH){
+    if(readign){
       Serial.println("ign");
       digitalWrite(igniter_out, LOW);
     }
   else{
       digitalWrite(igniter_out, HIGH);
   }
-  if(readlox == HIGH){
+  if(readlox){
       Serial.println("lox");
       digitalWrite(lox_mpv_out, LOW);
     }
   else{
       digitalWrite(lox_mpv_out, HIGH);
   }
-  if(readch4 == HIGH){
+  if(readch4){
       Serial.println("ch4");
       digitalWrite(ch4_mpv_out, LOW);
     }
