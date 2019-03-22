@@ -30,7 +30,7 @@ loop() {
 	readign = digitalRead(igniter_in);
 	readlox = digitalRead(lox_mpv_in);
 	readch4 = digitalRead(ch4_mpv_in);
-  	while (readlaunch){
+	while (readlaunch){
 		digitalWrite(igniter_out, LOW);
 		delay(1000);
 		digitalWrite(ch4_mpv_out, LOW);
