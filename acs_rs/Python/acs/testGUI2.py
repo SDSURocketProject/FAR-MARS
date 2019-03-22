@@ -259,8 +259,6 @@ def main():
     app = QApplication(sys.argv)
     window = MainApp()
     window.show()
-    t1 = threading.Thread(target=switch_loop, args=(1, ))
-    t1.start()
     app.exec_()
 
 if __name__ == '__main__':

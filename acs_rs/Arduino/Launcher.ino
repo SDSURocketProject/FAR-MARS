@@ -11,7 +11,6 @@ int readlox;
 int readch4;
 
 void setup() { 
-  Serial.begin(9600);
   pinMode(lox_mpv_out, OUTPUT);
   pinMode(ch4_mpv_out, OUTPUT);
   pinMode(igniter_out, OUTPUT);
@@ -31,8 +30,6 @@ void loop() {
   readlox = digitalRead(lox_mpv_in);
   readch4 = digitalRead(ch4_mpv_in);
   if(readlaunch){
-      Serial.println(readlaunch);
-      Serial.println("Launch");
       digitalWrite(igniter_out, LOW);
       delay(1000);
       digitalWrite(ch4_mpv_out, LOW);
@@ -50,25 +47,22 @@ void loop() {
       digitalWrite(ch4_mpv_out, HIGH);
       digitalWrite(lox_mpv_out, HIGH);
   }
-    if(readign){
-      Serial.println("ign");
-      digitalWrite(igniter_out, LOW);
-    }
-  else{
+  switch(readign){
+    case 0:
       digitalWrite(igniter_out, HIGH);
+    case 1:
+      digitalWrite(igniter_out, LOW);
   }
-  if(readlox){
-      Serial.println("lox");
-      digitalWrite(lox_mpv_out, LOW);
-    }
-  else{
+  switch(readlox){
+    case 0:
       digitalWrite(lox_mpv_out, HIGH);
+    case 1:
+      digitalWrite(lox_mpv_out, LOW);
   }
-  if(readch4){
-      Serial.println("ch4");
-      digitalWrite(ch4_mpv_out, LOW);
-    }
-  else{
+  switch(readch4){
+    case 0:
       digitalWrite(ch4_mpv_out, HIGH);
+    case 1:
+      digitalWrite(ch4_mpv_out, LOW);
   }
 }
