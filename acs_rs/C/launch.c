@@ -46,5 +46,5 @@ loop() {
 
 	digitalWrite(lox_mpv_out, readlox^1);
 	
-	digitalWrite(ch4_mpv_out, readlox^1);
+	digitalWrite(ch4_mpv_out, readch4^1);
 }
