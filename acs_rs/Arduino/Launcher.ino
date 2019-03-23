@@ -50,19 +50,25 @@ void loop() {
   switch(readign){
     case 0:
       digitalWrite(igniter_out, HIGH);
+      break;
     case 1:
       digitalWrite(igniter_out, LOW);
+      break;
   }
   switch(readlox){
     case 0:
       digitalWrite(lox_mpv_out, HIGH);
+      break;
     case 1:
       digitalWrite(lox_mpv_out, LOW);
+      break;
   }
   switch(readch4){
     case 0:
       digitalWrite(ch4_mpv_out, HIGH);
+      break;
     case 1:
       digitalWrite(ch4_mpv_out, LOW);
+      break;
   }
 }
