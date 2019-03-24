@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>warning</class>
- <widget class="QMainWindow" name="warning">
+ <class>livePlot</class>
+ <widget class="QMainWindow" name="livePlot">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,56 +18,19 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1000</width>
-    <height>300</height>
+    <width>1920</width>
+    <height>1080</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>About</string>
+   <string>Live Plot</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="Header">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>10</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>19</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>WARNING!</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="warningtext">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>1001</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>19</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>WARNING!</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="chartDisplay"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -95,7 +58,7 @@
   <connection>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
-   <receiver>warning</receiver>
+   <receiver>livePlot</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

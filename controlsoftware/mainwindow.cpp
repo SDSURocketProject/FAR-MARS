@@ -14,6 +14,7 @@ mainwindow::mainwindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
     timer->start(50);
 	logDataBool = 0;
+	plotBool = 0;
 	serial_timeout = 0;
 
 	helGauge = new QcGaugeWidget;
@@ -87,9 +88,9 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    ch4Needle->setCurrentValue(ceil(data[0]));
-    loxNeedle->setCurrentValue(ceil(data[1]));
-    helNeedle->setCurrentValue(ceil(data[2]));
+    ch4Needle->setCurrentValue((data[0]));
+    loxNeedle->setCurrentValue((data[1]));
+    helNeedle->setCurrentValue((data[2]));
 }
 
 
@@ -120,6 +121,9 @@ mainwindow::onTimer(){
 		logData();
 
     }
+	if (plotBool){
+		updatePlots();
+	}
 }
 
 /**
@@ -175,17 +179,46 @@ mainwindow::logData(){
  */
 void
 mainwindow::getData(){
-	char message[11];
+	struct sensorMessage message;
 	float pressures[3];
-	u_int32_t timestamp;
-	int n = readMessage(message);
+	int n = readMessage(&message);
 	if (n < 0){
-		serial_timeout++;
+		//serial_timeout++;
 		return;
 	}
-	parseMessage(message, pressures, &timestamp);
-	for (int i = 0; i < 3; i++){
-		data[i] = pressures[i];
+	if (message.msgID == pressureRawDataID) {
+		parsePressureMessage(&message);
+		data[0] = message.pressurePSIG.methane;
+		data[1] = message.pressurePSIG.LOX;
+		data[2] = message.pressurePSIG.helium;
+		timestamp = message.timestamp;
 	}
 	update_data();
+}
+
+/**
+ * Handler for live plot button
+ * @param bool value of button
+ * @see liveplot.h
+ */
+void
+mainwindow::on_livePlotButton_clicked()
+{
+	if (plotBool){
+		plot->close();
+		plotBool = 0;
+	}else{
+		plot = new livePlot();
+		plot->setupPlot();
+		plot->show();
+		plotBool = 1;
+	}
+}
+
+/**
+ * Update plots with new data[] values
+ */
+void
+mainwindow::updatePlots(){
+	plot->appendData(data, &timestamp);
 }
