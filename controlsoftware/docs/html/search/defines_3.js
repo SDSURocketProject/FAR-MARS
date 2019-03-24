@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['win32',['WIN32',['../moc__predefs_8h.html#a6402e8b8594280624585b8fd643bfb65',1,'moc_predefs.h']]],
-  ['win64',['WIN64',['../moc__predefs_8h.html#a951ed972d2606d55ee009c69fe06672a',1,'moc_predefs.h']]],
-  ['winnt',['WINNT',['../moc__predefs_8h.html#a3e2be49a2ed02cf3eaf2b8ff2ff76afd',1,'moc_predefs.h']]]
+  ['machine_5f32_5fbit',['MACHINE_32_BIT',['../bno055_8h.html#abd876f9063f4967bbc64bf50e33cbb89',1,'bno055.h']]],
+  ['message_5fbuffer_5fsize',['MESSAGE_BUFFER_SIZE',['../serial_8cpp.html#a69e73620bd8f14313137ac04cf571477',1,'serial.cpp']]]
 ];
