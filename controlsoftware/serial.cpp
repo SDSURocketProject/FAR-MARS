@@ -27,8 +27,6 @@ readMessage(struct sensorMessage *message){
 	messageBufferIdx = 0;
 	if (unEscapeBuffer(messageBuffer, MESSAGE_BUFFER_SIZE, messageBuffer, MESSAGE_BUFFER_SIZE) < 0) {
 		return -1;
-	}else if (n != 11){/* if an incorrect number of bytes is read in */
-		return -3;
 	}
 	message->msgID = messageBuffer[messageBufferIdx++];
 	memcpy(&message->timestamp, &messageBuffer[messageBufferIdx], sizeof(message->timestamp));
