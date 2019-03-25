@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ui_5fmainwindow_2eh',['ui_mainwindow.h',['../ui__mainwindow_8h.html',1,'']]],
-  ['ui_5fwarning_2eh',['ui_warning.h',['../ui__warning_8h.html',1,'']]]
+  ['qcgaugewidget_2ecpp',['qcgaugewidget.cpp',['../qcgaugewidget_8cpp.html',1,'']]],
+  ['qcgaugewidget_2eh',['qcgaugewidget.h',['../qcgaugewidget_8h.html',1,'']]]
 ];

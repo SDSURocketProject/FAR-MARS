@@ -32,7 +32,9 @@ SOURCES += \
     csv.cpp \
     serial.cpp \
     qcgaugewidget.cpp \
-    liveplot.cpp
+    liveplot.cpp \
+    messages.cpp \
+    com.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +43,10 @@ HEADERS += \
     csv.h \
     serial.h \
     qcgaugewidget.h \
-    liveplot.h
+    liveplot.h \
+    messages.h \
+    com.h \
+    bno055.h \
 
 FORMS += \
         mainwindow.ui \

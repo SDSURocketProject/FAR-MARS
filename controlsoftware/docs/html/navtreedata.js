@@ -23,13 +23,14 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "FAR-MARS Control Software", "index.html", [
-    [ "Summary", "md_docs_api.html", [
-      [ "class <tt>about</tt>", "md_docs_api.html#classabout", null ],
-      [ "class <tt>logger</tt>", "md_docs_api.html#classlogger", null ],
-      [ "class <tt>mainwindow</tt>", "md_docs_api.html#classmainwindow", null ],
-      [ "class <tt>news</tt>", "md_docs_api.html#classnews", null ],
-      [ "class <tt>warning</tt>", "md_docs_api.html#classwarning", null ]
+  [ "FAR-MARS Controlsoftware", "index.html", [
+    [ "License", "index.html#License", null ],
+    [ "Summary", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html", [
+      [ "class <tt>about</tt>", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html#classabout", null ],
+      [ "class <tt>logger</tt>", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html#classlogger", null ],
+      [ "class <tt>mainwindow</tt>", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html#classmainwindow", null ],
+      [ "class <tt>news</tt>", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html#classnews", null ],
+      [ "class <tt>warning</tt>", "md__home_alefir_repos_farmars_controlsoftware_docs_api.html#classwarning", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -43,17 +44,20 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
-        [ "Functions", "globals_func.html", null ],
+        [ "Functions", "globals_func.html", "globals_func" ],
         [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", "globals_defs" ]
@@ -65,8 +69,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"moc__predefs_8h.html#a61c258ffad919b338b83e1401265f671",
-"structqt__meta__stringdata__mainwindow__t.html#a073aaf094b883fea8f20c806f984dcd4"
+"bno055_8h.html#a30bc18a7f8c5195e0f291a50bae7ff62",
+"bno055_8h.html#a5c7717e596190da1adc75973d215251e",
+"bno055_8h.html#a8f1be5da6bacce62d5fa8aa04725cbe6",
+"bno055_8h.html#abd8c5ba038ca1dc7a4cde331568d3d56",
+"bno055_8h.html#ae8bccda5dd9a41f2b850a9939e2a9fd3",
+"com_8h.html#ac7d02cc2ee124979c7160e74dd416678",
+"structbno055__linear__accel__float__t.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

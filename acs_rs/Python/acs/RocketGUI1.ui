@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RocketProject</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLCDNumber" name="Readout1">
@@ -205,7 +205,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>5000</number>
+     <number>4500</number>
     </property>
     <property name="value">
      <number>1000</number>
@@ -248,7 +248,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>5000</number>
+     <number>4500</number>
     </property>
     <property name="value">
      <number>24</number>
@@ -323,9 +323,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>704</x>
+      <x>707</x>
       <y>145</y>
-      <width>55</width>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -525,7 +525,7 @@
      <rect>
       <x>680</x>
       <y>100</y>
-      <width>81</width>
+      <width>101</width>
       <height>20</height>
      </rect>
     </property>
@@ -542,10 +542,10 @@
    <widget class="QGraphicsView" name="Alert1">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>100</y>
-      <width>461</width>
-      <height>331</height>
+      <x>70</x>
+      <y>110</y>
+      <width>661</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -555,8 +555,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>160</y>
+      <x>210</x>
+      <y>210</y>
       <width>451</width>
       <height>171</height>
      </rect>
@@ -568,6 +568,32 @@
     </property>
     <property name="text">
      <string>DISCONNECTED</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>707</x>
+      <y>225</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>4500 PSI</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>714</x>
+      <y>305</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>150 PSI</string>
     </property>
    </widget>
    <zorder>graphicsView_3</zorder>
@@ -604,6 +630,8 @@
    <zorder>label_4</zorder>
    <zorder>label_5</zorder>
    <zorder>checkBox</zorder>
+   <zorder>label_7</zorder>
+   <zorder>label_8</zorder>
    <zorder>Alert1</zorder>
    <zorder>label_6</zorder>
   </widget>

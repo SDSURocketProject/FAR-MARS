@@ -192,16 +192,19 @@ mainwindow::logData(){
  */
 void
 mainwindow::getData(){
-	char message[11];
+	struct sensorMessage message;
 	float pressures[3];
-	int n = readMessage(message);
+	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
 		return;
 	}
-	parseMessage(message, pressures, &timestamp);
-	for (int i = 0; i < 3; i++){
-		data[i] = pressures[i];
+	if (message.msgID == pressureRawDataID) {
+		parsePressureMessage(&message);
+		data[0] = message.pressurePSIG.methane;
+		data[1] = message.pressurePSIG.LOX;
+		data[2] = message.pressurePSIG.helium;
+		timestamp = message.timestamp;
 	}
 	update_data();
 }

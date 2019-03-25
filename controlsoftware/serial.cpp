@@ -1,39 +1,40 @@
 #include "serial.h"
+#include "messages.h"
+#include "com.h"
+
+#define MESSAGE_BUFFER_SIZE 100
 
 /**
  * Serial Data reader
  *
- * @param[in] char* array of length 11
- * @param[out] char* array containing data from UART
- * @return 0: ran correctly, -1: error reading, -2: read nothing
+ * @param[out] *message Sensor message that was read in.
+ *
+ * @return 0: ran correctly, -1: error reading
  */
 int
-readMessage(char *message){
-	int n, idx = 0;
+readMessage(struct sensorMessage *message){
 	char in;
-	static char header[] = {'A', 'B', 'C'};
-	while (1){
-		n = read(fd, (void*)&in, 1);
-		if (n == 0){ /* if no byte is read in */
-			return -2;
-		}else if (n < 0){ /* if read returns an error */
-			return -1;
+	u_int8_t messageBuffer[MESSAGE_BUFFER_SIZE];
+	u_int8_t messageBufferIdx = 0;
+	do {
+		read(fd, (void*)&in, 1);
+		if (messageBufferIdx >= MESSAGE_BUFFER_SIZE) {
+			messageBufferIdx = 0;
 		}
-		if (in == header[idx]){
-			idx++;
-			if (idx == 3){
-				break;
-			}
-		}
-	}
-	n = read(fd, message, 11);
-	if (n == 0){ /* if no byte is read in */
-		return -2;
-	}else if (n < 0){ /* if read returns an error */
+		messageBuffer[messageBufferIdx++] = in;
+	} while (in != ESCAPE_EOM);
+	
+	messageBufferIdx = 0;
+	if (unEscapeBuffer(messageBuffer, MESSAGE_BUFFER_SIZE, messageBuffer, MESSAGE_BUFFER_SIZE) < 0) {
 		return -1;
 	}else if (n != 11){/* if an incorrect number of bytes is read in */
 		return -3;
 	}
+	message->msgID = messageBuffer[messageBufferIdx++];
+	memcpy(&message->timestamp, &messageBuffer[messageBufferIdx], sizeof(message->timestamp));
+	messageBufferIdx += sizeof(message->timestamp);
+	memcpy(&message->accelerationRaw, &messageBuffer[messageBufferIdx], sensorMessageSizes[message->msgID]);
+
 	return 1;
 }
 
@@ -64,6 +65,27 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	output[1] = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
 	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	return;
+}
+
+/**
+ * Parse a pressure message from on board computer.
+ *
+ * @param[in, out] *message Pointer to the message to be parsed.
+ */
+void
+parsePressureMessage(struct sensorMessage *message){
+	float methane = 0, lox = 0, helium = 0;
+	methane = (float)message->pressureRaw.methane;
+	lox = (float)message->pressureRaw.LOX;
+	helium = (float)message->pressureRaw.helium;
+
+	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	message->pressurePSIG.methane = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
+	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	message->pressurePSIG.LOX = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
+	message->pressurePSIG.helium = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	message->msgID = pressurePSIGDataID;
 	return;
 }
 

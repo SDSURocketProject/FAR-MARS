@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FAR-MARS Control Software: serial.cpp File Reference</title>
+<title>FAR-MARS Controlsoftware: /home/alefir/repos/farmars/controlsoftware/serial.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -29,8 +29,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">FAR-MARS Control Software
-   &#160;<span id="projectnumber">v0.3.2</span>
+   <div id="projectname">FAR-MARS Controlsoftware
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
   </td>
  </tr>
@@ -87,24 +87,51 @@ $(document).ready(function(){initNavTree('serial_8cpp.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">serial.cpp File Reference</div>  </div>
+<div class="title">/home/alefir/repos/farmars/controlsoftware/serial.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="serial_8h_source.html">serial.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="messages_8h_source.html">messages.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="com_8h_source.html">com.h</a>&quot;</code><br />
 </div>
 <p><a href="serial_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a69e73620bd8f14313137ac04cf571477"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#a69e73620bd8f14313137ac04cf571477">MESSAGE_BUFFER_SIZE</a>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a69e73620bd8f14313137ac04cf571477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abe2f0cf91c958896a304f1fd058fa187"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#abe2f0cf91c958896a304f1fd058fa187">readMessage</a> (char *message)</td></tr>
-<tr class="separator:abe2f0cf91c958896a304f1fd058fa187"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf07ef05e597abd8d6f524e8be41e884"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#acf07ef05e597abd8d6f524e8be41e884">readMessage</a> (struct <a class="el" href="structsensor_message.html">sensorMessage</a> *message)</td></tr>
+<tr class="separator:acf07ef05e597abd8d6f524e8be41e884"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaff1debd30c6fa0062d7fe961d6b8fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#abaff1debd30c6fa0062d7fe961d6b8fe">parseMessage</a> (char *message, float *output, u_int32_t *timestamp)</td></tr>
 <tr class="separator:abaff1debd30c6fa0062d7fe961d6b8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74541c4e9a82ea5f7926d15cb305b38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#aa74541c4e9a82ea5f7926d15cb305b38">parsePressureMessage</a> (struct <a class="el" href="structsensor_message.html">sensorMessage</a> *message)</td></tr>
+<tr class="separator:aa74541c4e9a82ea5f7926d15cb305b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bfee77f43d287a477e32e10b3168430"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8cpp.html#a5bfee77f43d287a477e32e10b3168430">uart_init</a> ()</td></tr>
 <tr class="separator:a5bfee77f43d287a477e32e10b3168430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a69e73620bd8f14313137ac04cf571477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69e73620bd8f14313137ac04cf571477">&#9670;&nbsp;</a></span>MESSAGE_BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MESSAGE_BUFFER_SIZE&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00005">5</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="abaff1debd30c6fa0062d7fe961d6b8fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abaff1debd30c6fa0062d7fe961d6b8fe">&#9670;&nbsp;</a></span>parseMessage()</h2>
@@ -147,12 +174,39 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00046">46</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00049">49</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
 
 </div>
 </div>
-<a id="abe2f0cf91c958896a304f1fd058fa187"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe2f0cf91c958896a304f1fd058fa187">&#9670;&nbsp;</a></span>readMessage()</h2>
+<a id="aa74541c4e9a82ea5f7926d15cb305b38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa74541c4e9a82ea5f7926d15cb305b38">&#9670;&nbsp;</a></span>parsePressureMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parsePressureMessage </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structsensor_message.html">sensorMessage</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parse a pressure message from on board computer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*message</td><td>Pointer to the message to be parsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00077">77</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acf07ef05e597abd8d6f524e8be41e884"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf07ef05e597abd8d6f524e8be41e884">&#9670;&nbsp;</a></span>readMessage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,7 +214,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int readMessage </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="structsensor_message.html">sensorMessage</a> *&#160;</td>
           <td class="paramname"><em>message</em></td><td>)</td>
           <td></td>
         </tr>
@@ -169,14 +223,13 @@ Functions</h2></td></tr>
 <p>Serial Data reader</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">char*</td><td>array of length 11 </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">char*</td><td>array containing data from UART </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*message</td><td>Sensor message that was read in.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0: ran correctly, -1: error reading, -2: read nothing </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0: ran correctly, -1: error reading </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00011">11</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00015">15</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,7 +250,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>UART Init Initializes rs485 serial connection on ttyUSB0 </p><dl class="section return"><dt>Returns</dt><dd>0: Device opened successfully -1: Device could not be opened -2: tcgetattr failed before configuration -3: tcgetattr failed after configuration </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00078">78</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00102">102</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
 
 </div>
 </div>

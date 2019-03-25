@@ -6,9 +6,12 @@
 #include <string>
 #include <termios.h>
 #include <unistd.h>
+#include "messages.h"
+#include "com.h"
 
 void parseMessage(char *message, float *output, uint32_t *timestamp);
-int readMessage(char *message);
+void parsePressureMessage(struct sensorMessage *message);
+int readMessage(struct sensorMessage *message);
 int uart_init(void);
 
 static int fd;

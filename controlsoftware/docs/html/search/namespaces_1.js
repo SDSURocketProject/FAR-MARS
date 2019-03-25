@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ui',['Ui',['../namespace_ui.html',1,'']]]
+  ['plot',['plot',['../namespaceplot.html',1,'']]]
 ];
