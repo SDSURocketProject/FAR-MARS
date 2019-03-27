@@ -44,19 +44,20 @@ loop() {
     digitalWrite(lox_mpv_out, LOW);
     readlaunch = digitalRead(launch_in);
   }
+
   digitalWrite(igniter_out, HIGH);
   digitalWrite(ch4_mpv_out, HIGH);
   digitalWrite(lox_mpv_out, HIGH);
   
-  digitalWrite(igniter_out, readign^1);
+  digitalWrite(igniter_out, !readign);
 
-  digitalWrite(lox_mpv_out, readlox^1);
+  digitalWrite(lox_mpv_out, !readlox);
   
-  digitalWrite(ch4_mpv_out, readch4^1);
+  digitalWrite(ch4_mpv_out, !readch4);
 
-  digitalWrite(ign_log, readign^1);
+  digitalWrite(ign_log, readign);
 
-  digitalWrite(lox_log, readlox^1);
+  digitalWrite(lox_log, readlox);
   
-  digitalWrite(ch4_log, readch4^1);
+  digitalWrite(ch4_log, readch4);
 }
