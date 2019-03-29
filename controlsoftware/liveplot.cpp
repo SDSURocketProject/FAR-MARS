@@ -28,7 +28,7 @@ livePlot::setupPlot(){
 	ch4Series = new QLineSeries();
 	loxSeries = new QLineSeries();
 	helSeries = new QLineSeries();
-	cbrSereis = new QLineSeries();
+	cbrSeries = new QLineSeries();
 
 	ch4Chart = new QChart();
 	loxChart = new QChart();
@@ -58,7 +58,7 @@ livePlot::setupPlot(){
 	ch4Chart->legend()->hide();
 	loxChart->legend()->hide();
 	helChart->legend()->hide();
-	chrChart->legend()->hide();
+	cbrChart->legend()->hide();
 
 	ch4View = new QChartView(ch4Chart);
 	loxView = new QChartView(loxChart);
@@ -91,7 +91,7 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	ch4Series->append(ch4Point);
 	loxSeries->append(loxPoint);
 	helSeries->append(helPoint);
-	cbrSereis->append(cbrPoint);
+	cbrSeries->append(cbrPoint);
 
 	if (ch4Series->count() > 1200){
 		ch4Series->remove(0);

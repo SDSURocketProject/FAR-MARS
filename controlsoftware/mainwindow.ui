@@ -20,6 +20,13 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="logDataCheckbox">
+        <property name="text">
+         <string>Log Data</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QLineEdit" name="logFileNameBox">
         <property name="text">
@@ -43,19 +50,28 @@
         </property>
        </layout>
       </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="logDataCheckbox">
-        <property name="text">
-         <string>Log Data</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <widget class="QPushButton" name="livePlotButton">
         <property name="text">
          <string>Open Live Plot</string>
         </property>
        </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLCDNumber" name="tcLCD"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="tcLabel">
+        <property name="text">
+         <string>TC</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLCDNumber" name="chamberLCD"/>
       </item>
      </layout>
     </item>

@@ -109,6 +109,8 @@ mainwindow::update_data(){
     loxNeedle->setCurrentValue(pressures[LOX_READING]);
     helNeedle->setCurrentValue(pressures[HEL_READING]);
 	chamberbar->setValue(pressures[CBR_READING]);
+	ui->chamberLCD->display(pressures[CBR_READING]);
+	ui->tcLCD->display(thermo[0]);
 }
 
 
