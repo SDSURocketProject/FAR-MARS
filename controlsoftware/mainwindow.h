@@ -37,7 +37,10 @@ private:
     warning *warningPopup;
 	livePlot *plot;
 
-    float data[3];
+    float pressures[4];
+	float thermo;
+	uint8_t halleffect[2];
+
     int appendNewline;
 	int logCount = 0;
     int logDataBool;
@@ -54,6 +57,8 @@ private:
 	QcNeedleItem *loxNeedle;
 	QcNeedleItem *ch4Needle;
 	std::chrono::high_resolution_clock::time_point start;
+
+
 
 private slots:
     void onTimer();

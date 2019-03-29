@@ -34,9 +34,11 @@ enum sensorMessageIDs {
 	pressureRawDataID,			    // 17
 	pressurePSIADataID,			    // 18
 	pressurePSIGDataID,			    // 19
-	batteryRawDataID,			    // 20
-	batteryFloatDataID,			    // 21
-	strDataID,					    // 22
+	thermocoupleDataID,             // 20
+	halleffectDataID,               // 21
+	batteryRawDataID,			    // 22
+	batteryFloatDataID,			    // 23
+	strDataID,					    // 24
 	NUM_SENSOR_MESSAGES
 };
 
@@ -52,12 +54,12 @@ struct cpuTemperatureFloatData {
 
 //! @brief Struct containing pressure sensor data
 struct pressureData {
-	int16_t methane, LOX, helium;
+	int16_t methane, LOX, helium, chamber;
 };
 
 //! @brief Struct containing pressure sensor data
 struct pressureConvertedData {
-	int32_t methane, LOX, helium;
+	int32_t methane, LOX, helium, chamber;
 };
 
 struct batteryData {
@@ -66,6 +68,14 @@ struct batteryData {
 
 struct batteryFloatData {
 	float voltage;
+};
+
+struct halleffectData {
+	uint8_t methane, lox;
+};
+
+struct thermocoupleData {
+	float chamber;
 };
 
 //! @brief Struct containing a pointer to a string. Be very careful when using to hold strings that are not string literals.
@@ -106,6 +116,10 @@ struct sensorMessage {
 		struct pressureData                pressureRaw;  //!< Pressure data in raw binary format.
 		struct pressureConvertedData       pressurePSIA; //!< Pressure data in PSI absolute.
 		struct pressureConvertedData       pressurePSIG; //!< Pressure data in PSI gauge.
+
+		struct thermocoupleData            thermocouple; //!< Thermocouple data in celsius.
+
+		struct halleffectData              halleffect; //!< Hall effect data.
 
 		struct batteryData                 batteryRaw;     //!< Battery voltage in raw binary format.
 		struct batteryFloatData            batteryVoltage; //!< Battery voltage in volts.

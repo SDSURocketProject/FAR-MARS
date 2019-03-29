@@ -193,7 +193,9 @@ mainwindow::logData(){
 void
 mainwindow::getData(){
 	struct sensorMessage message;
-	float pressures[3];
+	float pressures[4];
+	float thermo;
+	uint8_t halleffect[3];
 	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
@@ -201,9 +203,17 @@ mainwindow::getData(){
 	}
 	if (message.msgID == pressureRawDataID) {
 		parsePressureMessage(&message);
-		data[0] = message.pressurePSIG.methane;
-		data[1] = message.pressurePSIG.LOX;
-		data[2] = message.pressurePSIG.helium;
+
+		pressures[METHANE_READING] = message.pressurePSIG.methane;
+		pressures[LOX_READING] = message.pressurePSIG.LOX;
+		pressures[HELIUM_READING] = message.pressurePSIG.helium;
+		pressures[CHAMBER_READING] = message.pressurePSIG.chamber;
+	
+		thermo = message.thermocouple.chamber;
+
+		halleffect[CH4_VNT] = message.halleffect.methane;
+		halleffect[LOX_VNT] = message.halleffect.lox;
+
 		timestamp = message.timestamp;
 	}
 	update_data();

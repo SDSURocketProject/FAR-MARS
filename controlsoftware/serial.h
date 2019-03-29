@@ -25,9 +25,15 @@ static int rate = 0;
 #define PRESSURE_LOX_BIAS 41.0f
 #define PRESSURE_HELIUM_BIAS 0.0f
 
-enum reading {
-	METHANE_READING = 0,
-	LOX_READING = 1,
-	HELIUM_READING = 2,
+enum pressures {
+	METHANE_READING,
+	LOX_READING,
+	HELIUM_READING,
+	CHAMBER_READING
+};
+
+enum halls {
+	CH4_VNT,
+	LOX_VNT
 };
 
