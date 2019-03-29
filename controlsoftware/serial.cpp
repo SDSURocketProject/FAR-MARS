@@ -73,16 +73,18 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
  */
 void
 parsePressureMessage(struct sensorMessage *message){
-	float methane = 0, lox = 0, helium = 0;
+	float methane = 0, lox = 0, helium = 0, chamber = 0;
 	methane = (float)message->pressureRaw.methane;
 	lox = (float)message->pressureRaw.LOX;
 	helium = (float)message->pressureRaw.helium;
+	chamber = (floa)message->pressureRaw.chamber;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	message->pressurePSIG.methane = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	message->pressurePSIG.LOX = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
 	message->pressurePSIG.helium = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	message->pressurePSIG.chamber = ((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
 	message->msgID = pressurePSIGDataID;
 	return;
 }

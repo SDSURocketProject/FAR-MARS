@@ -216,10 +216,10 @@ mainwindow::getData(){
 		pressures[HEL_READING] = message.pressurePSIG.helium;
 		pressures[CBR_READING] = message.pressurePSIG.chamber;
 	
-		thermo[1] = message.thermocouple.chamber;
+		thermo[1] = message.thermocoupleRaw.uaf;
 
-		halleffect[CH4_VNT] = message.halleffect.methane;
-		halleffect[LOX_VNT] = message.halleffect.lox;
+		halleffect[CH4_VNT] = message.hallEffect.methane;
+		halleffect[LOX_VNT] = message.hallEffect.LOX;
 
 		timestamp = message.timestamp;
 	}
