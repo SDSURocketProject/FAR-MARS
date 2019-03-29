@@ -60,6 +60,7 @@ logger::isOpen(){
  * Spawns a warning popup if the file is not open for writing
  *
  * @param float[] data to be appended to file
+ * @param int number of values to parse
  */
 void
 logger::appendData(float data[], int vals){
@@ -73,6 +74,7 @@ logger::appendData(float data[], int vals){
  * Spawns a warning popup if the file is not open for writing
  *
  * @param float[] data to be appended to file
+ * @param int number of values to parse
  * @param int append newline to end of data, 1 for yes 0 for no
  */
 void
@@ -87,12 +89,28 @@ logger::appendData(float data[], int vals, int newLine){
  * Spawns a warning popup if the file is not open for writing
  *
  * @param int[] data to be appended to file
+ * @param int number of values to parse
  * @param int append newline to end of data, 1 for yes 0 for no
  */
 void
 logger::appendData(int data[], int vals, int newLine){
     if (!state) { mainwindow::showWarningBox("File not open"); return; }
 	std::string str = csvformat(data, vals, newLine);
+    file << str.c_str();
+}
+
+/**
+ * Append data to file, EOL-defined
+ * Spawns a warning popup if the file is not open for writing
+ *
+ * @param long[] timestamp to be appended to file
+ * @param int number of values to parse
+ * @param int append newline to end of data, 1 for yes 0 for no
+ */
+void
+logger::appendData(long time[], int vals, int newLine){
+    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	std::string str = csvformat(time, newLine);
     file << str.c_str();
 }
 

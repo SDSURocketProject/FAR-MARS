@@ -182,9 +182,11 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
  */
 void
 mainwindow::logData(){
-	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
-	int time[1] = { (timespan.count()*1000) };
+	long time[1];
+	struct timespec spec;
+	clock_gettime(CLOCK_REALTIME, &spec);
+	time[0] = spec.tv_nsec / 1000000l;
+
 	getData();
 	log.appendData(time, 1, 0);
 	log.appendData(pressures, 4, 0);
