@@ -77,7 +77,7 @@ parsePressureMessage(struct sensorMessage *message){
 	methane = (float)message->pressureRaw.methane;
 	lox = (float)message->pressureRaw.LOX;
 	helium = (float)message->pressureRaw.helium;
-	chamber = (floa)message->pressureRaw.chamber;
+	chamber = (float)message->pressureRaw.chamber;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	message->pressurePSIG.methane = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
