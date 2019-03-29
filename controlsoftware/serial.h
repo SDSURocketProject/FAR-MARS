@@ -26,10 +26,10 @@ static int rate = 0;
 #define PRESSURE_HELIUM_BIAS 0.0f
 
 enum pressures {
-	METHANE_READING,
+	CH4_READING,
 	LOX_READING,
-	HELIUM_READING,
-	CHAMBER_READING
+	HEL_READING,
+	CBR_READING
 };
 
 enum halls {

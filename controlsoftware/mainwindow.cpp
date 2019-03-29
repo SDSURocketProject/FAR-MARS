@@ -16,9 +16,6 @@ mainwindow::mainwindow(QWidget *parent) :
     ui(new Ui::mainwindow)
 {
     ui->setupUi(this);
-    for (int i = 0; i <= int(sizeof(data)/sizeof(data[0])); i++){
-        data[i] = 0; /* Set data values to zero */
-    }
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
@@ -81,6 +78,13 @@ mainwindow::mainwindow(QWidget *parent) :
 	helNeedle->setValueRange(0,6000);
 	//helNeedle->addBackground(7);
 	ui->data->addWidget(helGauge);
+
+	chamberbar = new QProgressBar;
+	chamberbar->setOrientation(Qt::Vertical);
+	chamberbar->setMinimum(0);
+	chamberbar->setMaximum(1500);
+	chamberbar->setTextVisible(true);
+	ui->data->addWidget(chamberbar);
 }
 
 /**
@@ -101,9 +105,10 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    ch4Needle->setCurrentValue((data[0]));
-    loxNeedle->setCurrentValue((data[1]));
-    helNeedle->setCurrentValue((data[2]));
+    ch4Needle->setCurrentValue(pressures[CH4_READING]);
+    loxNeedle->setCurrentValue(pressures[LOX_READING]);
+    helNeedle->setCurrentValue(pressures[HEL_READING]);
+	chamberbar->setValue(pressures[CBR_READING]);
 }
 
 
@@ -180,7 +185,8 @@ mainwindow::logData(){
 	int time[1] = { (timespan.count()*1000) };
 	getData();
 	log.appendData(time, 1, 0);
-	log.appendData(data, 3, 1);
+	log.appendData(pressures, 4, 0);
+	log.appendData(thermo, 1, 1);
 }
 
 /**
@@ -193,9 +199,6 @@ mainwindow::logData(){
 void
 mainwindow::getData(){
 	struct sensorMessage message;
-	float pressures[4];
-	float thermo;
-	uint8_t halleffect[3];
 	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
@@ -204,12 +207,12 @@ mainwindow::getData(){
 	if (message.msgID == pressureRawDataID) {
 		parsePressureMessage(&message);
 
-		pressures[METHANE_READING] = message.pressurePSIG.methane;
+		pressures[CH4_READING] = message.pressurePSIG.methane;
 		pressures[LOX_READING] = message.pressurePSIG.LOX;
-		pressures[HELIUM_READING] = message.pressurePSIG.helium;
-		pressures[CHAMBER_READING] = message.pressurePSIG.chamber;
+		pressures[HEL_READING] = message.pressurePSIG.helium;
+		pressures[CBR_READING] = message.pressurePSIG.chamber;
 	
-		thermo = message.thermocouple.chamber;
+		thermo[1] = message.thermocouple.chamber;
 
 		halleffect[CH4_VNT] = message.halleffect.methane;
 		halleffect[LOX_VNT] = message.halleffect.lox;
@@ -243,5 +246,5 @@ mainwindow::on_livePlotButton_clicked()
  */
 void
 mainwindow::updatePlots(){
-	plot->appendData(data, &timestamp);
+	plot->appendData(pressures, &timestamp);
 }

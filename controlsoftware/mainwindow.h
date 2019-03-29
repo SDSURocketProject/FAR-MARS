@@ -4,6 +4,7 @@
 #include <chrono>
 #include <math.h>
 #include <QMainWindow>
+#include <QProgressBar>
 #include <QTimer>
 #include <qcgaugewidget.h>
 #include <time.h>
@@ -38,7 +39,7 @@ private:
 	livePlot *plot;
 
     float pressures[4];
-	float thermo;
+	float thermo[1];
 	uint8_t halleffect[2];
 
     int appendNewline;
@@ -49,6 +50,7 @@ private:
 	uint32_t timestamp;
 	int serial_timeout;
     logger log;
+	QProgressBar *chamberbar;
     QTimer *timer;
 	QcGaugeWidget *helGauge;
 	QcGaugeWidget *loxGauge;
