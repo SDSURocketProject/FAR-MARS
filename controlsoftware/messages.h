@@ -34,12 +34,13 @@ enum sensorMessageIDs {
 	pressureRawDataID,			    // 17
 	pressurePSIADataID,			    // 18
 	pressurePSIGDataID,			    // 19
-	thermocoupleDataID,             // 20
-	halleffectDataID,               // 21
-	batteryRawDataID,			    // 22
-	batteryFloatDataID,			    // 23
-	strDataID,					    // 24
-	NUM_SENSOR_MESSAGES
+	pressureRawADC1DataID,          // 20
+	thermocoupleRawDataID,          // 21
+	hallEffectDataID,               // 22
+	batteryRawDataID,			    // 23
+	batteryFloatDataID,			    // 24
+	strDataID,					    // 25
+	NUM_SENSOR_MESSAGES             // 26
 };
 
 //! @brief Struct containing raw CPU temperature data
@@ -52,14 +53,34 @@ struct cpuTemperatureFloatData {
 	float temperature;
 };
 
-//! @brief Struct containing pressure sensor data
-struct pressureData {
+//! @brief Struct containing pressure sensor data from ADC0
+struct pressureDataADC0 {
 	int16_t methane, LOX, helium, chamber;
 };
 
-//! @brief Struct containing pressure sensor data
-struct pressureConvertedData {
+//! @brief Struct containing pressure sensor data from ADC0
+struct pressureConvertedDataADC0 {
 	int32_t methane, LOX, helium, chamber;
+};
+
+//! @brief Struct containing pressure sensor data from ADC1
+struct pressureDataADC1 {
+	int16_t heliumReg;
+};
+
+//! @brief Struct containing pressure sensor data from ADC1
+struct pressureConvertedDataADC1 {
+	int32_t heliumReg;
+};
+
+//! @brief Struct containing thermocouple sensor data
+struct thermocoupleData {
+	int32_t uaf; // upper air frame
+};
+
+//! @brief Struct containing thermocouple sensor data
+struct hallEffectData {
+	uint8_t methane, LOX;
 };
 
 struct batteryData {
@@ -68,14 +89,6 @@ struct batteryData {
 
 struct batteryFloatData {
 	float voltage;
-};
-
-struct halleffectData {
-	uint8_t methane, lox;
-};
-
-struct thermocoupleData {
-	float chamber;
 };
 
 //! @brief Struct containing a pointer to a string. Be very careful when using to hold strings that are not string literals.
@@ -113,13 +126,15 @@ struct sensorMessage {
 		struct cpuTemperatureFloatData     cpuTemperatureFahrenheit; //!< CPU temperature in Fahrenheit.
 		struct cpuTemperatureFloatData     cpuTemperatureKelvin;     //!< CPU temperature in Kelvin.
 
-		struct pressureData                pressureRaw;  //!< Pressure data in raw binary format.
-		struct pressureConvertedData       pressurePSIA; //!< Pressure data in PSI absolute.
-		struct pressureConvertedData       pressurePSIG; //!< Pressure data in PSI gauge.
+		struct pressureDataADC0            pressureRaw;  //!< Pressure data in raw binary format.
+		struct pressureConvertedDataADC0   pressurePSIA; //!< Pressure data in PSI absolute.
+		struct pressureConvertedDataADC0   pressurePSIG; //!< Pressure data in PSI gauge.
 
-		struct thermocoupleData            thermocouple; //!< Thermocouple data in celsius.
+		struct pressureDataADC1            pressureRawADC1; //!< Pressure data of the helium regulator in raw binary format.
 
-		struct halleffectData              halleffect; //!< Hall effect data.
+		struct thermocoupleData            thermocoupleRaw; //!< Thermocouple data in raw binary format.
+
+		struct hallEffectData              hallEffect; //!< Hall effect sensor data.
 
 		struct batteryData                 batteryRaw;     //!< Battery voltage in raw binary format.
 		struct batteryFloatData            batteryVoltage; //!< Battery voltage in volts.
