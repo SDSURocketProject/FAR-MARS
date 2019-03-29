@@ -18,5 +18,5 @@ More information available at http://www.alefir.net:443/rocket/controlsoftware
 
 ## Operation of python plotter:
 
-1. create a new line at the top of the log file, with the following: `TIME,CH4,LOX,HEL`
+1. create a new line at the top of the log file, with the following: `TIME,CH4,LOX,HEL,CBR`
 1. `python plot.py /path/to/logfile.csv`

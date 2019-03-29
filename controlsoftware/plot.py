@@ -16,6 +16,7 @@ try:
     ax1.plot(data['TIME'], data['CH4'], label='CH4')
     ax1.plot(data['TIME'], data['LOX'], label='LOX')
     ax1.plot(data['TIME'], data['HEL'], label='HEL')
+    ax1.plot(data['TIME'], data['CBR'], label='CBR')
 except ValueError:
     print('CSV headers not prepended. Run the data_preparation.py script to fix this.')
     quit()
