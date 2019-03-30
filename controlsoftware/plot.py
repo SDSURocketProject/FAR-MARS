@@ -17,11 +17,12 @@ try:
     ax1.plot(data['TIME'], data['LOX'], label='LOX')
     ax1.plot(data['TIME'], data['HEL'], label='HEL')
     ax1.plot(data['TIME'], data['CBR'], label='CBR')
+    ax1.plot(data['TIME'], data['UAF'], label='UAF')
 except ValueError:
     print('CSV headers not prepended. Run the data_preparation.py script to fix this.')
     quit()
 plt.xlabel('Time (ms)')
-plt.ylabel('Pressure (psi)')
+plt.ylabel('Pressure (psi) \ Temperature (C)')
 plt.legend(loc='best')
 plt.grid(True)
 plt.show()
