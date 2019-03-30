@@ -50,7 +50,7 @@ private:
 	uint32_t timestamp;
 	int serial_timeout;
     logger log;
-	QProgressBar *chamberbar;
+	QProgressBar *thermobar;
     QTimer *timer;
 	QcGaugeWidget *helGauge;
 	QcGaugeWidget *loxGauge;

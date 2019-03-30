@@ -79,12 +79,12 @@ mainwindow::mainwindow(QWidget *parent) :
 	//helNeedle->addBackground(7);
 	ui->data->addWidget(helGauge);
 
-	chamberbar = new QProgressBar;
-	chamberbar->setOrientation(Qt::Vertical);
-	chamberbar->setMinimum(0);
-	chamberbar->setMaximum(1500);
-	chamberbar->setTextVisible(true);
-	ui->data->addWidget(chamberbar);
+	thermobar = new QProgressBar;
+	thermobar->setOrientation(Qt::Vertical);
+	thermobar->setMinimum(0);
+	thermobar->setMaximum(1500);
+	thermobar->setTextVisible(true);
+	ui->data->addWidget(thermobar);
 }
 
 /**
@@ -108,7 +108,7 @@ mainwindow::update_data(){
     ch4Needle->setCurrentValue(pressures[CH4_READING]);
     loxNeedle->setCurrentValue(pressures[LOX_READING]);
     helNeedle->setCurrentValue(pressures[HEL_READING]);
-	chamberbar->setValue(pressures[CBR_READING]);
+	thermobar->setValue(pressures[CBR_READING]);
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
 }

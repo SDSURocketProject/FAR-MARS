@@ -58,12 +58,12 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLCDNumber" name="tcLCD"/>
+       <widget class="QLCDNumber" name="chamberLCD"/>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="tcLabel">
+       <widget class="QLabel" name="chamberLabel">
         <property name="text">
-         <string>TC</string>
+         <string>Chamber</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -71,7 +71,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLCDNumber" name="chamberLCD"/>
+       <widget class="QLCDNumber" name="tcLCD"/>
       </item>
      </layout>
     </item>
