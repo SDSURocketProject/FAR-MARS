@@ -8,3 +8,4 @@ Makefile
 controlsoftware
 !controlsoftware/
 *.pro.user
+*.autosave
