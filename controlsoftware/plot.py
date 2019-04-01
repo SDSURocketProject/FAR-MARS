@@ -21,6 +21,19 @@ try:
 except ValueError:
     print('CSV headers not prepended. Run the data_preparation.py script to fix this.')
     quit()
+
+hallarr = [0,0]
+
+with open(sys.argv[1]) as f:
+    for line in f:
+        arr = line.split(',')
+        if hallarr[0] != arr[6]:
+            hallarr[0] = arr[6]
+            plt.axvline(x=arr[0])
+        if hallarr[1] != arr[7]:
+            hallarr[1] = arr[7]
+            plt.axvline(x=arr[0])
+
 plt.xlabel('Time (ms)')
 plt.ylabel('Pressure (psi) \ Temperature (C)')
 plt.legend(loc='best')

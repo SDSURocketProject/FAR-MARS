@@ -188,9 +188,11 @@ mainwindow::logData(){
 	time[0] = spec.tv_nsec / 1000000l;
 
 	getData();
+
 	log.appendData(time, 1, 0);
 	log.appendData(pressures, 4, 0);
-	log.appendData(thermo, 1, 1);
+	log.appendData(thermo, 1, 0);
+	log.appendData(halleffect, 2, 1);
 }
 
 /**
