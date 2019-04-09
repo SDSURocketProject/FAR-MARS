@@ -113,7 +113,6 @@ mainwindow::update_data(){
 	ui->tcLCD->display(thermo[0]);
 }
 
-
 /**
  * Popup Warning Box Generator
  * Generates a popup displaying the QString supplied
