@@ -67,9 +67,9 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         #self.radioButton1.toggled.connect(self.radio1)
         #self.radioButton2.toggled.connect(self.radio2)
         #self.radioButton3.toggled.connect(self.radio3)
-        self.radioButton1.hide()
-        self.radioButton2.hide()
-        self.radioButton3.hide()
+        #self.radioButton1.hide()
+        #self.radioButton2.hide()
+        #self.radioButton3.hide()
         self.checkBox.toggled.connect(self.radio4)
 
     def init_ui(self):
