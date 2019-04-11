@@ -23,6 +23,7 @@ TOPIC_3 = "STATE"
 class mainthread(QThread):
     STATEsignal = pyqtSignal('PyQt_PyObject')
     DATAsignal = pyqtSignal('PyQt_PyObject')
+    disconnectSignal = pyqtSignal('PyQt_PyObject')
 
     def __init__(self):
         QThread.__init__(self)
@@ -31,11 +32,21 @@ class mainthread(QThread):
     def connect1(self):
         self.mqtt_client = mqtt.Client()
         self.mqtt_client.on_message = self.subscrib1
+        self.mqtt_client.on_disconnect = self.connect
+        self.mqtt_client.on_disconnect = self.disconnect
         self.mqtt_client.connect(HOST, port=port, keepalive=60)
         self.mqtt_client.subscribe(TOPIC_2)
         self.mqtt_client.subscribe(TOPIC_3)
         self.mqtt_client.loop_start()
         print("connected")
+
+    def disconnect(self):
+        connectionFlag = 0
+        self.disconnectSignal.emit(connectionFlag)
+
+    def connect(self):
+        connectionFlag = 1
+        self.disconnectSignal.emit(connectionFlag)
 
     def subscrib1(self, mqtt_client, userdata, msg):
         try:
@@ -47,8 +58,8 @@ class mainthread(QThread):
                 print(C)
             if msg.topic == "STATE":
                 B = str(msg.payload)[2:-1]
-                A = (B.split(',')[0], B.split(',')[1], B.split(',')[2], B.split(',')[3], B.split(',')[4], B.split(',')[5], B.split(',')[6])
-                A = ('%4s' % A[0], '%4s' % A[1], '%4s' % A[2], '%4s' % A[3], '%4s' % A[4], '%4s' % A[5], '%4s' % A[6],)
+                A = (B.split(',')[0], B.split(',')[1], B.split(',')[2], B.split(',')[3], B.split(',')[4], B.split(',')[5], B.split(',')[6], B.split(',')[7])
+                A = ('%4s' % A[0], '%4s' % A[1], '%4s' % A[2], '%4s' % A[3], '%4s' % A[4], '%4s' % A[5], '%4s' % A[6], '%4s' % A[7],)
                 self.STATEsignal.emit(A)
         except:
             print('Missed Data')
@@ -63,7 +74,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Alert1.hide()
         self.label_6.hide()
         self.mythread1.STATEsignal.connect(self.progress1)
-        self.mythread1.DATAsignal.connect(self.progress2)        
+        self.mythread1.DATAsignal.connect(self.progress2)
+        self.mythread1.disconnectSignal.connect(self.alert)
         #self.radioButton1.toggled.connect(self.radio1)
         #self.radioButton2.toggled.connect(self.radio2)
         #self.radioButton3.toggled.connect(self.radio3)
@@ -81,39 +93,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.MPV_Safety.setAutoFillBackground(True)
         self.MPV_Key.setAutoFillBackground(True)
         self.Ign_Key.setAutoFillBackground(True)
+        self.ign_state.setAutoFillBackground(True)
+        self.ch4_state.setAutoFillBackground(True)
+        self.lox_state.setAutoFillBackground(True)
         try:
-            if int(A[1]) == 1:
-                p1 = self.Pressure_Key.palette()
-                p1.setColor(self.Pressure_Key.backgroundRole(), Qt.red)
-                self.Pressure_Key.setPalette(p1)
-            if int(A[1]) == 0:
-                p2 = self.Pressure_Key.palette()
-                p2.setColor(self.Pressure_Key.backgroundRole(), Qt.white)
-                self.Pressure_Key.setPalette(p2)
-            if int(A[6]) == 1:
-                p1 = self.Ign_Safety.palette()
-                p1.setColor(self.Ign_Safety.backgroundRole(), Qt.red)
-                self.Ign_Safety.setPalette(p1)
-            if int(A[6]) == 0:
-                p2 = self.Ign_Safety.palette()
-                p2.setColor(self.Ign_Safety.backgroundRole(), Qt.white)
-                self.Ign_Safety.setPalette(p2)
-            if int(A[4]) == 1:
-                p1 = self.MPV_Safety.palette()
-                p1.setColor(self.MPV_Safety.backgroundRole(), Qt.red)
-                self.MPV_Safety.setPalette(p1)
-            if int(A[4]) == 0:
-                p2 = self.MPV_Safety.palette()
-                p2.setColor(self.MPV_Safety.backgroundRole(), Qt.white)
-                self.MPV_Safety.setPalette(p2)
-            if int(A[3]) == 1:
-                p1 = self.MPV_Key.palette()
-                p1.setColor(self.MPV_Key.backgroundRole(), Qt.red)
-                self.MPV_Key.setPalette(p1)
-            if int(A[3]) == 0:
-                p2 = self.MPV_Key.palette()
-                p2.setColor(self.MPV_Key.backgroundRole(), Qt.white)
-                self.MPV_Key.setPalette(p2)
+#-----------------IGN KEY------------------------------------
             if int(A[0]) == 1:
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
@@ -122,6 +106,69 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p2 = self.Ign_Key.palette()
                 p2.setColor(self.Ign_Key.backgroundRole(), Qt.white)
                 self.Ign_Key.setPalette(p2)
+#-----------------Pressure KEY--------------------------------
+            if int(A[1]) == 1:
+                p1 = self.Pressure_Key.palette()
+                p1.setColor(self.Pressure_Key.backgroundRole(), Qt.red)
+                self.Pressure_Key.setPalette(p1)
+            if int(A[1]) == 0:
+                p2 = self.Pressure_Key.palette()
+                p2.setColor(self.Pressure_Key.backgroundRole(), Qt.white)
+                self.Pressure_Key.setPalette(p2)
+#-----------------IGN STATE------------------------------------
+            if int(A[2]) == 1:
+                p1 = self.ign_state.palette()
+                p1.setColor(self.ign_state.backgroundRole(), Qt.red)
+                self.ign_state.setPalette(p1)
+            if int(A[2]) == 0:
+                p2 = self.ign_state.palette()
+                p2.setColor(self.ign_state.backgroundRole(), Qt.white)
+                self.ign_state.setPalette(p2)
+#-----------------MPV KEY------------------------------------
+            if int(A[3]) == 1:
+                p1 = self.MPV_Key.palette()
+                p1.setColor(self.MPV_Key.backgroundRole(), Qt.red)
+                self.MPV_Key.setPalette(p1)
+            if int(A[3]) == 0:
+                p2 = self.MPV_Key.palette()
+                p2.setColor(self.MPV_Key.backgroundRole(), Qt.white)
+                self.MPV_Key.setPalette(p2)
+#-----------------MPV SAFETY---------------------------------
+            if int(A[4]) == 1:
+                p1 = self.MPV_Safety.palette()
+                p1.setColor(self.MPV_Safety.backgroundRole(), Qt.red)
+                self.MPV_Safety.setPalette(p1)
+            if int(A[4]) == 0:
+                p2 = self.MPV_Safety.palette()
+                p2.setColor(self.MPV_Safety.backgroundRole(), Qt.white)
+                self.MPV_Safety.setPalette(p2)
+#-----------------CH4 STATE------------------------------------
+            if int(A[5]) == 1:
+                p1 = self.ch4_state.palette()
+                p1.setColor(self.ch4_state.backgroundRole(), Qt.red)
+                self.ch4_state.setPalette(p1)
+            if int(A[5]) == 0:
+                p2 = self.ch4_state.palette()
+                p2.setColor(self.ch4_state.backgroundRole(), Qt.white)
+                self.ch4_state.setPalette(p2)
+#-----------------IGN SAFTEY----------------------------------
+            if int(A[6]) == 1:
+                p1 = self.Ign_Safety.palette()
+                p1.setColor(self.Ign_Safety.backgroundRole(), Qt.red)
+                self.Ign_Safety.setPalette(p1)
+            if int(A[6]) == 0:
+                p2 = self.Ign_Safety.palette()
+                p2.setColor(self.Ign_Safety.backgroundRole(), Qt.white)
+                self.Ign_Safety.setPalette(p2)
+#-----------------LOX STATE----------------------------------
+            if int(A[7]) == 1:
+                p1 = self.lox_state.palette()
+                p1.setColor(self.lox_state.backgroundRole(), Qt.red)
+                self.lox_state.setPalette(p1)
+            if int(A[7]) == 0:
+                p2 = self.lox_state.palette()
+                p2.setColor(self.lox_state.backgroundRole(), Qt.white)
+                self.lox_state.setPalette(p2)
         except:
             pass
 #------Set Progress bar values and Readout values/colors----------
@@ -251,9 +298,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
 #------Disconnected alert -------
-    def alert(self):
-        self.Alert1.show()
-        self.label_6.show()
+    def alert(self, connectionFlag):
+        if connectionFlag == 1
+            self.Alert1.hide()
+            self.label_6.hide()
+        if connectionFlag == 0
+            self.Alert1.show()
+            self.label_6.show()
 
 def main():
     app = QApplication(sys.argv)
