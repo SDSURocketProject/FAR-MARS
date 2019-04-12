@@ -40,7 +40,7 @@ private:
 
     float pressures[4];
 	float thermo[1];
-	uint8_t halleffect[2];
+	int halleffect[2];
 
     int appendNewline;
 	int logCount = 0;
