@@ -203,27 +203,19 @@ mainwindow::logData(){
  */
 void
 mainwindow::getData(){
-	struct sensorMessage message;
+	struct daqSensors message;
 	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
 		return;
 	}
-	if (message.msgID == pressureRawDataID) {
-		parsePressureMessage(&message);
-
-		pressures[CH4_READING] = message.pressurePSIG.methane;
-		pressures[LOX_READING] = message.pressurePSIG.LOX;
-		pressures[HEL_READING] = message.pressurePSIG.helium;
-		pressures[CBR_READING] = message.pressurePSIG.chamber;
+	parsePressureMessage(&message);
 	
-		thermo[1] = message.thermocoupleRaw.uaf;
-
-		halleffect[CH4_VNT] = message.hallEffect.methane;
-		halleffect[LOX_VNT] = message.hallEffect.LOX;
-
-		timestamp = message.timestamp;
-	}
+	//printf("%i\n", message.timestamp);
+	pressures[CH4_READING] = message.PT_methane;
+	pressures[LOX_READING] = message.PT_LOX;
+	pressures[HEL_READING] = message.PT_helium;
+	timestamp = message.timestamp;
 	update_data();
 }
 

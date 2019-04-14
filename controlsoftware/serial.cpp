@@ -12,7 +12,7 @@
  * @return 0: ran correctly, -1: error reading
  */
 int
-readMessage(struct sensorMessage *message){
+readMessage(struct daqSensors *message){
 	char in;
 	u_int8_t messageBuffer[MESSAGE_BUFFER_SIZE];
 	u_int8_t messageBufferIdx = 0;
@@ -25,14 +25,10 @@ readMessage(struct sensorMessage *message){
 	} while (in != ESCAPE_EOM);
 	
 	messageBufferIdx = 0;
-	if (unEscapeBuffer(messageBuffer, MESSAGE_BUFFER_SIZE, messageBuffer, MESSAGE_BUFFER_SIZE) < 0) {
+	if (unEscapeBuffer(messageBuffer, MESSAGE_BUFFER_SIZE, (uint8_t *)message, sizeof(struct daqSensors)) < 0) {
 		return -1;
 	}
-	message->msgID = messageBuffer[messageBufferIdx++];
-	memcpy(&message->timestamp, &messageBuffer[messageBufferIdx], sizeof(message->timestamp));
-	messageBufferIdx += sizeof(message->timestamp);
-	memcpy(&message->accelerationRaw, &messageBuffer[messageBufferIdx], sensorMessageSizes[message->msgID]);
-
+	
 	return 1;
 }
 
@@ -72,20 +68,18 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
  * @param[in, out] *message Pointer to the message to be parsed.
  */
 void
-parsePressureMessage(struct sensorMessage *message){
-	float methane = 0, lox = 0, helium = 0, chamber = 0;
-	methane = (float)message->pressureRaw.methane;
-	lox = (float)message->pressureRaw.LOX;
-	helium = (float)message->pressureRaw.helium;
-	chamber = (float)message->pressureRaw.chamber;
+parsePressureMessage(struct daqSensors *message){
+	float methane = 0, lox = 0, helium = 0;
+	methane = (float)message->PT_methane;
+	lox = (float)message->PT_LOX;
+	helium = (float)message->PT_helium;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	message->pressurePSIG.methane = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
+	message->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	message->pressurePSIG.LOX = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
-	message->pressurePSIG.helium = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
-	message->pressurePSIG.chamber = ((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
-	message->msgID = pressurePSIGDataID;
+	message->PT_LOX = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
+	message->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	
 	return;
 }
 

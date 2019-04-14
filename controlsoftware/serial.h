@@ -9,10 +9,19 @@
 #include "messages.h"
 #include "com.h"
 
+struct daqSensors {
+	uint32_t timestamp;
+	int32_t TC_uaf;
+	uint8_t HALL_methane, HALL_LOX;
+	uint16_t BATT_voltage;
+	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
+} __attribute__((packed));
+
 void parseMessage(char *message, float *output, uint32_t *timestamp);
-void parsePressureMessage(struct sensorMessage *message);
-int readMessage(struct sensorMessage *message);
+void parsePressureMessage(struct daqSensors *message);
+int readMessage(struct daqSensors *message);
 int uart_init(void);
+
 
 static int fd;
 static int rate = 0;
