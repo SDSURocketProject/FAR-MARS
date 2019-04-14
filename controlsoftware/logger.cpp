@@ -40,7 +40,10 @@ logger::openFile(){
  */
 void
 logger::closeFile(){
-    if (!state) { mainwindow::showWarningBox("File already closed"); return; }
+    if (!state) {
+	//mainwindow::showWarningBox("File already closed");
+	return;
+    }
     file.close();
     state = CLOSED;
 }
