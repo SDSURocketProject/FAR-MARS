@@ -69,16 +69,18 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
  */
 void
 parsePressureMessage(struct daqSensors *message){
-	float methane = 0, lox = 0, helium = 0;
+	float methane = 0, lox = 0, helium = 0, chamber = 0;
 	methane = (float)message->PT_methane;
 	lox = (float)message->PT_LOX;
 	helium = (float)message->PT_helium;
+	chamber = (float)message->PT_chamber;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	message->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	message->PT_LOX = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
 	message->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
+	message->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
 	
 	return;
 }

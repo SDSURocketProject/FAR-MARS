@@ -215,6 +215,7 @@ mainwindow::getData(){
 	pressures[CH4_READING] = message.PT_methane;
 	pressures[LOX_READING] = message.PT_LOX;
 	pressures[HEL_READING] = message.PT_helium;
+	pressures[CBR_READING] = message.PT_chamber;
 	timestamp = message.timestamp;
 	update_data();
 }
