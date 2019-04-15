@@ -55,11 +55,6 @@ livePlot::setupPlot(){
 	helChart->axisY()->setMin(0.0);
 	cbrChart->axisY()->setMin(0.0);
 
-	ch4Chart->axisY()->setMax(15.0);
-	loxChart->axisY()->setMax(15.0);
-	helChart->axisY()->setMax(30.0);
-	cbrChart->axisY()->setMax(15.0);
-
 	ch4Chart->legend()->hide();
 	loxChart->legend()->hide();
 	helChart->legend()->hide();
@@ -124,34 +119,6 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	loxChart->axisY()->setMin(0.0);
 	helChart->axisY()->setMin(0.0);
 	cbrChart->axisY()->setMin(0.0);
-
-	if ((int)data[0] > 15 && (int)data[0] > ch4Max){
-	    ch4Max = (int)data[0];
-	    ch4Chart->axisY()->setMax(ch4Max);
-	} else {
-	    ch4Chart->axisY()->setMax(15.0);
-	}
-
-	if ((int)data[1] > 15 && (int)data[1] > loxMax){
-	    loxMax = (int)data[1];
-	    loxChart->axisY()->setMax(loxMax);
-	} else {
-	    loxChart->axisY()->setMax(15.0);
-	}
-
-	if ((int)data[2] > 30 && (int)data[2] > helMax){
-	    helMax = (int)data[2];
-	    helChart->axisY()->setMax(helMax);
-	} else {
-	    helChart->axisY()->setMax(30.0);
-	}
-
-	if ((int)data[3] > 15 && (int)data[3] > cbrMax){
-	    cbrMax = (int)data[3];
-	    cbrChart->axisY()->setMax(cbrMax);
-	} else {
-	    cbrChart->axisY()->setMax(15.0);
-	}
 
 	ch4View->repaint();
 	loxView->repaint();
