@@ -38,7 +38,8 @@ enum pressures {
 	CH4_READING,
 	LOX_READING,
 	HEL_READING,
-	CBR_READING
+	CBR_READING,
+	REG_READING
 };
 
 enum halls {

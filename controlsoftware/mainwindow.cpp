@@ -12,14 +12,14 @@
  * @param QWidget* parent QWidget
  */
 mainwindow::mainwindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::mainwindow)
+	QMainWindow(parent),
+	ui(new Ui::mainwindow)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    timer->start(50);
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
+	timer->start(50);
 	logDataBool = 0;
 	plotBool = 0;
 	serial_timeout = 0;
@@ -92,7 +92,7 @@ mainwindow::mainwindow(QWidget *parent) :
  */
 mainwindow::~mainwindow()
 {
-    delete ui;
+	delete ui;
 }
 
 /**
@@ -105,9 +105,9 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    ch4Needle->setCurrentValue(pressures[CH4_READING]);
-    loxNeedle->setCurrentValue(pressures[LOX_READING]);
-    helNeedle->setCurrentValue(pressures[HEL_READING]);
+	ch4Needle->setCurrentValue(pressures[CH4_READING]);
+	loxNeedle->setCurrentValue(pressures[LOX_READING]);
+	helNeedle->setCurrentValue(pressures[HEL_READING]);
 	thermobar->setValue(pressures[CBR_READING]);
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
@@ -121,9 +121,9 @@ mainwindow::update_data(){
  */
 void
 mainwindow::showWarningBox(QString message){
-    warning *warningPopup = new warning();
-    warningPopup->setWarning(message);
-    warningPopup->show();
+	warning *warningPopup = new warning();
+	warningPopup->setWarning(message);
+	warningPopup->show();
 }
 
 /**
@@ -132,14 +132,14 @@ mainwindow::showWarningBox(QString message){
  */
 void
 mainwindow::onTimer(){
-    if (logDataBool){
-        if (serial_timeout > 50){
+	if (logDataBool){
+		if (serial_timeout > 50){
 			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
 			return;
 		}
 		logData();
 
-    }
+	}
 	if (plotBool){
 		updatePlots();
 	}
@@ -156,22 +156,22 @@ mainwindow::onTimer(){
 void
 mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
-    logDataBool = arg1;
-    if (logDataBool) {
+	logDataBool = arg1;
+	if (logDataBool) {
 		int u = uart_init();
 		if (u != 0){
 			showWarningBox("Serial Connection Not Opened");
 			logDataBool = 0;
 			return;
 		}
-        QString qfilename = this->ui->logFileNameBox->displayText();
+		QString qfilename = this->ui->logFileNameBox->displayText();
 		const char *filename = qfilename.toStdString().c_str();
-        log.setFile(filename);
-        start = std::chrono::high_resolution_clock::now();
+		log.setFile(filename);
+		start = std::chrono::high_resolution_clock::now();
 		log.openFile();
 		return;
 	}
-    log.closeFile();
+	log.closeFile();
 }
 
 /**
@@ -189,9 +189,10 @@ mainwindow::logData(){
 	getData();
 
 	log.appendData(time, 1, 0);
-	log.appendData(pressures, 4, 0);
+	log.appendData(pressures, 5, 0);
 	log.appendData(thermo, 1, 0);
-	log.appendData(halleffect, 2, 1);
+	log.appendData(halleffect, 2, 0);
+	log.appendData(battVoltage, 1, 1);
 }
 
 /**
@@ -216,7 +217,12 @@ mainwindow::getData(){
 	pressures[LOX_READING] = message.PT_LOX;
 	pressures[HEL_READING] = message.PT_helium;
 	pressures[CBR_READING] = message.PT_chamber;
-	timestamp = message.timestamp;
+	pressures[REG_READING] = message.PT_heliumReg;
+	halleffect[CH4_VNT]    = message.HALL_methane;
+	halleffect[LOX_VNT]    = message.HALL_LOX;
+	thermo[UAF]            = message.TC_uaf
+	battVoltage[1]         = message.BATT_voltage;
+	timestamp              = message.timestamp;
 	update_data();
 }
 
