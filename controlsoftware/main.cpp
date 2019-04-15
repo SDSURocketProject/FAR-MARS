@@ -6,6 +6,8 @@
 
 #include "mainwindow.h"
 #include <QApplication>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QChartView>
 
 int
 main(int argc, char *argv[])

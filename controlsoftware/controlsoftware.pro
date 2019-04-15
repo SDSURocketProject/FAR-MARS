@@ -27,7 +27,6 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    warning.cpp \
     logger.cpp \
     csv.cpp \
     serial.cpp \
@@ -38,7 +37,6 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    warning.h \
     logger.h \
     csv.h \
     serial.h \
@@ -50,7 +48,6 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui \
-    warning.ui \
     liveplot.ui
 
 # Default rules for deployment.

@@ -9,13 +9,13 @@
 #include <qcgaugewidget.h>
 #include <time.h>
 #include "csv.h"
+
 #include "liveplot.h"
 #include "logger.h"
 #include "serial.h"
-#include "warning.h"
 
 namespace Ui {
-class mainwindow;
+	class mainwindow;
 }
 
 class mainwindow : public QMainWindow
@@ -24,7 +24,6 @@ class mainwindow : public QMainWindow
 
 public:
 	explicit mainwindow(QWidget *parent = nullptr);
-	static void showWarningBox(QString);
 	~mainwindow();
 
 private:
@@ -35,7 +34,6 @@ private:
 	void update_data();
 	void updatePlots();
 
-	warning *warningPopup;
 	livePlot *plot;
 
 	float pressures[4];

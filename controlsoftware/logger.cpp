@@ -9,8 +9,8 @@
  * Logger Class Constructor
  */
 logger::logger(){
-    filename = "test.txt";
-    state = CLOSED;      
+	filename = "test.txt";
+	state = CLOSED;	  
 }
 
 /**
@@ -21,7 +21,9 @@ logger::logger(){
  */
 void
 logger::setFile(const char *newFilename){
-    if (state) { mainwindow::showWarningBox("File open. Close before changing file"); return; }
+	if (state) {
+		return;
+	}
 	filename = const_cast<char *>(newFilename);
 }
 
@@ -30,9 +32,11 @@ logger::setFile(const char *newFilename){
  */
 void
 logger::openFile(){
-    if (state) { mainwindow::showWarningBox("File already open. Close before opening again"); return; }
-    file.open(filename, std::ios::app);
-    state = OPEN;
+	if (state) {
+		return;
+	}
+	file.open(filename, std::ios::app);
+	state = OPEN;
 }
 
 /**
@@ -40,12 +44,11 @@ logger::openFile(){
  */
 void
 logger::closeFile(){
-    if (!state) {
-	//mainwindow::showWarningBox("File already closed");
-	return;
-    }
-    file.close();
-    state = CLOSED;
+	if (!state) {
+		return;
+	}
+	file.close();
+	state = CLOSED;
 }
 
 /**
@@ -55,7 +58,7 @@ logger::closeFile(){
  */
 int
 logger::isOpen(){
-    return state;
+	return state;
 }
 
 /**
@@ -67,9 +70,11 @@ logger::isOpen(){
  */
 void
 logger::appendData(float data[], int vals){
-    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	if (!state) {
+		return;
+	}
 	std::string str = csvformat(data, vals);
-    file << str.c_str();
+	file << str.c_str();
 }
 
 /**
@@ -82,9 +87,11 @@ logger::appendData(float data[], int vals){
  */
 void
 logger::appendData(float data[], int vals, int newLine){
-    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	if (!state) {
+		return;
+	}
 	std::string str = csvformat(data, vals, newLine);
-    file << str.c_str();
+	file << str.c_str();
 }
 
 /**
@@ -97,9 +104,11 @@ logger::appendData(float data[], int vals, int newLine){
  */
 void
 logger::appendData(int data[], int vals, int newLine){
-    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	if (!state) {
+		return;
+	}
 	std::string str = csvformat(data, vals, newLine);
-    file << str.c_str();
+	file << str.c_str();
 }
 
 /**
@@ -112,9 +121,11 @@ logger::appendData(int data[], int vals, int newLine){
  */
 void
 logger::appendData(long time[], int vals, int newLine){
-    if (!state) { mainwindow::showWarningBox("File not open"); return; }
+	if (!state) {
+		return;
+	}
 	std::string str = csvformat(time, newLine);
-    file << str.c_str();
+	file << str.c_str();
 }
 
 /**
@@ -123,6 +134,8 @@ logger::appendData(long time[], int vals, int newLine){
  */
 void
 logger::newLine(){
-    if (!state) { mainwindow::showWarningBox("File not open"); return; }
-    file << '\n';
+	if (!state) {
+		return;
+	}
+	file << '\n';
 }

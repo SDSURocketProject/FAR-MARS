@@ -114,19 +114,6 @@ mainwindow::update_data(){
 }
 
 /**
- * Popup Warning Box Generator
- * Generates a popup displaying the QString supplied
- *
- * @param QString message to display on warning popup
- */
-void
-mainwindow::showWarningBox(QString message){
-	warning *warningPopup = new warning();
-	warningPopup->setWarning(message);
-	warningPopup->show();
-}
-
-/**
  * Main timer handler
  * Runs whenever the main timer timeouts to run repeating tasks
  */
@@ -160,7 +147,6 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 	if (logDataBool) {
 		int u = uart_init();
 		if (u != 0){
-			showWarningBox("Serial Connection Not Opened");
 			logDataBool = 0;
 			return;
 		}
@@ -220,7 +206,7 @@ mainwindow::getData(){
 	pressures[REG_READING] = message.PT_heliumReg;
 	halleffect[CH4_VNT]    = message.HALL_methane;
 	halleffect[LOX_VNT]    = message.HALL_LOX;
-	thermo[UAF]            = message.TC_uaf
+	thermo[UAF]            = message.TC_uaf;
 	battVoltage[1]         = message.BATT_voltage;
 	timestamp              = message.timestamp;
 	update_data();

@@ -47,3 +47,6 @@ enum halls {
 	LOX_VNT
 };
 
+enum thermos {
+	UAF
+};
