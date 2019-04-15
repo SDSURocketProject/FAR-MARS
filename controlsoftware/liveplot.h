@@ -26,6 +26,8 @@ public:
 	void setupPlot();
 
 private:
+	int ch4Max = 0, loxMax = 0, helMax = 0, cbrMax = 0;
+
 	Ui::livePlot *ui;
 
 	QLineSeries *ch4Series;
