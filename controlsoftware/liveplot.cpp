@@ -126,29 +126,29 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	cbrChart->axisY()->setMin(0.0);
 
 	if ((int)data[0] > 15 && (int)data[0] > ch4Max){
-	    ch4Chart->axisY()->setMax((int)data[0]);
 	    ch4Max = (int)data[0];
+	    ch4Chart->axisY()->setMax(ch4Max);
 	} else {
 	    ch4Chart->axisY()->setMax(15.0);
 	}
 
 	if ((int)data[1] > 15 && (int)data[1] > loxMax){
-	    loxChart->axisY()->setMax((int)data[1]);
 	    loxMax = (int)data[1];
+	    loxChart->axisY()->setMax(loxMax);
 	} else {
 	    loxChart->axisY()->setMax(15.0);
 	}
 
 	if ((int)data[2] > 30 && (int)data[2] > helMax){
-	    helChart->axisY()->setMax((int)data[2]);
 	    helMax = (int)data[2];
+	    helChart->axisY()->setMax(helMax);
 	} else {
 	    helChart->axisY()->setMax(30.0);
 	}
 
 	if ((int)data[3] > 15 && (int)data[3] > cbrMax){
-	    cbrChart->axisY()->setMax((int)data[3]);
 	    cbrMax = (int)data[3];
+	    cbrChart->axisY()->setMax(cbrMax);
 	} else {
 	    cbrChart->axisY()->setMax(15.0);
 	}
