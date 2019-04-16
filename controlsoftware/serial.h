@@ -6,7 +6,6 @@
 #include <string>
 #include <termios.h>
 #include <unistd.h>
-#include "messages.h"
 #include "com.h"
 
 struct daqSensors {

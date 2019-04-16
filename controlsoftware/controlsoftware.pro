@@ -32,7 +32,6 @@ SOURCES += \
     serial.cpp \
     qcgaugewidget.cpp \
     liveplot.cpp \
-    messages.cpp \
     com.cpp
 
 HEADERS += \
@@ -42,9 +41,7 @@ HEADERS += \
     serial.h \
     qcgaugewidget.h \
     liveplot.h \
-    messages.h \
     com.h \
-    bno055.h \
 
 FORMS += \
         mainwindow.ui \

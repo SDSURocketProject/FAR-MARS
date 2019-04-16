@@ -1,6 +1,4 @@
 #include "serial.h"
-#include "messages.h"
-#include "com.h"
 
 #define MESSAGE_BUFFER_SIZE 100
 
