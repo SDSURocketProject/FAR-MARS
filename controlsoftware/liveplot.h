@@ -5,7 +5,6 @@
 #include <QMainWindow>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
-#include <QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -32,22 +31,17 @@ private:
 	QLineSeries *ch4Series;
 	QLineSeries *loxSeries;
 	QLineSeries *helSeries;
+	QLineSeries *cbrSeries;
 
 	QChart *ch4Chart;
 	QChart *loxChart;
 	QChart *helChart;
+	QChart *cbrChart;
 
 	QChartView *ch4View;
 	QChartView *loxView;
 	QChartView *helView;
-
-	QValueAxis *ch4ValueAxis;
-	QValueAxis *loxValueAxis;
-	QValueAxis *helValueAxis;
-
-	qreal ch4Max;
-	qreal loxMax;
-	qreal helMax;
+	QChartView *cbrView;
 };
 
 #endif // LIVEPLOT_H

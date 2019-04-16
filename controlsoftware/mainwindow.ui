@@ -20,10 +20,13 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="logFileNameBox">
+      <item row="4" column="2">
+       <widget class="QLCDNumber" name="chamberLCD"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="livePlotButton">
         <property name="text">
-         <string>log_data.csv</string>
+         <string>Open Live Plot</string>
         </property>
        </widget>
       </item>
@@ -43,6 +46,13 @@
         </property>
        </layout>
       </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="logFileNameBox">
+        <property name="text">
+         <string>log_data.csv</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="0">
        <widget class="QCheckBox" name="logDataCheckbox">
         <property name="text">
@@ -50,10 +60,29 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="livePlotButton">
+      <item row="3" column="2">
+       <widget class="QLabel" name="chamberLabel">
         <property name="text">
-         <string>Open Live Plot</string>
+         <string>Chamber</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLCDNumber" name="tcLCD"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLCDNumber" name="batteryLCD"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="batteryLabel">
+        <property name="text">
+         <string>Battery</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>

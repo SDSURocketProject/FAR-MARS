@@ -28,34 +28,42 @@ livePlot::setupPlot(){
 	ch4Series = new QLineSeries();
 	loxSeries = new QLineSeries();
 	helSeries = new QLineSeries();
+	cbrSeries = new QLineSeries();
 
 	ch4Chart = new QChart();
 	loxChart = new QChart();
 	helChart = new QChart();
+	cbrChart = new QChart();
 
 	ch4Chart->addSeries(ch4Series);
 	loxChart->addSeries(loxSeries);
 	helChart->addSeries(helSeries);
+	cbrChart->addSeries(cbrSeries);
 
 	ch4Chart->setTitle("Methane");
 	loxChart->setTitle("LOX");
 	helChart->setTitle("Helium");
+	cbrChart->setTitle("Chamber Pressure");
 
 	ch4Chart->createDefaultAxes();
 	loxChart->createDefaultAxes();
 	helChart->createDefaultAxes();
+	cbrChart->createDefaultAxes();
 
 	ch4Chart->axisY()->setMin(0.0);
 	loxChart->axisY()->setMin(0.0);
 	helChart->axisY()->setMin(0.0);
+	cbrChart->axisY()->setMin(0.0);
 
 	ch4Chart->legend()->hide();
 	loxChart->legend()->hide();
 	helChart->legend()->hide();
+	cbrChart->legend()->hide();
 
 	ch4View = new QChartView(ch4Chart);
 	loxView = new QChartView(loxChart);
 	helView = new QChartView(helChart);
+	cbrView = new QChartView(cbrChart);
 
 	/** Antialiasing causes a massive performance hit on my machine **/
 	//ch4View->setRenderHint(QPainter::Antialiasing);
@@ -65,6 +73,7 @@ livePlot::setupPlot(){
 	this->ui->chartDisplay->addWidget(ch4View);
 	this->ui->chartDisplay->addWidget(loxView);
 	this->ui->chartDisplay->addWidget(helView);
+	this->ui->chartDisplay->addWidget(cbrView);
 }
 
 /**
@@ -77,44 +86,42 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	QPointF ch4Point(*timestamp, (int)data[0]);
 	QPointF loxPoint(*timestamp, (int)data[1]);
 	QPointF helPoint(*timestamp, (int)data[2]);
+	QPointF cbrPoint(*timestamp, (int)data[3]);
 
 	ch4Series->append(ch4Point);
 	loxSeries->append(loxPoint);
 	helSeries->append(helPoint);
-
-	if ((double)data[0] > ch4Max){
-		ch4Max = (double)data[0];
-	}
-	if ((double)data[1] > loxMax){
-		loxMax = (double)data[1];
-	}
-	if ((double)data[2] > helMax){
-		helMax = (double)data[2];
-	}
+	cbrSeries->append(cbrPoint);
 
 	if (ch4Series->count() > 1200){
 		ch4Series->remove(0);
 		loxSeries->remove(0);
 		helSeries->remove(0);
+		cbrSeries->remove(0);
 	}
 
 	ch4Chart->removeSeries(ch4Series);
 	loxChart->removeSeries(loxSeries);
 	helChart->removeSeries(helSeries);
+	cbrChart->removeSeries(cbrSeries);
 
 	ch4Chart->addSeries(ch4Series);
 	loxChart->addSeries(loxSeries);
 	helChart->addSeries(helSeries);
+	cbrChart->addSeries(cbrSeries);
 
 	ch4Chart->createDefaultAxes();
 	loxChart->createDefaultAxes();
 	helChart->createDefaultAxes();
+	cbrChart->createDefaultAxes();
 
 	ch4Chart->axisY()->setMin(0.0);
 	loxChart->axisY()->setMin(0.0);
 	helChart->axisY()->setMin(0.0);
+	cbrChart->axisY()->setMin(0.0);
 
 	ch4View->repaint();
 	loxView->repaint();
 	helView->repaint();
+	cbrView->repaint();
 }

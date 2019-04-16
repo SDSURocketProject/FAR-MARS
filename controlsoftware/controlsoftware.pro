@@ -27,30 +27,24 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    warning.cpp \
     logger.cpp \
     csv.cpp \
     serial.cpp \
     qcgaugewidget.cpp \
     liveplot.cpp \
-    messages.cpp \
     com.cpp
 
 HEADERS += \
         mainwindow.h \
-    warning.h \
     logger.h \
     csv.h \
     serial.h \
     qcgaugewidget.h \
     liveplot.h \
-    messages.h \
     com.h \
-    bno055.h \
 
 FORMS += \
         mainwindow.ui \
-    warning.ui \
     liveplot.ui
 
 # Default rules for deployment.

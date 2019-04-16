@@ -29,6 +29,30 @@ csvformat(float data[], int vals){
 }
 
 /**
+ * Format longs as csv with no newline
+ *
+ * @since v0.5.0
+ * @param long[] longs to format
+ * @param int number of values to process
+ * @return csv formatted string
+ */
+std::string
+csvformat(long data[], int vals){
+	std::string csv;
+	int items = vals;
+	for (int i = 0; i < items; i++){
+		char buf[100];
+		sprintf(buf, "%ld", data[i]);
+		std::string str(buf);
+		csv.append(str);
+		if (i < items-1){
+			csv.append(",");
+		}
+	}
+	return csv;
+}
+
+/**
  * Format integers as csv with no newline
  *
  * @since v0.3.2
@@ -54,16 +78,36 @@ csvformat(int data[], int vals){
 
 
 /**
- * Format floats as csv with no newline
+ * Format floats as csv with optional newline
  *
  * @since v0.3.2
- * @param float[] integers to format
+ * @param float[] floats to format
  * @param int number of values to process
  * @param bool whether to append newline
  * @return csv formatted string
  */
 std::string
 csvformat(float data[], int vals, bool newline){
+	std::string csv = csvformat(data, vals);
+	if (newline){
+		csv.append("\n");
+	}
+	else {
+		csv.append(",");
+	}
+	return csv;
+}
+
+/**
+ * Format long as csv with optional newline
+ *
+ * @since v0.5.0
+ * @param long long to format
+ * @param bool whether to append newline
+ * @return csv formatted string
+ */
+std::string
+csvformat(long data[], int vals, bool newline){
 	std::string csv = csvformat(data, vals);
 	if (newline){
 		csv.append("\n");
