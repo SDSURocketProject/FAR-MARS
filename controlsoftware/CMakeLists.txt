@@ -34,7 +34,7 @@ set(CMAKE_AUTOUIC ON)
 
 add_executable(controlsoftware main.cpp mainwindow.cpp ${SOURCES} ${HEADER_FILES})
 
-target_include_directories(controlsoftware include/)
+target_include_directories(controlsoftware PUBLIC include/)
 
 target_link_libraries(controlsoftware
 	PUBLIC
