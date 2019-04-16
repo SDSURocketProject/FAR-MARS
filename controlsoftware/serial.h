@@ -16,8 +16,16 @@ struct daqSensors {
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 } __attribute__((packed));
 
+struct daqParsed {
+	uint32_t timestamp;
+	int32_t TC_uaf;
+	uint8_t HALL_methane, HALL_LOX;
+	float BATT_voltage;
+	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
+};
+
 void parseMessage(char *message, float *output, uint32_t *timestamp);
-void parsePressureMessage(struct daqSensors *message);
+void parsePressureMessage(struct daqSensors*, struct daqParsed*);
 int readMessage(struct daqSensors *message);
 int uart_init(void);
 
@@ -34,6 +42,8 @@ static int rate = 0;
 #define PRESSURE_LOX_BIAS 41.0f
 #define PRESSURE_HELIUM_BIAS 0.0f
 #define PRESSURE_CHAMBER_BIAS 0.0f
+#define BATTERY_DIVISION_CONSTANT 4095.0f
+#define BATTERY_MULTIPLICATION_CONSTANT 4.959f*11.0f
 
 enum pressures {
 	CH4_READING,

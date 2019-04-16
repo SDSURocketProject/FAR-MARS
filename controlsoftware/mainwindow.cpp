@@ -192,24 +192,28 @@ mainwindow::logData(){
 void
 mainwindow::getData(){
 	struct daqSensors message;
+	struct daqParsed readings;
+
 	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
 		return;
 	}
-	parsePressureMessage(&message);
+
+	parsePressureMessage(&message, &readings);
 	
 	//printf("%i\n", message.timestamp);
-	pressures[CH4_READING] = message.PT_methane;
-	pressures[LOX_READING] = message.PT_LOX;
-	pressures[HEL_READING] = message.PT_helium;
-	pressures[CBR_READING] = message.PT_chamber;
-	pressures[REG_READING] = message.PT_heliumReg;
-	halleffect[CH4_VNT]    = message.HALL_methane;
-	halleffect[LOX_VNT]    = message.HALL_LOX;
-	thermo[UAF]            = message.TC_uaf;
-	battVoltage[1]         = message.BATT_voltage;
-	timestamp              = message.timestamp;
+	pressures[CH4_READING] = readings.PT_methane;
+	pressures[LOX_READING] = readings.PT_LOX;
+	pressures[HEL_READING] = readings.PT_helium;
+	pressures[CBR_READING] = readings.PT_chamber;
+	pressures[REG_READING] = readings.PT_heliumReg;
+	halleffect[CH4_VNT]    = readings.HALL_methane;
+	halleffect[LOX_VNT]    = readings.HALL_LOX;
+	thermo[UAF]            = readings.TC_uaf;
+	battVoltage[0]         = readings.BATT_voltage;
+	timestamp              = readings.timestamp;
+	printf("BATT: %f\n", battVoltage[0]);
 	update_data();
 }
 
