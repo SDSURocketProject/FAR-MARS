@@ -3,20 +3,22 @@
 ## Linux Build Instructions
 
 1. go to <projectroot>/controlsoftware
-1. run `qmake`
+1. run `qmake` (qmake may be aliased along the lines of `qmake-qt5` on some systems)
 1. run `make`
 
 ## Operation of controlsoftware:
 
-1. ensure serial cable is available as /dev/ttyUSB0
-2. run controlsoftware binary as root
-3. put desired filename into box above log data checkbox
-4. click 'log data' checkbox
-5. uncheck the box when you are done. The log can be restarted, and the program will append new data to the end. This will not effect the plotter
+1. ensure serial cable is available as /dev/ttyUSB0 (this is configurable)
+1. run controlsoftware binary as root
+1. put desired filename into box above log data checkbox
+1. click 'log data' checkbox
+1. click the live plot button to toggle the live plot window
+1. uncheck the box when you are done. The log can be restarted, and the program will append new data to the end. This will not effect the plotter
 
-More information available at http://www.alefir.net:443/rocket/controlsoftware
+More information available on the SDSURP Wiki
 
 ## Operation of python plotter:
 
-1. create a new line at the top of the log file, with the following: `TIME,CH4,LOX,HEL,CBR`
+1. If the log has not been preprocessed (do NOT run this twice on the same file):
+	`python data_prepare.py /path/to/logfile.csv`
 1. `python plot.py /path/to/logfile.csv`
