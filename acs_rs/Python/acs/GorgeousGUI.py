@@ -9,9 +9,11 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUiType
-from PyQt5.QtCore import QThread, pyqtSignal, QPropertyAnimation
+from PyQt5.QtCore import QThread, pyqtSignal
+import RPi.GPIO as GPIO
+import threading
 
-qtCreatorFile = "RocketGUI1.ui"
+qtCreatorFile = "RocketGUIv2.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 HOST = "192.168.0.10"
@@ -19,6 +21,10 @@ port = 1883
 TOPIC_1 = "RELAY"
 TOPIC_2 = "DATA"
 TOPIC_3 = "STATE"
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(21, GPIO.OUT)
+GPIO.output(21, 1)
 
 class mainthread(QThread):
     STATEsignal = pyqtSignal('PyQt_PyObject')
@@ -31,22 +37,26 @@ class mainthread(QThread):
 
     def connect1(self):
         self.mqtt_client = mqtt.Client()
-        self.mqtt_client.on_message = self.subscrib1
-        self.mqtt_client.on_disconnect = self.connect
-        self.mqtt_client.on_disconnect = self.disconnect
-        self.mqtt_client.connect(HOST, port=port, keepalive=60)
-        self.mqtt_client.subscribe(TOPIC_2)
-        self.mqtt_client.subscribe(TOPIC_3)
+#        self.mqtt_client.on_message = self.subscrib1
+        self.mqtt_client.on_connect = self.on_connect
+        self.mqtt_client.on_disconnect = self.on_disconnect
+        self.mqtt_client.connect(HOST, port=port, keepalive=4)
+#        self.mqtt_client.subscribe(TOPIC_2)
+#        self.mqtt_client.subscribe(TOPIC_3)
         self.mqtt_client.loop_start()
-        print("connected")
 
-    def disconnect(self):
+    def on_disconnect(self, mqtt_client, userdata, flags, rc=0):
         connectionFlag = 0
         self.disconnectSignal.emit(connectionFlag)
+        print("disconnected")
 
-    def connect(self):
+    def on_connect(self, mqtt_client, userdata, flags, rc):
+        self.mqtt_client.on_message = self.subscrib1
+        self.mqtt_client.subscribe(TOPIC_2) 
+        self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
+        print("connected")
 
     def subscrib1(self, mqtt_client, userdata, msg):
         try:
@@ -116,11 +126,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p2.setColor(self.Pressure_Key.backgroundRole(), Qt.white)
                 self.Pressure_Key.setPalette(p2)
 #-----------------IGN STATE------------------------------------
-            if int(A[2]) == 1:
+            if int(A[2]) == 0:
                 p1 = self.ign_state.palette()
                 p1.setColor(self.ign_state.backgroundRole(), Qt.red)
                 self.ign_state.setPalette(p1)
-            if int(A[2]) == 0:
+            if int(A[2]) == 1:
                 p2 = self.ign_state.palette()
                 p2.setColor(self.ign_state.backgroundRole(), Qt.white)
                 self.ign_state.setPalette(p2)
@@ -143,11 +153,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p2.setColor(self.MPV_Safety.backgroundRole(), Qt.white)
                 self.MPV_Safety.setPalette(p2)
 #-----------------CH4 STATE------------------------------------
-            if int(A[5]) == 1:
+            if int(A[5]) == 0:
                 p1 = self.ch4_state.palette()
                 p1.setColor(self.ch4_state.backgroundRole(), Qt.red)
                 self.ch4_state.setPalette(p1)
-            if int(A[5]) == 0:
+            if int(A[5]) == 1:
                 p2 = self.ch4_state.palette()
                 p2.setColor(self.ch4_state.backgroundRole(), Qt.white)
                 self.ch4_state.setPalette(p2)
@@ -161,11 +171,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 p2.setColor(self.Ign_Safety.backgroundRole(), Qt.white)
                 self.Ign_Safety.setPalette(p2)
 #-----------------LOX STATE----------------------------------
-            if int(A[7]) == 1:
+            if int(A[7]) == 0:
                 p1 = self.lox_state.palette()
                 p1.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p1)
-            if int(A[7]) == 0:
+            if int(A[7]) == 1:
                 p2 = self.lox_state.palette()
                 p2.setColor(self.lox_state.backgroundRole(), Qt.white)
                 self.lox_state.setPalette(p2)
@@ -204,6 +214,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
+                self.beepCall(1)
             if 3500 <= float(C[0]) < 4500:
                 self.Readout1.setAutoFillBackground(True)
                 c = self.Readout1.palette()
@@ -217,7 +228,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
 #------PNU-------
-            if float(C[2]) > 150:
+            if float(C[2]) > 160:
                 self.Readout2.setAutoFillBackground(True)
                 h = self.Readout2.palette()
                 h.setColor(self.Readout2.backgroundRole(), Qt.red)
@@ -229,6 +240,12 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
+            if 150 < float(C[2]) <= 160:
+                self.Readout2.setAutoFillBackground(True)
+                h = self.Readout2.palette()
+                h.setColor(self.Readout2.backgroundRole(), Qt.green)
+                self.Readout2.setPalette(h)
+                self.progressBar2.setValue(150)
             if float(C[2]) < 135:
                 self.Readout2.setAutoFillBackground(True)
                 h = self.Readout2.palette()
@@ -265,6 +282,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_2.setText('500 PSI')
 #------Check Box Functions--------
     def radio4(self):
+        self.beepCall(1)
         self.progressBar3.hide()
         self.pstate_label_5.hide()
         self.Readout3.hide()
@@ -297,14 +315,26 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Readout1.move(20, 230)
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
+
+    def beepCall(self, x):
+        t1 = threading.Thread(target = self.beep(x))
+        t1.start()
+
+    def beep(self, x):
+        if x == 1:
+             GPIO.output(21, 0)
+             time.sleep(0.5)
+             GPIO.output(21,1)
+
 #------Disconnected alert -------
     def alert(self, connectionFlag):
-        if connectionFlag == 1
+        if connectionFlag == 1:
             self.Alert1.hide()
             self.label_6.hide()
-        if connectionFlag == 0
+        if connectionFlag == 0:
             self.Alert1.show()
             self.label_6.show()
+            self.beepCall(1)
 
 def main():
     app = QApplication(sys.argv)
