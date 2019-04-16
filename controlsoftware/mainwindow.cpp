@@ -111,6 +111,7 @@ mainwindow::update_data(){
 	thermobar->setValue(pressures[CBR_READING]);
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
+	ui->batteryLCD->display(battVoltage[0]);
 }
 
 /**
