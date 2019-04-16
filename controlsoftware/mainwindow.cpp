@@ -2,17 +2,14 @@
 #include "ui_mainwindow.h"
 
 mainwindow::mainwindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::mainwindow)
+	QMainWindow(parent),
+	ui(new Ui::mainwindow)
 {
-    ui->setupUi(this);
-    for (int i = 0; i <= int(sizeof(data)/sizeof(data[0])); i++){
-        data[i] = 0; /* Set data values to zero */
-    }
+	ui->setupUi(this);
 	/* Initialize new QTimer with 0.1 second timeout and connect to onTimer() slot */
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    timer->start(50);
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
+	timer->start(50);
 	logDataBool = 0;
 	plotBool = 0;
 	serial_timeout = 0;
@@ -71,11 +68,18 @@ mainwindow::mainwindow(QWidget *parent) :
 	helNeedle->setValueRange(0,6000);
 	//helNeedle->addBackground(7);
 	ui->data->addWidget(helGauge);
+
+	thermobar = new QProgressBar;
+	thermobar->setOrientation(Qt::Vertical);
+	thermobar->setMinimum(0);
+	thermobar->setMaximum(1500);
+	thermobar->setTextVisible(true);
+	ui->data->addWidget(thermobar);
 }
 
 mainwindow::~mainwindow()
 {
-    delete ui;
+	delete ui;
 }
 
 /**
@@ -88,23 +92,13 @@ mainwindow::update_data(){
 		return;
 	}
 	logCount = 0;
-    ch4Needle->setCurrentValue((data[0]));
-    loxNeedle->setCurrentValue((data[1]));
-    helNeedle->setCurrentValue((data[2]));
-}
-
-
-/**
- * Popup Warning Box Generator
- * Generates a popup displaying the QString supplied
- *
- * @param QString message to display on warning popup
- */
-void
-mainwindow::showWarningBox(QString message){
-    warning *warningPopup = new warning();
-    warningPopup->setWarning(message);
-    warningPopup->show();
+	ch4Needle->setCurrentValue(pressures[CH4_READING]);
+	loxNeedle->setCurrentValue(pressures[LOX_READING]);
+	helNeedle->setCurrentValue(pressures[HEL_READING]);
+	thermobar->setValue(pressures[CBR_READING]);
+	ui->chamberLCD->display(pressures[CBR_READING]);
+	ui->tcLCD->display(thermo[0]);
+	ui->batteryLCD->display(battVoltage[0]);
 }
 
 /**
@@ -113,14 +107,14 @@ mainwindow::showWarningBox(QString message){
  */
 void
 mainwindow::onTimer(){
-    if (logDataBool){
-        if (serial_timeout > 50){
+	if (logDataBool){
+		if (serial_timeout > 50){
 			this->ui->logDataCheckbox->setCheckState(Qt::Unchecked);
 			return;
 		}
 		logData();
 
-    }
+	}
 	if (plotBool){
 		updatePlots();
 	}
@@ -137,22 +131,21 @@ mainwindow::onTimer(){
 void
 mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 {
-    logDataBool = arg1;
-    if (logDataBool) {
+	logDataBool = arg1;
+	if (logDataBool) {
 		int u = uart_init();
 		if (u != 0){
-			showWarningBox("Serial Connection Not Opened");
 			logDataBool = 0;
 			return;
 		}
-        QString qfilename = this->ui->logFileNameBox->displayText();
+		QString qfilename = this->ui->logFileNameBox->displayText();
 		const char *filename = qfilename.toStdString().c_str();
-        log.setFile(filename);
-        start = std::chrono::high_resolution_clock::now();
+		log.setFile(filename);
+		start = std::chrono::high_resolution_clock::now();
 		log.openFile();
 		return;
 	}
-    log.closeFile();
+	log.closeFile();
 }
 
 /**
@@ -162,12 +155,18 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
  */
 void
 mainwindow::logData(){
-	std::chrono::high_resolution_clock::time_point now = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> timespan = std::chrono::duration_cast<std::chrono::duration<double>>(now - start);
-	int time[1] = { (timespan.count()*1000) };
+	long time[1];
+	struct timespec spec;
+	clock_gettime(CLOCK_REALTIME, &spec);
+	time[0] = spec.tv_nsec / 1000000l;
+
 	getData();
+
 	log.appendData(time, 1, 0);
-	log.appendData(data, 3, 1);
+	log.appendData(pressures, 5, 0);
+	log.appendData(thermo, 1, 0);
+	log.appendData(halleffect, 2, 0);
+	log.appendData(battVoltage, 1, 1);
 }
 
 /**
@@ -179,20 +178,25 @@ mainwindow::logData(){
  */
 void
 mainwindow::getData(){
-	struct sensorMessage message;
-	float pressures[3];
+	struct daqSensors message;
 	int n = readMessage(&message);
 	if (n < 0){
 		//serial_timeout++;
 		return;
 	}
-	if (message.msgID == pressureRawDataID) {
-		parsePressureMessage(&message);
-		data[0] = message.pressurePSIG.methane;
-		data[1] = message.pressurePSIG.LOX;
-		data[2] = message.pressurePSIG.helium;
-		timestamp = message.timestamp;
-	}
+	parsePressureMessage(&message);
+	
+	//printf("%i\n", message.timestamp);
+	pressures[CH4_READING] = message.PT_methane;
+	pressures[LOX_READING] = message.PT_LOX;
+	pressures[HEL_READING] = message.PT_helium;
+	pressures[CBR_READING] = message.PT_chamber;
+	pressures[REG_READING] = message.PT_heliumReg;
+	halleffect[CH4_VNT]    = message.HALL_methane;
+	halleffect[LOX_VNT]    = message.HALL_LOX;
+	thermo[UAF]            = message.TC_uaf;
+	battVoltage[1]         = message.BATT_voltage;
+	timestamp              = message.timestamp;
 	update_data();
 }
 
@@ -220,5 +224,5 @@ mainwindow::on_livePlotButton_clicked()
  */
 void
 mainwindow::updatePlots(){
-	plot->appendData(data, &timestamp);
+	plot->appendData(pressures, &timestamp);
 }

@@ -1,0 +1,3 @@
+Use DAQ for only reading states and PT data, 
+Use RELAY for only sending RS commands over Raspberry Pi's, 
+Use DAQRELAY for sending commands and reading data

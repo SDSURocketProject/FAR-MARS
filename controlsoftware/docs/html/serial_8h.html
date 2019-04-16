@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FAR-MARS Control Software: serial.h File Reference</title>
+<title>FAR-MARS Controlsoftware: /home/alefir/repos/farmars/controlsoftware/serial.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -29,8 +29,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">FAR-MARS Control Software
-   &#160;<span id="projectnumber">v0.3.2</span>
+   <div id="projectname">FAR-MARS Controlsoftware
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
   </td>
  </tr>
@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('serial_8h.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">serial.h File Reference</div>  </div>
+<div class="title">/home/alefir/repos/farmars/controlsoftware/serial.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;cstring&gt;</code><br />
@@ -102,6 +102,8 @@ $(document).ready(function(){initNavTree('serial_8h.html','');});
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;termios.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="messages_8h_source.html">messages.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="com_8h_source.html">com.h</a>&quot;</code><br />
 </div>
 <p><a href="serial_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -124,15 +126,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ad3b2c3f039b4ebf0bc3bbed5bc8fd678"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678">reading</a> { <br />
-&#160;&#160;<a class="el" href="raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d">METHANE_READING</a> = 0, 
-<a class="el" href="raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7">LOX_READING</a> = 1, 
-<a class="el" href="raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b">HELIUM_READING</a> = 2, 
-<a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d">METHANE_READING</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7">LOX_READING</a> = 1, 
+<tr class="memitem:ad3b2c3f039b4ebf0bc3bbed5bc8fd678"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678">reading</a> { <a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d">METHANE_READING</a> = 0, 
+<a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7">LOX_READING</a> = 1, 
 <a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b">HELIUM_READING</a> = 2
-<br />
  }</td></tr>
 <tr class="separator:ad3b2c3f039b4ebf0bc3bbed5bc8fd678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -140,8 +136,10 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a668598c8cf6046a4b3ee9736e9667ba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a668598c8cf6046a4b3ee9736e9667ba1">parseMessage</a> (char *message, float *output, uint32_t *timestamp)</td></tr>
 <tr class="separator:a668598c8cf6046a4b3ee9736e9667ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe2f0cf91c958896a304f1fd058fa187"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abe2f0cf91c958896a304f1fd058fa187">readMessage</a> (char *message)</td></tr>
-<tr class="separator:abe2f0cf91c958896a304f1fd058fa187"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74541c4e9a82ea5f7926d15cb305b38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#aa74541c4e9a82ea5f7926d15cb305b38">parsePressureMessage</a> (struct <a class="el" href="structsensor_message.html">sensorMessage</a> *message)</td></tr>
+<tr class="separator:aa74541c4e9a82ea5f7926d15cb305b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf07ef05e597abd8d6f524e8be41e884"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#acf07ef05e597abd8d6f524e8be41e884">readMessage</a> (struct <a class="el" href="structsensor_message.html">sensorMessage</a> *message)</td></tr>
+<tr class="separator:acf07ef05e597abd8d6f524e8be41e884"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af619fe0b949297d40d50ab9f41e96999"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#af619fe0b949297d40d50ab9f41e96999">uart_init</a> (void)</td></tr>
 <tr class="separator:af619fe0b949297d40d50ab9f41e96999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -158,7 +156,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00017">17</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00020">20</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -174,7 +172,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00023">23</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00026">26</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -190,7 +188,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00020">20</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00023">23</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -206,7 +204,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00022">22</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00025">25</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -222,7 +220,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00019">19</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00022">22</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -238,7 +236,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00021">21</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00024">24</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -254,7 +252,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00018">18</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00021">21</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -266,7 +264,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678">reading</a></td>
+          <td class="memname">enum <a class="el" href="serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678">reading</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -274,12 +272,9 @@ Functions</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d"></a>METHANE_READING&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7"></a>LOX_READING&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b"></a>HELIUM_READING&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d"></a>METHANE_READING&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7"></a>LOX_READING&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b"></a>HELIUM_READING&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00025">25</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8h_source.html#l00028">28</a> of file <a class="el" href="serial_8h_source.html">serial.h</a>.</p>
 
 </div>
 </div>
@@ -318,8 +313,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abe2f0cf91c958896a304f1fd058fa187"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe2f0cf91c958896a304f1fd058fa187">&#9670;&nbsp;</a></span>readMessage()</h2>
+<a id="aa74541c4e9a82ea5f7926d15cb305b38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa74541c4e9a82ea5f7926d15cb305b38">&#9670;&nbsp;</a></span>parsePressureMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parsePressureMessage </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structsensor_message.html">sensorMessage</a> *&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parse a pressure message from on board computer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*message</td><td>Pointer to the message to be parsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00077">77</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
+
+</div>
+</div>
+<a id="acf07ef05e597abd8d6f524e8be41e884"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf07ef05e597abd8d6f524e8be41e884">&#9670;&nbsp;</a></span>readMessage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -327,7 +349,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int readMessage </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="structsensor_message.html">sensorMessage</a> *&#160;</td>
           <td class="paramname"><em>message</em></td><td>)</td>
           <td></td>
         </tr>
@@ -336,14 +358,13 @@ Functions</h2></td></tr>
 <p>Serial Data reader</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">char*</td><td>array of length 11 </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">char*</td><td>array containing data from UART </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*message</td><td>Sensor message that was read in.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0: ran correctly, -1: error reading, -2: read nothing </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0: ran correctly, -1: error reading </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pressuretest_8c_source.html#l00074">74</a> of file <a class="el" href="pressuretest_8c_source.html">pressuretest.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00015">15</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
 
 </div>
 </div>
@@ -364,7 +385,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>UART Init Initializes rs485 serial connection on ttyUSB0 </p><dl class="section return"><dt>Returns</dt><dd>0: Device opened successfully -1: Device could not be opened -2: tcgetattr failed before configuration -3: tcgetattr failed after configuration </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="pressuretest_8c_source.html#l00011">11</a> of file <a class="el" href="pressuretest_8c_source.html">pressuretest.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="serial_8cpp_source.html#l00102">102</a> of file <a class="el" href="serial_8cpp_source.html">serial.cpp</a>.</p>
 
 </div>
 </div>

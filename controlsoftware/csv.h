@@ -6,5 +6,8 @@
 std::string csvformat(float data[], int vals);
 std::string csvformat(float data[], int vals, bool endofline);
 std::string csvformat(int data[], int vals, bool endofline);
+std::string csvformat(int data[], int vals);
+std::string csvformat(long data[], int vals);
+std::string csvformat(long data[], int vals, bool endofline);
 
 #endif

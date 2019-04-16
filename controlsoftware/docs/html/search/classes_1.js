@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['mainwindow',['mainwindow',['../classmainwindow.html',1,'mainwindow'],['../class_ui_1_1mainwindow.html',1,'Ui::mainwindow']]]
+  ['cputemperaturedata',['cpuTemperatureData',['../structcpu_temperature_data.html',1,'']]],
+  ['cputemperaturefloatdata',['cpuTemperatureFloatData',['../structcpu_temperature_float_data.html',1,'']]]
 ];

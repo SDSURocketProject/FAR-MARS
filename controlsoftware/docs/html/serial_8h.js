@@ -8,14 +8,12 @@ var serial_8h =
     [ "PRESSURE_METHANE_BIAS", "serial_8h.html#a4e4bf8bd3785e4836c614466a08e6fa9", null ],
     [ "PRESSURE_METHANE_MAX_PRESSURE", "serial_8h.html#a1488e7c69e932a7ca6710ff6fb38582b", null ],
     [ "reading", "serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678", [
-      [ "METHANE_READING", "raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d", null ],
-      [ "LOX_READING", "raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7", null ],
-      [ "HELIUM_READING", "raw__serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b", null ],
       [ "METHANE_READING", "serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a650bd4e4e65a5a78c2c2fd352c95fc3d", null ],
       [ "LOX_READING", "serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a7eb397febd5da1e79315bd0490e8a9f7", null ],
       [ "HELIUM_READING", "serial_8h.html#ad3b2c3f039b4ebf0bc3bbed5bc8fd678a311fbae54c2f1da5c7847eb6205ec51b", null ]
     ] ],
     [ "parseMessage", "serial_8h.html#a668598c8cf6046a4b3ee9736e9667ba1", null ],
-    [ "readMessage", "serial_8h.html#abe2f0cf91c958896a304f1fd058fa187", null ],
+    [ "parsePressureMessage", "serial_8h.html#aa74541c4e9a82ea5f7926d15cb305b38", null ],
+    [ "readMessage", "serial_8h.html#acf07ef05e597abd8d6f524e8be41e884", null ],
     [ "uart_init", "serial_8h.html#af619fe0b949297d40d50ab9f41e96999", null ]
 ];

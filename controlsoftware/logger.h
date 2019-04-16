@@ -10,7 +10,9 @@ public:
     logger();
     void appendData(float data[], int vals);
     void appendData(float data[], int vals, int newLine);
+    void appendData(int[], int);
     void appendData(int data[], int vals, int newLine);
+    void appendData(long time[], int vals, int newLine);
     void closeFile();
     int  isOpen();
     void newLine();

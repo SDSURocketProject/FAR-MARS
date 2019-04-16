@@ -1,12 +1,20 @@
 var searchData=
 [
-  ['summary',['Summary',['../md_docs_api.html',1,'']]],
-  ['serial_2ecpp',['serial.cpp',['../serial_8cpp.html',1,'']]],
-  ['serial_2eh',['serial.h',['../serial_8h.html',1,'']]],
-  ['setfile',['setFile',['../classlogger.html#a6db76a6051a38c791134a7ef05479b3d',1,'logger']]],
-  ['setupui',['setupUi',['../class_ui__mainwindow.html#a9d29ca399f3b23c10ddf17585637cbdf',1,'Ui_mainwindow::setupUi()'],['../class_ui__warning.html#a72e1a13be29afc128f0235be31086adb',1,'Ui_warning::setupUi()']]],
-  ['setwarning',['setWarning',['../classwarning.html#a81dadd00d0568986c68b9a21793441ab',1,'warning']]],
-  ['showwarningbox',['showWarningBox',['../classmainwindow.html#a8841948aafd1e4c30d46e60ef2dbb4d6',1,'mainwindow']]],
-  ['statusbar',['statusBar',['../class_ui__mainwindow.html#aad310b7e1ef5efc821e43e629d958954',1,'Ui_mainwindow::statusBar()'],['../class_ui__warning.html#ada0181af94388f9d8b9b12770dd55792',1,'Ui_warning::statusBar()']]],
-  ['stringdata0',['stringdata0',['../structqt__meta__stringdata__mainwindow__t.html#ac312149139583bf1186d4ef2969f1570',1,'qt_meta_stringdata_mainwindow_t::stringdata0()'],['../structqt__meta__stringdata__warning__t.html#a7318ca65ffcc5446376771722c1145ad',1,'qt_meta_stringdata_warning_t::stringdata0()']]]
+  ['qcarcitem',['QcArcItem',['../class_qc_arc_item.html',1,'QcArcItem'],['../class_qc_arc_item.html#aa931c9ef375daf9f8c8cf51b814313e7',1,'QcArcItem::QcArcItem()']]],
+  ['qcattitudemeter',['QcAttitudeMeter',['../class_qc_attitude_meter.html',1,'QcAttitudeMeter'],['../class_qc_attitude_meter.html#ab7ef1275aeb8ad859db87134d19600ae',1,'QcAttitudeMeter::QcAttitudeMeter()']]],
+  ['qcbackgrounditem',['QcBackgroundItem',['../class_qc_background_item.html',1,'QcBackgroundItem'],['../class_qc_background_item.html#a4a83b84154a1bb9fa1865f735f9a7590',1,'QcBackgroundItem::QcBackgroundItem()']]],
+  ['qccolorband',['QcColorBand',['../class_qc_color_band.html',1,'QcColorBand'],['../class_qc_color_band.html#aacd9a8a482cc9bbc5307b53ce848634a',1,'QcColorBand::QcColorBand()']]],
+  ['qcdegreesitem',['QcDegreesItem',['../class_qc_degrees_item.html',1,'QcDegreesItem'],['../class_qc_degrees_item.html#a89d1d3380c6377670011a2121b6039a2',1,'QcDegreesItem::QcDegreesItem()']]],
+  ['qcgauge_5fdecl',['QCGAUGE_DECL',['../qcgaugewidget_8h.html#a10d4708ce3b0191d4e664c021e2f580e',1,'qcgaugewidget.h']]],
+  ['qcgaugewidget',['QcGaugeWidget',['../class_qc_gauge_widget.html',1,'QcGaugeWidget'],['../class_qc_gauge_widget.html#acec96a8be7fa1d531b53abfc4a935140',1,'QcGaugeWidget::QcGaugeWidget()']]],
+  ['qcgaugewidget_2ecpp',['qcgaugewidget.cpp',['../qcgaugewidget_8cpp.html',1,'']]],
+  ['qcgaugewidget_2eh',['qcgaugewidget.h',['../qcgaugewidget_8h.html',1,'']]],
+  ['qcglassitem',['QcGlassItem',['../class_qc_glass_item.html',1,'QcGlassItem'],['../class_qc_glass_item.html#a030f54d4bb14c2bcec619780b45b8c73',1,'QcGlassItem::QcGlassItem()']]],
+  ['qcitem',['QcItem',['../class_qc_item.html',1,'QcItem'],['../class_qc_item.html#ab593d4293b83b1eb3da71a54e5f030a0',1,'QcItem::QcItem()']]],
+  ['qclabelitem',['QcLabelItem',['../class_qc_label_item.html',1,'QcLabelItem'],['../class_qc_label_item.html#a600aa5117147495f9cd0abe2a7fbb9d9',1,'QcLabelItem::QcLabelItem()']]],
+  ['qcneedleitem',['QcNeedleItem',['../class_qc_needle_item.html',1,'QcNeedleItem'],['../class_qc_needle_item.html#a02b3c7b39cf2e33c59db9ed661c718ea',1,'QcNeedleItem::QcNeedleItem()']]],
+  ['qcscaleitem',['QcScaleItem',['../class_qc_scale_item.html',1,'QcScaleItem'],['../class_qc_scale_item.html#ad0c0c93980981371ccc1c54352047f8a',1,'QcScaleItem::QcScaleItem()']]],
+  ['qcvaluesitem',['QcValuesItem',['../class_qc_values_item.html',1,'QcValuesItem'],['../class_qc_values_item.html#a7d572c5791ac06c289f1b3043f9c7de8',1,'QcValuesItem::QcValuesItem()']]],
+  ['quaternionraw',['quaternionRaw',['../structsensor_message.html#ad7dec42b8d813c62903512c5271ba702',1,'sensorMessage']]],
+  ['quaternionrawdataid',['quaternionRawDataID',['../messages_8h.html#aadf3fb51d2e5c6d7bd07ee54b01557b3a46ebe21558b193d0cefa0dfec1ce9bea',1,'messages.h']]]
 ];
