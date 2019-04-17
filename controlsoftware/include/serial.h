@@ -24,9 +24,9 @@ struct daqParsed {
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 };
 
-void parseMessage(char *message, float *output, uint32_t *timestamp);
+void parseMessage(char*, float*, uint32_t*);
 void parsePressureMessage(struct daqSensors*, struct daqParsed*);
-int readMessage(struct daqSensors *message);
+int readMessage(struct daqSensors*);
 int uart_init(void);
 
 

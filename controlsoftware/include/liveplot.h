@@ -22,8 +22,8 @@ public:
     explicit livePlot(QWidget *parent = nullptr);
 	~livePlot();
 	
-	void appendData(float *data, uint32_t *timestamp);
-	void setupPlot();
+	void appendData(float*, uint32_t*);
+	void setupPlot(void);
 
 private:
 	Ui::livePlot *ui;

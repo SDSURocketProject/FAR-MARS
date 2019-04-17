@@ -7,9 +7,9 @@
 #include "ui_mainwindow.h"
 
 /**
- * Mainwindow Constructor
+ * @brief Mainwindow Constructor
  *
- * @param QWidget* parent QWidget
+ * @param[in] QWidget* parent QWidget
  */
 mainwindow::mainwindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -88,7 +88,7 @@ mainwindow::mainwindow(QWidget *parent) :
 }
 
 /**
- * Mainwindow destructor
+ * @brief Mainwindow destructor
  */
 mainwindow::~mainwindow()
 {
@@ -96,8 +96,8 @@ mainwindow::~mainwindow()
 }
 
 /**
- * GUI Data Updater
- * Sets GUI Elements to display values in static data array
+ * @brief GUI Data Updater
+ * @brief Sets GUI Elements to display values in static data array
  */
 void
 mainwindow::update_data(){
@@ -115,8 +115,8 @@ mainwindow::update_data(){
 }
 
 /**
- * Main timer handler
- * Runs whenever the main timer timeouts to run repeating tasks
+ * @brief Main timer handler
+ * @brief Runs whenever the main timer timeouts to run repeating tasks
  */
 void
 mainwindow::onTimer(){
@@ -134,12 +134,12 @@ mainwindow::onTimer(){
 }
 
 /**
- * Global Log Data Checkbox handler
- * Triggered by state change of Log Data checkbox
- * Initiates UART connection and opens log file
+ * @brief Global Log Data Checkbox handler
+ * @brief Triggered by state change of Log Data checkbox
+ * @brief Initiates UART connection and opens log file
  * @see uart_init()
  * @see openFile()
- * @param int new value of checkbox
+ * @param[in] int new value of checkbox
  */
 void
 mainwindow::on_logDataCheckbox_stateChanged(int arg1)
@@ -162,8 +162,8 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 }
 
 /**
- * Global Log Data Handler
- * Logs data from static data array, with timestamp
+ * @brief Global Log Data Handler
+ * @brief Logs data from static data array, with timestamp
  * @see appendData()
  */
 void
@@ -183,8 +183,8 @@ mainwindow::logData(){
 }
 
 /**
- * Data Retrieval Routine
- * Recieves data from UART connection, updates static data array, and updates GUI to reflect changes
+ * @brief Data Retrieval Routine
+ * @brief Recieves data from UART connection, updates static data array, and updates GUI to reflect changes
  * @see readMessage()
  * @see parseMessage()
  * @see updateData()
@@ -218,8 +218,7 @@ mainwindow::getData(){
 }
 
 /**
- * Handler for live plot button
- * @param bool value of button
+ * @brief Handler for live plot button
  * @see liveplot.h
  */
 void
@@ -237,7 +236,7 @@ mainwindow::on_livePlotButton_clicked()
 }
 
 /**
- * Update plots with new data[] values
+ * @brief Update plots with new data[] values
  */
 void
 mainwindow::updatePlots(){

@@ -3,10 +3,9 @@
 #define MESSAGE_BUFFER_SIZE 100
 
 /**
- * Serial Data reader
+ * @brief Serial Data reader
  *
  * @param[out] *message Sensor message that was read in.
- *
  * @return 0: ran correctly, -1: error reading
  */
 int
@@ -31,7 +30,7 @@ readMessage(struct daqSensors *message){
 }
 
 /**
- * Serial Data Parser
+ * @brief Serial Data Parser
  *
  * @param[in] char* message to parse
  * @param[out] float* array to put values in
@@ -61,7 +60,7 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 }
 
 /**
- * Parse a pressure message from on board computer.
+ * @brief Parse a pressure message from on board computer.
  *
  * @param[in, out] *message Pointer to the message to be parsed.
  */
@@ -86,13 +85,12 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings){
 }
 
 /**
- * UART Init
- * Initializes rs485 serial connection on ttyUSB0
- * @return
- 	0: Device opened successfully
- 	-1: Device could not be opened
- 	-2: tcgetattr failed before configuration
-	-3: tcgetattr failed after configuration
+ * @brief UART Init
+ * @brief Initializes rs485 serial connection on ttyUSB0
+ * @return	0: Device opened successfully
+ * @return	-1: Device could not be opened
+ * @return	-2: tcgetattr failed before configuration
+ * @return	-3: tcgetattr failed after configuration
  */
 int
 uart_init(){

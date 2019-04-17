@@ -23,6 +23,9 @@ livePlot::~livePlot()
 	delete ui;
 }
 
+/**
+ * @brief Setup plot with default values
+ */
 void
 livePlot::setupPlot(){
 	ch4Series = new QLineSeries();
@@ -77,9 +80,9 @@ livePlot::setupPlot(){
 }
 
 /**
- * Append data to graph, removing old data to keep length at NUM_DATA_POINTS
- * @param float* 3-index float array containing new values to append
- * @param uint32_t* timestamp to plot
+ * @brief Append data to graph, removing old data to keep length at NUM_DATA_POINTS
+ * @param[in] float* 3-index float array containing new values to append
+ * @param[in] uint32_t* timestamp to plot
  */
 void
 livePlot::appendData(float *data, uint32_t *timestamp){

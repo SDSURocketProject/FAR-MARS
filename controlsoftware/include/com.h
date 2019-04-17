@@ -9,9 +9,9 @@
 #define ESCAPE_EOM 0x03 // Byte signifying end of message
 #define ESCAPE_FLAG '~' // Byte signifying the following byte should have a special interpretation, don't use null for the escape flag
 
-uint16_t CRCCCITT(uint8_t *data, uint32_t length);
-int escapeBuffer(uint8_t *in, uint32_t inSize, uint8_t *out, uint32_t outSize);
-int unEscapeBuffer(uint8_t *in, uint32_t inSize, uint8_t *out, uint32_t outSize);
+uint16_t CRCCCITT(uint8_t*, uint32_t*);
+int escapeBuffer(uint8_t*, uint32_t*, uint8_t*, uint32_t);
+int unEscapeBuffer(uint8_t*, uint32_t, uint8_t*, uint32_t);
 
 #define COM_ASSERT(x)
 

@@ -5,11 +5,11 @@
 #include "csv.h"
 
 /**
- * Format floats as csv with no newline
+ * @brief Format floats as csv with no newline
  *
  * @since v0.2.0
- * @param float[] floats to format
- * @param int number of values to process
+ * @param[in] float[] floats to format
+ * @param[in] int number of values to process
  * @return csv formatted string
  */
 std::string
@@ -29,11 +29,11 @@ csvformat(float data[], int vals){
 }
 
 /**
- * Format longs as csv with no newline
+ * @brief Format longs as csv with no newline
  *
  * @since v0.5.0
- * @param long[] longs to format
- * @param int number of values to process
+ * @param[in] long[] longs to format
+ * @param[in] int number of values to process
  * @return csv formatted string
  */
 std::string
@@ -53,11 +53,11 @@ csvformat(long data[], int vals){
 }
 
 /**
- * Format integers as csv with no newline
+ * @brief Format integers as csv with no newline
  *
  * @since v0.3.2
- * @param int[] integers to format
- * @param int number of values to process
+ * @param[in] int[] integers to format
+ * @param[in] int number of values to process
  * @return csv formatted string
  */
 std::string
@@ -78,16 +78,16 @@ csvformat(int data[], int vals){
 
 
 /**
- * Format floats as csv with optional newline
+ * @brief Format floats as csv with optional newline
  *
  * @since v0.3.2
- * @param float[] floats to format
- * @param int number of values to process
- * @param bool whether to append newline
+ * @param[in] float[] floats to format
+ * @param[in] int number of values to process
+ * @param[in] int whether to append newline
  * @return csv formatted string
  */
 std::string
-csvformat(float data[], int vals, bool newline){
+csvformat(float data[], int vals, int newline){
 	std::string csv = csvformat(data, vals);
 	if (newline){
 		csv.append("\n");
@@ -99,15 +99,16 @@ csvformat(float data[], int vals, bool newline){
 }
 
 /**
- * Format long as csv with optional newline
+ * @brief Format long as csv with optional newline
  *
  * @since v0.5.0
- * @param long long to format
- * @param bool whether to append newline
+ * @param[in] long long to format
+ * @param[in] int number of values to process
+ * @param[in] int whether to append newline
  * @return csv formatted string
  */
 std::string
-csvformat(long data[], int vals, bool newline){
+csvformat(long data[], int vals, int newline){
 	std::string csv = csvformat(data, vals);
 	if (newline){
 		csv.append("\n");
@@ -119,16 +120,16 @@ csvformat(long data[], int vals, bool newline){
 }
 
 /**
- * Format integers as csv with no newline
+ * @brief Format integers as csv with no newline
  *
  * @since v0.2.0
- * @param int[] integers to format
- * @param int number of values to process
- * @param bool whether to append newline
+ * @param[in] int[] integers to format
+ * @param[in] int number of values to process
+ * @param[in] int whether to append newline
  * @return csv formatted string
  */
 std::string
-csvformat(int data[], int vals, bool newline){
+csvformat(int data[], int vals, int newline){
 	std::string csv = csvformat(data, vals);
 	if (newline){
 		csv.append("\n");
