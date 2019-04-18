@@ -53,11 +53,6 @@ livePlot::setupPlot(){
 	helChart->createDefaultAxes();
 	cbrChart->createDefaultAxes();
 
-	ch4Chart->axisY()->setMin(0.0);
-	loxChart->axisY()->setMin(0.0);
-	helChart->axisY()->setMin(0.0);
-	cbrChart->axisY()->setMin(0.0);
-
 	ch4Chart->legend()->hide();
 	loxChart->legend()->hide();
 	helChart->legend()->hide();
@@ -117,11 +112,6 @@ livePlot::appendData(float *data, uint32_t *timestamp){
 	loxChart->createDefaultAxes();
 	helChart->createDefaultAxes();
 	cbrChart->createDefaultAxes();
-
-	ch4Chart->axisY()->setMin(0.0);
-	loxChart->axisY()->setMin(0.0);
-	helChart->axisY()->setMin(0.0);
-	cbrChart->axisY()->setMin(0.0);
 
 	ch4View->repaint();
 	loxView->repaint();
