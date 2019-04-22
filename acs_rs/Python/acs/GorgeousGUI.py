@@ -26,6 +26,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, 1)
 
+
 class mainthread(QThread):
     STATEsignal = pyqtSignal('PyQt_PyObject')
     DATAsignal = pyqtSignal('PyQt_PyObject')
@@ -52,7 +53,7 @@ class mainthread(QThread):
 
     def on_connect(self, mqtt_client, userdata, flags, rc):
         self.mqtt_client.on_message = self.subscrib1
-        self.mqtt_client.subscribe(TOPIC_2) 
+        self.mqtt_client.subscribe(TOPIC_2)
         self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
@@ -74,6 +75,7 @@ class mainthread(QThread):
         except:
             print('Missed Data')
 
+
 class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(MainApp, self).__init__(parent)
@@ -86,17 +88,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mythread1.STATEsignal.connect(self.progress1)
         self.mythread1.DATAsignal.connect(self.progress2)
         self.mythread1.disconnectSignal.connect(self.alert)
-        #self.radioButton1.toggled.connect(self.radio1)
-        #self.radioButton2.toggled.connect(self.radio2)
-        #self.radioButton3.toggled.connect(self.radio3)
-        #self.radioButton1.hide()
-        #self.radioButton2.hide()
-        #self.radioButton3.hide()
+        # self.radioButton1.toggled.connect(self.radio1)
+        # self.radioButton2.toggled.connect(self.radio2)
+        # self.radioButton3.toggled.connect(self.radio3)
+        # self.radioButton1.hide()
+        # self.radioButton2.hide()
+        # self.radioButton3.hide()
         self.checkBox.toggled.connect(self.radio4)
 
     def init_ui(self):
         self.mythread1.start()
 #------State color set----------
+
     def progress1(self, A):
         self.Pressure_Key.setAutoFillBackground(True)
         self.Ign_Safety.setAutoFillBackground(True)
@@ -107,7 +110,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.ch4_state.setAutoFillBackground(True)
         self.lox_state.setAutoFillBackground(True)
         try:
-#-----------------IGN KEY------------------------------------
+            #-----------------IGN KEY------------------------------------
             if int(A[0]) == 1:
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
@@ -182,6 +185,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         except:
             pass
 #------Set Progress bar values and Readout values/colors----------
+
     def progress2(self, C):
         try:
             self.Readout0.display(C[1])
@@ -254,7 +258,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
-#------Extra-------                
+#------Extra-------
             if float(C[3]) >= 4500:
                 self.Readout3.setAutoFillBackground(True)
                 k = self.Readout3.palette()
@@ -283,12 +287,12 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar0.setMaximum(500)
         self.label_2.setText('500 PSI')
 #------Check Box Functions--------
+
     def radio4(self):
         self.pstate_label_7.hide()
         self.pstate_label_6.hide()
         self.TReadout.hide()
         self.TReadout_2.hide()
-        self.beepCall(1)
         self.progressBar3.hide()
         self.pstate_label_5.hide()
         self.Readout3.hide()
@@ -327,14 +331,14 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_8.move(707, 305)
 
     def beepCall(self, x):
-        t1 = threading.Thread(target = self.beep(x))
+        t1 = threading.Thread(target=self.beep(x))
         t1.start()
 
     def beep(self, x):
         if x == 1:
-             GPIO.output(21, 0)
-             time.sleep(0.5)
-             GPIO.output(21,1)
+            GPIO.output(21, 0)
+            time.sleep(0.5)
+            GPIO.output(21, 1)
 
 #------Disconnected alert -------
     def alert(self, connectionFlag):
@@ -346,11 +350,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
             self.label_6.show()
             self.beepCall(1)
 
+
 def main():
     app = QApplication(sys.argv)
     window = MainApp()
     window.show()
     app.exec_()
+
 
 if __name__ == '__main__':
     main()
