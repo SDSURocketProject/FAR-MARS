@@ -62,8 +62,8 @@ class mainthread(QThread):
         try:
             if msg.topic == "DATA":
                 D = str(msg.payload)[2:-1]
-                C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3])
-                C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3])
+                C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3], D.split(',')[4], D.split(',')[5])
+                C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3], '%4s' % C[4], '%4s' % C[5])
                 self.DATAsignal.emit(C)
                 print(C)
             if msg.topic == "STATE":
@@ -188,6 +188,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
             self.Readout1.display(C[0])
             self.Readout2.display(C[2])
             self.Readout3.display(C[3])
+            self.TReadout_2.display(C[4])
+            self.TReadout.display(C[5])
 #------HE_BOTTLE-------
             if float(C[1]) >= 4500:
                 self.Readout0.setAutoFillBackground(True)
@@ -282,6 +284,10 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_2.setText('500 PSI')
 #------Check Box Functions--------
     def radio4(self):
+        self.pstate_label_7.hide()
+        self.pstate_label_6.hide()
+        self.TReadout.hide()
+        self.TReadout_2.hide()
         self.beepCall(1)
         self.progressBar3.hide()
         self.pstate_label_5.hide()
@@ -301,6 +307,10 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):
             self.radio5()
 
     def radio5(self):
+        self.pstate_label_7.show()
+        self.pstate_label_6.show()
+        self.TReadout.show()
+        self.TReadout_2.show()
         self.progressBar3.show()
         self.pstate_label_5.show()
         self.Readout3.show()
