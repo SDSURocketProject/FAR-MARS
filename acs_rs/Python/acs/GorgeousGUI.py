@@ -84,6 +84,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.mythread1.DATAsignal.connect(self.progress2)
         self.mythread1.disconnectSignal.connect(self.alert)
         self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
+        self.checkBox_2.toggled.connect(self.record) # Start recoding
 
     def init_ui(self): # Start Mainthread
         self.mythread1.start()
@@ -307,6 +308,16 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.Alert1.show()
             self.label_6.show()
             self.beepCall(1)
+
+    def record(self):
+        filename = self.lineEdit.text()
+        f = open(filename, "w+")
+        f.write('{},{},{},{}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),C,A))
+        if self.checkBox_2.isChecked() == False:
+            self.stopRecording()
+
+    def stopRecording():
+        f.close()
 
 def main():
     app = QApplication(sys.argv) # start PyQT
