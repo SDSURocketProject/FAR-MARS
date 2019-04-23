@@ -99,76 +99,76 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.lox_state.setAutoFillBackground(True)
         try:
 #-----------------IGN KEY------------------------------------
-            if int(A[0]) == 1: # Set colors of state displays
+            if int(A[0]): # Set colors of state displays
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
                 self.Ign_Key.setPalette(p1)
-            if int(A[0]) == 0:
+            else:
                 p2 = self.Ign_Key.palette()
                 p2.setColor(self.Ign_Key.backgroundRole(), Qt.white)
                 self.Ign_Key.setPalette(p2)
 #-----------------Pressure KEY--------------------------------
-            if int(A[1]) == 1:
+            if int(A[1]):
                 p1 = self.Pressure_Key.palette()
                 p1.setColor(self.Pressure_Key.backgroundRole(), Qt.red)
                 self.Pressure_Key.setPalette(p1)
-            if int(A[1]) == 0:
+            else:
                 p2 = self.Pressure_Key.palette()
                 p2.setColor(self.Pressure_Key.backgroundRole(), Qt.white)
                 self.Pressure_Key.setPalette(p2)
 #-----------------IGN STATE------------------------------------
-            if int(A[2]) == 0:
+            if int(A[2]):
                 p1 = self.ign_state.palette()
-                p1.setColor(self.ign_state.backgroundRole(), Qt.red)
+                p1.setColor(self.ign_state.backgroundRole(), Qt.white)
                 self.ign_state.setPalette(p1)
-            if int(A[2]) == 1:
+            else:
                 p2 = self.ign_state.palette()
-                p2.setColor(self.ign_state.backgroundRole(), Qt.white)
+                p2.setColor(self.ign_state.backgroundRole(), Qt.red)
                 self.ign_state.setPalette(p2)
 #-----------------MPV KEY------------------------------------
-            if int(A[3]) == 1:
+            if int(A[3]):
                 p1 = self.MPV_Key.palette()
                 p1.setColor(self.MPV_Key.backgroundRole(), Qt.red)
                 self.MPV_Key.setPalette(p1)
-            if int(A[3]) == 0:
+            else:
                 p2 = self.MPV_Key.palette()
                 p2.setColor(self.MPV_Key.backgroundRole(), Qt.white)
                 self.MPV_Key.setPalette(p2)
 #-----------------MPV SAFETY---------------------------------
-            if int(A[4]) == 1:
+            if int(A[4]):
                 p1 = self.MPV_Safety.palette()
                 p1.setColor(self.MPV_Safety.backgroundRole(), Qt.red)
                 self.MPV_Safety.setPalette(p1)
-            if int(A[4]) == 0:
+            else:
                 p2 = self.MPV_Safety.palette()
                 p2.setColor(self.MPV_Safety.backgroundRole(), Qt.white)
                 self.MPV_Safety.setPalette(p2)
 #-----------------CH4 STATE------------------------------------
-            if int(A[5]) == 0:
+            if int(A[5]):
                 p1 = self.ch4_state.palette()
-                p1.setColor(self.ch4_state.backgroundRole(), Qt.red)
+                p1.setColor(self.ch4_state.backgroundRole(), Qt.white)
                 self.ch4_state.setPalette(p1)
-            if int(A[5]) == 1:
+            else:
                 p2 = self.ch4_state.palette()
-                p2.setColor(self.ch4_state.backgroundRole(), Qt.white)
+                p2.setColor(self.ch4_state.backgroundRole(), Qt.red)
                 self.ch4_state.setPalette(p2)
 #-----------------IGN SAFTEY----------------------------------
-            if int(A[6]) == 1:
+            if int(A[6]):
                 p1 = self.Ign_Safety.palette()
                 p1.setColor(self.Ign_Safety.backgroundRole(), Qt.red)
                 self.Ign_Safety.setPalette(p1)
-            if int(A[6]) == 0:
+            else:
                 p2 = self.Ign_Safety.palette()
                 p2.setColor(self.Ign_Safety.backgroundRole(), Qt.white)
                 self.Ign_Safety.setPalette(p2)
 #-----------------LOX STATE----------------------------------
-            if int(A[7]) == 0:
+            if int(A[7]):
                 p1 = self.lox_state.palette()
-                p1.setColor(self.lox_state.backgroundRole(), Qt.red)
+                p1.setColor(self.lox_state.backgroundRole(), Qt.white)
                 self.lox_state.setPalette(p1)
-            if int(A[7]) == 1:
+            else:
                 p2 = self.lox_state.palette()
-                p2.setColor(self.lox_state.backgroundRole(), Qt.white)
+                p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
             pass
@@ -198,7 +198,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
-            if float(C[1]) < 3500:
+            else:
                 p.setColor(self.Readout0.backgroundRole(), Qt.white)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
@@ -211,7 +211,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
-            if float(C[0]) < 3500:
+            else:
                 c.setColor(self.Readout1.backgroundRole(), Qt.white)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
@@ -228,7 +228,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
-            if float(C[2]) < 135:
+            else:
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
@@ -237,7 +237,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 k.setColor(self.Readout3.backgroundRole(), Qt.red)
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(4500)
-            if float(C[3]) < 4500:
+            else:
                 k.setColor(self.Readout3.backgroundRole(), Qt.white)
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
