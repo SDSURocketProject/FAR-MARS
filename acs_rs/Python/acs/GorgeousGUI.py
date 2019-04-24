@@ -310,14 +310,19 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.beepCall(1)
 
     def record(self):
-        filename = self.lineEdit.text()
-        f = open(filename, "w+")
-        f.write('{},{},{},{}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),C,A))
-        if self.checkBox_2.isChecked() == False:
-            self.stopRecording()
+        if self.checkBox_2.isChecked() == True:
+             A = self.mythread1.STATEsignal
+             C = self.mythread1.DATAsignal
+             filename = self.lineEdit.text()
+             f = open("test.txt", "w+")
+             f.write(time.strftime("%H:%M:%S"+time.strftime("%d:%m:%Y")+C+A))
+             print("Started Recording")
+             if self.checkBox_2.isChecked() == False:
+                  self.stopRecording(f)
 
-    def stopRecording():
+    def stopRecording(self,f):
         f.close()
+        print("Stopped Recording")
 
 def main():
     app = QApplication(sys.argv) # start PyQT
