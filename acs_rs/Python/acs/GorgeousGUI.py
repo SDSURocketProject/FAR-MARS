@@ -172,7 +172,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
-            pass
+            print("State Data Error")
 #------Set Progress bar values and Readout values/colors----------
     def progress2(self, C): # Set progress bars and readouts for pressure data
         try:
@@ -243,7 +243,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
         except:
-            pass
+            print("Pressure Data Error")
 
 #------Check Box Functions--------
     def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
@@ -310,14 +310,19 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.beepCall(1)
 
     def record(self):
-        filename = self.lineEdit.text()
-        f = open(filename, "w+")
-        f.write('{},{},{},{}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),C,A))
-        if self.checkBox_2.isChecked() == False:
-            self.stopRecording()
+        if self.checkBox_2.isChecked() == True:
+             A = self.mythread1.STATEsignal
+             C = self.mythread1.DATAsignal
+             filename = self.lineEdit.text()
+             f = open("test.txt", "w+")
+             f.write(time.strftime("%H:%M:%S"+time.strftime("%d:%m:%Y")+C+A))
+             print("Started Recording")
+             if self.checkBox_2.isChecked() == False:
+                  self.stopRecording(f)
 
-    def stopRecording():
+    def stopRecording(self,f):
         f.close()
+        print("Stopped Recording")
 
 def main():
     app = QApplication(sys.argv) # start PyQT
