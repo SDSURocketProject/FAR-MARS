@@ -32,7 +32,7 @@ SOURCES += \
     serial.cpp \
     qcgaugewidget.cpp \
     liveplot.cpp \
-    com.cpp
+    com.cpp \
 
 HEADERS += \
         include/mainwindow.h \
