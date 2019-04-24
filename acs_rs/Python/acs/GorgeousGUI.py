@@ -172,7 +172,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
-            pass
+            print("State Data Error")
 #------Set Progress bar values and Readout values/colors----------
     def progress2(self, C): # Set progress bars and readouts for pressure data
         try:
@@ -243,7 +243,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
         except:
-            pass
+            print("Pressure Data Error")
 
 #------Check Box Functions--------
     def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
