@@ -516,8 +516,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>140</y>
+      <x>160</x>
+      <y>150</y>
       <width>450</width>
       <height>150</height>
      </rect>
@@ -603,7 +603,7 @@
    <widget class="QLCDNumber" name="TReadout">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>600</x>
       <y>100</y>
       <width>61</width>
       <height>31</height>
@@ -625,7 +625,7 @@
    <widget class="QLabel" name="pstate_label_6">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>610</x>
       <y>130</y>
       <width>41</width>
       <height>20</height>
@@ -643,7 +643,7 @@
    <widget class="QLCDNumber" name="TReadout_2">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>520</x>
       <y>100</y>
       <width>61</width>
       <height>31</height>
@@ -665,7 +665,7 @@
    <widget class="QLabel" name="pstate_label_7">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>530</x>
       <y>130</y>
       <width>41</width>
       <height>20</height>
@@ -678,6 +678,56 @@
     </property>
     <property name="text">
      <string>Tank P</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>110</y>
+      <width>137</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>log.txt</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pstate_label_8">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>130</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Filename</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_2">
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>120</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Record</string>
+    </property>
+    <property name="autoRepeat">
+     <bool>false</bool>
+    </property>
+    <property name="tristate">
+     <bool>false</bool>
     </property>
    </widget>
    <zorder>line_3</zorder>
@@ -721,6 +771,9 @@
    <zorder>pstate_label_6</zorder>
    <zorder>TReadout_2</zorder>
    <zorder>pstate_label_7</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>pstate_label_8</zorder>
+   <zorder>checkBox_2</zorder>
    <zorder>Alert1</zorder>
    <zorder>label_6</zorder>
   </widget>
