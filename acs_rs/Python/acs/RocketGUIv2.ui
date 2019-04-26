@@ -701,9 +701,9 @@ alternate-background-color: rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>110</y>
+      <y>108</y>
       <width>137</width>
-      <height>18</height>
+      <height>22</height>
      </rect>
     </property>
     <property name="placeholderText">
