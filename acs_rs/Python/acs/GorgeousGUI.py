@@ -62,7 +62,6 @@ class mainthread(QThread): # Data and state communications class
                 C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3], D.split(',')[4], D.split(',')[5]) # Tokenizing into array
                 C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3], '%4s' % C[4], '%4s' % C[5]) # Truncating
                 self.DATAsignal.emit(C)
-                print(C)
             if msg.topic == "STATE":
                 B = str(msg.payload)[2:-1]
                 A = (B.split(',')[0], B.split(',')[1], B.split(',')[2], B.split(',')[3], B.split(',')[4], B.split(',')[5], B.split(',')[6], B.split(',')[7])
@@ -83,8 +82,10 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.mythread1.STATEsignal.connect(self.progress1) # Connect signals from Mainthread to coresponding functions
         self.mythread1.DATAsignal.connect(self.progress2)
         self.mythread1.disconnectSignal.connect(self.alert)
+        #self.mythread1.STATEsignal.connect(self.record)
         self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
-        self.checkBox_2.toggled.connect(self.record) # Start recoding
+        self.checkBox_2.stateChanged.connect(self.rec)
+        self.mythread1.STATEsignal.connect(self.record1) # Start recoding
 
     def init_ui(self): # Start Mainthread
         self.mythread1.start()
@@ -98,6 +99,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.ign_state.setAutoFillBackground(True)
         self.ch4_state.setAutoFillBackground(True)
         self.lox_state.setAutoFillBackground(True)
+        MainApp.progress1.A1 = A
         try:
 #-----------------IGN KEY------------------------------------
             if int(A[0]): # Set colors of state displays
@@ -172,7 +174,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
-            print("State Data Error")
+            pass
 #------Set Progress bar values and Readout values/colors----------
     def progress2(self, C): # Set progress bars and readouts for pressure data
         try:
@@ -190,6 +192,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             c = self.Readout1.palette()
             h = self.Readout2.palette()
             k = self.Readout3.palette()
+            MainApp.progress2.C1 = C
 #------HE_BOTTLE-------
             if float(C[1]) >= 4500: # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
@@ -243,7 +246,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
         except:
-            print("Pressure Data Error")
+            pass
 
 #------Check Box Functions--------
     def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
@@ -299,7 +302,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
              time.sleep(0.5)
              GPIO.output(21,1)
 
-#------Disconnected alert -------
+#------Disconnected alert-------
     def alert(self, connectionFlag): # Called when disconnected show alerts
         if connectionFlag == 1:
             self.Alert1.hide()
@@ -308,21 +311,26 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.Alert1.show()
             self.label_6.show()
             self.beepCall(1)
-
-    def record(self):
+#--------Recording Functions-----------
+    def rec(self):
         if self.checkBox_2.isChecked() == True:
-             A = self.mythread1.STATEsignal
-             C = self.mythread1.DATAsignal
-             filename = self.lineEdit.text()
-             f = open("test.txt", "w+")
-             f.write(time.strftime("%H:%M:%S"+time.strftime("%d:%m:%Y")+C+A))
-             print("Started Recording")
-             if self.checkBox_2.isChecked() == False:
-                  self.stopRecording(f)
+             if not self.lineEdit.text():
+                  fname = 'log.txt'
+             else:
+                  fname = self.lineEdit.text()
+             MainApp.rec.f = open(fname, 'a+')
+             print('Set Filename')
+        else:
+             MainApp.rec.f.close()
+             print('Closed file')
 
-    def stopRecording(self,f):
-        f.close()
-        print("Stopped Recording")
+    def record1(self, A):
+        if self.checkBox_2.isChecked() == True:
+             C = self.progress2.C1
+             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5])
+             A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7])
+             print('Recording\n'+A+'\n'+C)
+             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n'))
 
 def main():
     app = QApplication(sys.argv) # start PyQT
