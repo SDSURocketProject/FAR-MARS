@@ -312,25 +312,25 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.label_6.show()
             self.beepCall(1)
 #--------Recording Functions-----------
-    def rec(self):
+    def rec(self): # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
              if not self.lineEdit.text():
-                  fname = 'log.txt'
+                  fname = 'log.txt' # Default filename
              else:
-                  fname = self.lineEdit.text()
-             MainApp.rec.f = open(fname, 'a+')
+                  fname = self.lineEdit.text() # Get name from line edit
+             MainApp.rec.f = open(fname, 'a+') # Open file for appending, creates if does not exist
              print('Set Filename')
         else:
-             MainApp.rec.f.close()
+             MainApp.rec.f.close() # Close the file
              print('Closed file')
 
-    def record1(self, A):
+    def record1(self, A): # A is setup as a signal to execute the function each time a message is recieved
         if self.checkBox_2.isChecked() == True:
-             C = self.progress2.C1
-             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5])
-             A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7])
+             C = self.progress2.C1 # Get C from function progress2
+             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5]) # Seperate values to make final txt file more readable
+             A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7]) 
              print('Recording\n'+A+'\n'+C)
-             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n'))
+             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
 
 def main():
     app = QApplication(sys.argv) # start PyQT
