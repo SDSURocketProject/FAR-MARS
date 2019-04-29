@@ -13,54 +13,55 @@ from PyQt5.QtCore import QThread, pyqtSignal
 import RPi.GPIO as GPIO
 import threading
 
-qtCreatorFile = "RocketGUIv2.ui" # Import .UI file
-Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile) # Load .UI file
+qtCreatorFile = "RocketGUIv2.ui"  # Import .UI file
+Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)  # Load .UI file
 
-HOST = "192.168.0.10" # Declare connection and topic information
+HOST = "192.168.0.10"  # Declare connection and topic information
 port = 1883
 TOPIC_1 = "RELAY"
 TOPIC_2 = "DATA"
 TOPIC_3 = "STATE"
 
-GPIO.setmode(GPIO.BCM) # Setup Pins for Buzzer
+GPIO.setmode(GPIO.BCM)  # Setup Pins for Buzzer
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, 1)
 
-class mainthread(QThread): # Data and state communications class
-    STATEsignal = pyqtSignal('PyQt_PyObject') # Declare signals to be emmitted from Mainthread to MainApp
+
+class mainthread(QThread):  # Data and state communications class
+    STATEsignal = pyqtSignal('PyQt_PyObject')  # Declare signals to be emmitted from Mainthread to MainApp
     DATAsignal = pyqtSignal('PyQt_PyObject')
     disconnectSignal = pyqtSignal('PyQt_PyObject')
 
-    def __init__(self): # PyQT initialization function
+    def __init__(self):  # PyQT initialization function
         QThread.__init__(self)
         self.connect1()
 
-    def connect1(self): # Connect to RS Pi
+    def connect1(self):  # Connect to RS Pi
         self.mqtt_client = mqtt.Client()
-        self.mqtt_client.on_connect = self.on_connect # Does This when connected
-        self.mqtt_client.on_disconnect = self.on_disconnect # Does this when disconnected
-        self.mqtt_client.connect(HOST, port=port, keepalive=4) # Connect to Pi
-        self.mqtt_client.loop_start() # Start Reciving data
+        self.mqtt_client.on_connect = self.on_connect  # Does This when connected
+        self.mqtt_client.on_disconnect = self.on_disconnect  # Does this when disconnected
+        self.mqtt_client.connect(HOST, port=port, keepalive=4)  # Connect to Pi
+        self.mqtt_client.loop_start()  # Start Reciving data
 
-    def on_disconnect(self, mqtt_client, userdata, flags, rc=0): # What to do when disconnected
+    def on_disconnect(self, mqtt_client, userdata, flags, rc=0):  # What to do when disconnected
         connectionFlag = 0
-        self.disconnectSignal.emit(connectionFlag) # When disconnected send connection flag to alert function
-        print("disconnected") 
+        self.disconnectSignal.emit(connectionFlag)  # When disconnected send connection flag to alert function
+        print("disconnected")
 
-    def on_connect(self, mqtt_client, userdata, flags, rc): # What to do when reconnected
-        self.mqtt_client.on_message = self.subscrib1 # Call subscrib1 to start reading data when a message is recieved
-        self.mqtt_client.subscribe(TOPIC_2) 
+    def on_connect(self, mqtt_client, userdata, flags, rc):  # What to do when reconnected
+        self.mqtt_client.on_message = self.subscrib1  # Call subscrib1 to start reading data when a message is recieved
+        self.mqtt_client.subscribe(TOPIC_2)
         self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
         print("connected")
 
-    def subscrib1(self, mqtt_client, userdata, msg): # What to do when message is recieved
+    def subscrib1(self, mqtt_client, userdata, msg):  # What to do when message is recieved
         try:
-            if msg.topic == "DATA": 
-                D = str(msg.payload)[2:-1] # Get rid of excess delimiters
-                C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3], D.split(',')[4], D.split(',')[5]) # Tokenizing into array
-                C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3], '%4s' % C[4], '%4s' % C[5]) # Truncating
+            if msg.topic == "DATA":
+                D = str(msg.payload)[2:-1]  # Get rid of excess delimiters
+                C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3], D.split(',')[4], D.split(',')[5])  # Tokenizing into array
+                C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3], '%4s' % C[4], '%4s' % C[5])  # Truncating
                 self.DATAsignal.emit(C)
             if msg.topic == "STATE":
                 B = str(msg.payload)[2:-1]
@@ -70,28 +71,30 @@ class mainthread(QThread): # Data and state communications class
         except:
             print('Missed Data')
 
-class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
-    def __init__(self, parent=None): # Initialization function
-        super(MainApp, self).__init__(parent) # Set Mainapp as parent
-        QMainWindow.__init__(self) 
-        self.setupUi(self) 
-        self.mythread1 = mainthread() # Threading to Mainthread
+
+class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):  # PyQT class
+    def __init__(self, parent=None):  # Initialization function
+        super(MainApp, self).__init__(parent)  # Set Mainapp as parent
+        QMainWindow.__init__(self)
+        self.setupUi(self)
+        self.mythread1 = mainthread()  # Threading to Mainthread
         self.init_ui()
-        self.Alert1.hide() 
+        self.Alert1.hide()
         self.label_6.hide()
-        self.mythread1.STATEsignal.connect(self.progress1) # Connect signals from Mainthread to coresponding functions
+        self.mythread1.STATEsignal.connect(self.progress1)  # Connect signals from Mainthread to coresponding functions
         self.mythread1.DATAsignal.connect(self.progress2)
         self.mythread1.disconnectSignal.connect(self.alert)
-        #self.mythread1.STATEsignal.connect(self.record)
-        self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
+        # self.mythread1.STATEsignal.connect(self.record)
+        self.checkBox.toggled.connect(self.radio4)  # When checkbox is clicked call radio 4
         self.checkBox_2.stateChanged.connect(self.rec)
-        self.mythread1.STATEsignal.connect(self.record1) # Start recoding
+        self.mythread1.STATEsignal.connect(self.record1)  # Start recoding
 
-    def init_ui(self): # Start Mainthread
+    def init_ui(self):  # Start Mainthread
         self.mythread1.start()
 #------State color set----------
-    def progress1(self, A): # Set state colors
-        self.Pressure_Key.setAutoFillBackground(True) # Used for PyQt to set backround colors
+
+    def progress1(self, A):  # Set state colors
+        self.Pressure_Key.setAutoFillBackground(True)  # Used for PyQt to set backround colors
         self.Ign_Safety.setAutoFillBackground(True)
         self.MPV_Safety.setAutoFillBackground(True)
         self.MPV_Key.setAutoFillBackground(True)
@@ -101,8 +104,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.lox_state.setAutoFillBackground(True)
         MainApp.progress1.A1 = A
         try:
-#-----------------IGN KEY------------------------------------
-            if int(A[0]): # Set colors of state displays
+            #-----------------IGN KEY------------------------------------
+            if int(A[0]):  # Set colors of state displays
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
                 self.Ign_Key.setPalette(p1)
@@ -176,9 +179,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         except:
             pass
 #------Set Progress bar values and Readout values/colors----------
-    def progress2(self, C): # Set progress bars and readouts for pressure data
+
+    def progress2(self, C):  # Set progress bars and readouts for pressure data
+        int bottle_count = 0
+        int reg_count = 0
+        int pnu_count = 0
         try:
-            self.Readout0.display(C[1]) # Display Pessure data in readouts
+            self.Readout0.display(C[1])  # Display Pessure data in readouts
             self.Readout1.display(C[0])
             self.Readout2.display(C[2])
             self.Readout3.display(C[3])
@@ -194,49 +201,65 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             k = self.Readout3.palette()
             MainApp.progress2.C1 = C
 #------HE_BOTTLE-------
-            if float(C[1]) >= 4500: # Set Progress bar values for pressure data and change readout color based on value
+            if float(C[1]) >= 4500:  # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(4500)
+                bottle_count + +
+                if bottle_count == 1:
+                    beep()
             if 3500 <= float(C[1]) < 4500:
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
+                bottle_count = 0
             else:
                 p.setColor(self.Readout0.backgroundRole(), Qt.white)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
+                bottle_count = 0
 #------HE_REG--------
             if float(C[0]) >= 4500:
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
+                reg_count + +
+                if reg_count == 1:
+                    beep()
             if 3500 <= float(C[0]) < 4500:
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
+                reg_count = 0
             else:
                 c.setColor(self.Readout1.backgroundRole(), Qt.white)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
+                reg_count = 0
 #------PNU-------
             if float(C[2]) > 160:
                 h.setColor(self.Readout2.backgroundRole(), Qt.red)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
+                pnu_count + +
+                if pnu_count == 1:
+                    beep()
             if 135 <= float(C[2]) <= 150:
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
+                pnu_count = 0
             if 150 < float(C[2]) <= 160:
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
+                pnu_count = 0
             else:
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
-#------Extra-------                
+                pnu_count = 0
+#------Extra-------
             if float(C[3]) >= 4500:
                 k.setColor(self.Readout3.backgroundRole(), Qt.red)
                 self.Readout3.setPalette(k)
@@ -249,7 +272,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             pass
 
 #------Check Box Functions--------
-    def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
+    def radio4(self):  # When checkbox cliked hide uneccesary readouts and reshape display
         self.pstate_label_7.hide()
         self.pstate_label_6.hide()
         self.TReadout.hide()
@@ -272,7 +295,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         if self.checkBox.isChecked() == False:
             self.radio5()
 
-    def radio5(self): # When Checkbox unclicked show extra readouts and move all to original spots
+    def radio5(self):  # When Checkbox unclicked show extra readouts and move all to original spots
         self.pstate_label_7.show()
         self.pstate_label_6.show()
         self.TReadout.show()
@@ -292,18 +315,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
 
-    def beepCall(self, x): # Thread to beep function
-        t1 = threading.Thread(target = self.beep(x))
+    def beepCall(self, x):  # Thread to beep function
+        t1 = threading.Thread(target=self.beep(x))
         t1.start()
 
-    def beep(self, x): # beep for .5 seconds
+    def beep(self, x):  # beep for .5 seconds
         if x == 1:
-             GPIO.output(21, 0)
-             time.sleep(0.5)
-             GPIO.output(21,1)
+            GPIO.output(21, 0)
+            time.sleep(0.5)
+            GPIO.output(21, 1)
 
 #------Disconnected alert-------
-    def alert(self, connectionFlag): # Called when disconnected show alerts
+    def alert(self, connectionFlag):  # Called when disconnected show alerts
         if connectionFlag == 1:
             self.Alert1.hide()
             self.label_6.hide()
@@ -312,31 +335,34 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.label_6.show()
             self.beepCall(1)
 #--------Recording Functions-----------
-    def rec(self): # Only called when checkbox changes state
-        if self.checkBox_2.isChecked() == True:
-             if not self.lineEdit.text():
-                  fname = 'log.txt' # Default filename
-             else:
-                  fname = self.lineEdit.text() # Get name from line edit
-             MainApp.rec.f = open(fname, 'a+') # Open file for appending, creates if does not exist
-             print('Set Filename')
-        else:
-             MainApp.rec.f.close() # Close the file
-             print('Closed file')
 
-    def record1(self, A): # A is setup as a signal to execute the function each time a message is recieved
+    def rec(self):  # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
-             C = self.progress2.C1 # Get C from function progress2
-             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5]) # Seperate values to make final txt file more readable
-             A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7]) 
-             print('Recording\n'+A+'\n'+C)
-             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
+            if not self.lineEdit.text():
+                fname = 'log.txt'  # Default filename
+            else:
+                fname = self.lineEdit.text()  # Get name from line edit
+            MainApp.rec.f = open(fname, 'a+')  # Open file for appending, creates if does not exist
+            print('Set Filename')
+        else:
+            MainApp.rec.f.close()  # Close the file
+            print('Closed file')
+
+    def record1(self, A):  # A is setup as a signal to execute the function each time a message is recieved
+        if self.checkBox_2.isChecked() == True:
+            C = self.progress2.C1  # Get C from function progress2
+            C = str(C[0] + ', ' + C[1] + ', ' + C[2] + ', ' + C[3] + ', ' + C[4] + ', ' + C[5])  # Seperate values to make final txt file more readable
+            A = str(A[0] + ', ' + A[1] + ', ' + A[2] + ', ' + A[3] + ', ' + A[4] + ', ' + A[5] + ', ' + A[6] + ', ' + A[7])
+            print('Recording\n' + A + '\n' + C)
+            self.rec.f.write(time.strftime("%H:%M:%S, " + time.strftime("%d:%m:%Y, ") + A + ', ' + C + '\n'))  # Write to txt file
+
 
 def main():
-    app = QApplication(sys.argv) # start PyQT
+    app = QApplication(sys.argv)  # start PyQT
     window = MainApp()
     window.show()
     app.exec_()
 
-if __name__ == '__main__': # run PyQT
+
+if __name__ == '__main__':  # run PyQT
     main()
