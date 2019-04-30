@@ -86,6 +86,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
         self.checkBox_2.stateChanged.connect(self.rec)
         self.mythread1.STATEsignal.connect(self.record1) # Start recoding
+        self.mythread1.STATEsignal.connect(self.beebv2)
 
     def init_ui(self): # Start Mainthread
         self.mythread1.start()
@@ -311,6 +312,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.Alert1.show()
             self.label_6.show()
             self.beepCall(1)
+    def beebv2(self, A):
+        #do stuff with A
 #--------Recording Functions-----------
     def rec(self): # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
