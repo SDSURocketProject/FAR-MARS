@@ -26,6 +26,8 @@ GPIO.setmode(GPIO.BCM) # Setup Pins for Buzzer
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, 1)
 
+beepsig = 0
+
 class mainthread(QThread): # Data and state communications class
     STATEsignal = pyqtSignal('PyQt_PyObject') # Declare signals to be emmitted from Mainthread to MainApp
     DATAsignal = pyqtSignal('PyQt_PyObject')
@@ -312,8 +314,16 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.Alert1.show()
             self.label_6.show()
             self.beepCall(1)
+
     def beebv2(self, A):
-        #do stuff with A
+        global beepsig
+        newState = int(A[1])
+        if newState != beepsig:
+             self.beep(1)
+             print('beep')
+        else:
+             pass
+        beepsig = newState
 #--------Recording Functions-----------
     def rec(self): # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
