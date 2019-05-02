@@ -31,6 +31,12 @@ ignKeyFlag = 0
 mpvKeyFlag = 0
 ignSwitchFlag = 0
 mpvSwitchFlag = 0
+static_he_bottle = 6000
+static_he_reg = 4500
+static_pnu = 165
+he_bottle = static_he_bottle
+he_reg = static_he_reg
+pnu = static_pnu
 
 class mainthread(QThread): # Data and state communications class
     STATEsignal = pyqtSignal('PyQt_PyObject') # Declare signals to be emmitted from Mainthread to MainApp
@@ -76,28 +82,29 @@ class mainthread(QThread): # Data and state communications class
         except:
             print('Missed Data')
 
-class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
-    def __init__(self, parent=None): # Initialization function
-        super(MainApp, self).__init__(parent) # Set Mainapp as parent
+class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
+    def __init__(self, parent=None):                          # Initialization function
+        super(MainApp, self).__init__(parent)                 # Set Mainapp as parent
         QMainWindow.__init__(self) 
         self.setupUi(self) 
-        self.mythread1 = mainthread() # Threading to Mainthread
+        self.mythread1 = mainthread()                         # Threading to Mainthread
         self.init_ui()
         self.Alert1.hide() 
         self.label_6.hide()
         self.mythread1.STATEsignal.connect(self.stateDisplay) # Connect signals from Mainthread to coresponding functions
+        self.mythread1.STATEsignal.connect(self.record1)      # Start recoding
+        self.mythread1.STATEsignal.connect(self.beep1)        # Send state data to beep function
+        self.mythread1.DATAsignal.connect(self.beep2)         # Send pressure data to pressure beeb function
         self.mythread1.DATAsignal.connect(self.dataDisplay)
         self.mythread1.disconnectSignal.connect(self.alert)
-        self.checkBox.toggled.connect(self.hideExtra) # When checkbox is clicked call hideExtra
+        self.checkBox.toggled.connect(self.hideExtra)         # When checkbox is clicked call hideExtra
         self.checkBox_2.stateChanged.connect(self.rec) 
-        self.mythread1.STATEsignal.connect(self.record1) # Start recoding
-        self.mythread1.STATEsignal.connect(self.beep2) # Send state data to beep function
 
-    def init_ui(self): # Start Mainthread
+    def init_ui(self):                                        # Start Mainthread
         self.mythread1.start()
 #------State color set----------
-    def stateDisplay(self, A): # Set state colors
-        self.Pressure_Key.setAutoFillBackground(True) # Used for PyQt to set backround colors
+    def stateDisplay(self, A):                                # Set state colors
+        self.Pressure_Key.setAutoFillBackground(True)         # Used for PyQt to set backround colors
         self.Ign_Safety.setAutoFillBackground(True)
         self.MPV_Safety.setAutoFillBackground(True)
         self.MPV_Key.setAutoFillBackground(True)
@@ -107,7 +114,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.lox_state.setAutoFillBackground(True)
         try:
 #-----------------IGN KEY------------------------------------
-            if int(A[0]): # Set colors of state displays
+            if int(A[0]):                                     # Set colors of state displays
                 p1 = self.Ign_Key.palette()
                 p1.setColor(self.Ign_Key.backgroundRole(), Qt.red)
                 self.Ign_Key.setPalette(p1)
@@ -181,9 +188,9 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         except:
             print('State Error')
 #------Set Progress bar values and Readout values/colors----------
-    def dataDisplay(self, C): # Set progress bars and readouts for pressure data
+    def dataDisplay(self, C):                                 # Set progress bars and readouts for pressure data
         try:
-            self.Readout0.display(C[1]) # Display Pessure data in readouts
+            self.Readout0.display(C[1])                       # Display Pessure data in readouts
             self.Readout1.display(C[0])
             self.Readout2.display(C[2])
             self.Readout3.display(C[3])
@@ -199,7 +206,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             k = self.Readout3.palette()
             MainApp.dataDisplay.C1 = C
 #------HE_BOTTLE-------
-            if float(C[1]) >= 4500: # Set Progress bar values for pressure data and change readout color based on value
+            if float(C[1]) >= 4500:                           # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(4500)
@@ -254,7 +261,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             print('Readout Error')
 
 #------Check Box Functions--------
-    def hideExtra(self): # When checkbox cliked hide uneccesary readouts and reshape display
+    def hideExtra(self):                                        # When checkbox cliked hide uneccesary readouts and reshape display
         self.pstate_label_7.hide()
         self.pstate_label_6.hide()
         self.TReadout.hide()
@@ -277,7 +284,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         if self.checkBox.isChecked() == False:
             self.showExtra()
 
-    def showExtra(self): # When Checkbox unclicked show extra readouts and move all to original spots
+    def showExtra(self):                                        # When Checkbox unclicked show extra readouts and move all to original spots
         self.pstate_label_7.show()
         self.pstate_label_6.show()
         self.TReadout.show()
@@ -297,11 +304,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
 #----------Beep functions----------------------------
-    def beepCall(self, x): # Thread to beep function
+    def beepCall(self, x):                            # Thread to beep function
         t1 = threading.Thread(target = self.beep(x))
         t1.start()
 
-    def beep(self, x): # beep for .5 seconds
+    def beep(self, x):                                # beep for .5 seconds
         if x == 1:
             GPIO.output(21, 0)
             time.sleep(0.5)
@@ -311,7 +318,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             time.sleep(0.25)
             GPIO.output(21,1)
 
-   def beep2(self, A):
+    def beep1(self, A):                               # Beep calling function for state data
         try:
             global pressKeyFlag
             global ignKeyFlag
@@ -323,7 +330,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             newMpvKey = int(A[3])
             newIgnSwitch = int(A[6])
             newMpvSwitch = int(A[4])
-            if newPressKey != pressKeyFlag:
+            if newPressKey != pressKeyFlag:           # Call beep when a change is detected
                 self.beep(2)
             if newIgnKey != ignKeyFlag:
                 self.beep(2)
@@ -341,9 +348,61 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             ignSwitchFlag = newIgnSwitch
             mpvSwitchFlag = newMpvSwitch
         except:
-            print('Beep Error')
+            print('State beep Error')
+
+        def beep2(self, C):                # Beep calling function for pressure data
+            try:
+                global he_bottle           # Changes with every call
+                global he_reg              # "    "
+                global pnu                 # "    "
+                global static_he_bottle    # Always set to declared value at top
+                global static_he_reg       # "    "
+                global static_pnu          # "    "
+                newHeBottle = float(C[1])
+                newHeReg = float(C[0])
+                newPnu = float(C[2])
+                if newHeBottle > static_he_bottle:
+                    if newHeBottle > he_bottle:
+                        self.beep(2)
+                        he_bottle = float('inf')
+                    else:
+                        pass
+                if newHeBottle < static_he_bottle:
+                    if newHeBottle < he_bottle:
+                        self.beep(2)
+                        he_bottle = float('-inf')
+                    else:
+                        pass
+                if newHeReg > static_he_reg:
+                    if newHeReg > he_reg:
+                        self.beep(2)
+                        he_reg = float('inf')
+                    else:
+                        pass
+                if newHeReg < static_he_reg:
+                    if newHeReg < he_reg:
+                        self.beep(2)
+                        he_reg = float('-inf')
+                    else:
+                        pass
+                if newPnu > static_pnu:
+                    if newPnu > pnu:
+                        self.beep(2)
+                        pnu = float('inf')
+                    else:
+                        pass
+                if newPnu < static_pnu:
+                    if newPnu < pnu:
+                        self.beep(2)
+                        pnu = float('-inf')
+                    else:
+                        pass
+                else:
+                    pass
+            except:
+                print('Data beep error')
 #------Disconnected alert-------
-    def alert(self, connectionFlag): # Called when disconnected show alerts
+    def alert(self, connectionFlag):             # Called when disconnected show alerts
         if connectionFlag == 1:
             self.Alert1.hide()
             self.label_6.hide()
@@ -352,31 +411,31 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.label_6.show()
             self.beepCall(1)
 #--------Recording Functions-----------
-    def rec(self): # Only called when checkbox changes state
+    def rec(self):                               # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
              if not self.lineEdit.text():
-                  fname = 'log.txt' # Default filename
+                  fname = 'log.txt'              # Default filename
              else:
-                  fname = self.lineEdit.text() # Get name from line edit
-             MainApp.rec.f = open(fname, 'a+') # Open file for appending, creates if does not exist
+                  fname = self.lineEdit.text()   # Get name from line edit
+             MainApp.rec.f = open(fname, 'a+')   # Open file for appending, creates if does not exist
              print('Set Filename')
         else:
-             MainApp.rec.f.close() # Close the file
+             MainApp.rec.f.close()               # Close the file
              print('Closed file')
 
-    def record1(self, A): # A is setup as a signal to execute the function each time a message is recieved
+    def record1(self, A):                        # A is setup as a signal to execute the function each time a message is recieved
         if self.checkBox_2.isChecked() == True:
-             C = self.dataDisplay.C1 # Get C from function dataDisplay
-             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5]) # Seperate values to make final txt file more readable
+             C = self.dataDisplay.C1              # Get C from function dataDisplay
+             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5])              # Seperate values to make final txt file more readable
              A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7]) 
              print('Recording\n'+A+'\n'+C)
              self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
 
 def main():
-    app = QApplication(sys.argv) # start PyQT
+    app = QApplication(sys.argv)        # start PyQT
     window = MainApp()
     window.show()
     app.exec_()
 
-if __name__ == '__main__': # run PyQT
+if __name__ == '__main__':              # run PyQT
     main()
