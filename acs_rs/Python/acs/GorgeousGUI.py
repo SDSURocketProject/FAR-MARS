@@ -26,7 +26,11 @@ GPIO.setmode(GPIO.BCM) # Setup Pins for Buzzer
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, 1)
 
-beepsig = 0
+pressKeyFlag = 0 # Flags for beeper
+ignKeyFlag = 0
+mpvKeyFlag = 0
+ignSwitchFlag = 0
+mpvSwitchFlag = 0
 
 class mainthread(QThread): # Data and state communications class
     STATEsignal = pyqtSignal('PyQt_PyObject') # Declare signals to be emmitted from Mainthread to MainApp
@@ -84,11 +88,10 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.mythread1.STATEsignal.connect(self.progress1) # Connect signals from Mainthread to coresponding functions
         self.mythread1.DATAsignal.connect(self.progress2)
         self.mythread1.disconnectSignal.connect(self.alert)
-        #self.mythread1.STATEsignal.connect(self.record)
         self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
-        self.checkBox_2.stateChanged.connect(self.rec)
+        self.checkBox_2.stateChanged.connect(self.rec) 
         self.mythread1.STATEsignal.connect(self.record1) # Start recoding
-        self.mythread1.STATEsignal.connect(self.beebv2)
+        self.mythread1.STATEsignal.connect(self.beebv2) # Send state data to beep function
 
     def init_ui(self): # Start Mainthread
         self.mythread1.start()
@@ -177,7 +180,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
-            pass
+            print('State Error')
 #------Set Progress bar values and Readout values/colors----------
     def progress2(self, C): # Set progress bars and readouts for pressure data
         try:
@@ -249,7 +252,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
         except:
-            pass
+            print('Readout Error')
 
 #------Check Box Functions--------
     def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
@@ -294,17 +297,52 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.Readout1.move(20, 230)
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
-
+#----------Beep functions----------------------------
     def beepCall(self, x): # Thread to beep function
         t1 = threading.Thread(target = self.beep(x))
         t1.start()
 
     def beep(self, x): # beep for .5 seconds
         if x == 1:
-             GPIO.output(21, 0)
-             time.sleep(0.5)
-             GPIO.output(21,1)
+            GPIO.output(21, 0)
+            time.sleep(0.5)
+            GPIO.output(21,1)
+        if x == 2:
+            GPIO.output(21, 0)
+            time.sleep(0.25)
+            GPIO.output(21,1)
 
+   def beebv2(self, A):
+        try:
+            global pressKeyFlag
+            global ignKeyFlag
+            global mpvKeyFlag
+            global ignSwitchFlag
+            global mpvSwitchFlag
+            newPressKey = int(A[1])
+            newIgnKey = int(A[0])
+            newMpvKey = int(A[3])
+            newIgnSwitch = int(A[6])
+            newMpvSwitch = int(A[4])
+            if newPressKey != pressKeyFlag:
+                self.beep(2)
+            if newIgnKey != ignKeyFlag:
+                self.beep(2)
+            if newMpvKey != mpvKeyFlag:
+                self.beep(2)
+            if newIgnSwitch != ignSwitchFlag:
+                self.beep(2)
+            if newMpvSwitch != mpvSwitchFlag:
+                self.beep(2)
+            else:
+                pass
+            pressKeyFlag = newPressKey
+            ignKeyFlag = newIgnKey
+            mpvKeyFlag = newMpvKey
+            ignSwitchFlag = newIgnSwitch
+            mpvSwitchFlag = newMpvSwitch
+        except:
+            print('Beep Error')
 #------Disconnected alert-------
     def alert(self, connectionFlag): # Called when disconnected show alerts
         if connectionFlag == 1:
@@ -314,16 +352,6 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             self.Alert1.show()
             self.label_6.show()
             self.beepCall(1)
-
-    def beebv2(self, A):
-        global beepsig
-        newState = int(A[1])
-        if newState != beepsig:
-             self.beep(1)
-             print('beep')
-        else:
-             pass
-        beepsig = newState
 #--------Recording Functions-----------
     def rec(self): # Only called when checkbox changes state
         if self.checkBox_2.isChecked() == True:
