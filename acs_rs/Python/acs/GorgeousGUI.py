@@ -214,7 +214,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
-            else:
+            if float(C[1]) < 3500:
                 p.setColor(self.Readout0.backgroundRole(), Qt.white)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
@@ -227,12 +227,12 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
-            else:
+            if float(C[0]) < 3500:
                 c.setColor(self.Readout1.backgroundRole(), Qt.white)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
 #------PNU-------
-            if float(C[2]) > 160:
+            if float(C[2]) > 165:
                 h.setColor(self.Readout2.backgroundRole(), Qt.red)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
@@ -240,15 +240,15 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
-            if 150 < float(C[2]) <= 160:
+            if 150 < float(C[2]) <= 165:
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
-            else:
+            if float(C[2]) < 135:
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
-#------Extra-------                
+#------Extra-------
             if float(C[3]) >= 4500:
                 k.setColor(self.Readout3.backgroundRole(), Qt.red)
                 self.Readout3.setPalette(k)
@@ -350,57 +350,57 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         except:
             print('State beep Error')
 
-        def beep2(self, C):                # Beep calling function for pressure data
-            try:
-                global he_bottle           # Changes with every call
-                global he_reg              # "    "
-                global pnu                 # "    "
-                global static_he_bottle    # Always set to declared value at top
-                global static_he_reg       # "    "
-                global static_pnu          # "    "
-                newHeBottle = float(C[1])
-                newHeReg = float(C[0])
-                newPnu = float(C[2])
-                if newHeBottle > static_he_bottle:
-                    if newHeBottle > he_bottle:
-                        self.beep(2)
-                        he_bottle = float('inf')
-                    else:
-                        pass
-                if newHeBottle < static_he_bottle:
-                    if newHeBottle < he_bottle:
-                        self.beep(2)
-                        he_bottle = float('-inf')
-                    else:
-                        pass
-                if newHeReg > static_he_reg:
-                    if newHeReg > he_reg:
-                        self.beep(2)
-                        he_reg = float('inf')
-                    else:
-                        pass
-                if newHeReg < static_he_reg:
-                    if newHeReg < he_reg:
-                        self.beep(2)
-                        he_reg = float('-inf')
-                    else:
-                        pass
-                if newPnu > static_pnu:
-                    if newPnu > pnu:
-                        self.beep(2)
-                        pnu = float('inf')
-                    else:
-                        pass
-                if newPnu < static_pnu:
-                    if newPnu < pnu:
-                        self.beep(2)
-                        pnu = float('-inf')
-                    else:
-                        pass
+    def beep2(self, C):                # Beep calling function for pressure data
+        try:
+            global he_bottle           # Changes with every call
+            global he_reg              # "    "
+            global pnu                 # "    "
+            global static_he_bottle    # Always set to declared value at top
+            global static_he_reg       # "    "
+            global static_pnu          # "    "
+            newHeBottle = float(C[1])
+            newHeReg = float(C[0])
+            newPnu = float(C[2])
+            if newHeBottle > static_he_bottle:
+                if newHeBottle > he_bottle:
+                    self.beep(2)
+                    he_bottle = float('inf')
                 else:
                     pass
-            except:
-                print('Data beep error')
+            if newHeBottle < static_he_bottle:
+                if newHeBottle < he_bottle:
+                    self.beep(2)
+                    he_bottle = float('-inf')
+                else:
+                    pass
+            if newHeReg > static_he_reg:
+                if newHeReg > he_reg:
+                    self.beep(2)
+                    he_reg = float('inf')
+                else:
+                    pass
+            if newHeReg < static_he_reg:
+                if newHeReg < he_reg:
+                    self.beep(2)
+                    he_reg = float('-inf')
+                else:
+                    pass
+            if newPnu > static_pnu:
+                if newPnu > pnu:
+                    self.beep(2)
+                    pnu = float('inf')
+                else:
+                    pass
+            if newPnu < static_pnu:
+                if newPnu < pnu:
+                    self.beep(2)
+                    pnu = float('-inf')
+                else:
+                    pass
+            else:
+                pass
+        except:
+            print('Data beep error')
 #------Disconnected alert-------
     def alert(self, connectionFlag):             # Called when disconnected show alerts
         if connectionFlag == 1:
