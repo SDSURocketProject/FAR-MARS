@@ -54,14 +54,14 @@ class mainthread(QThread): # Data and state communications class
         print("disconnected") 
 
     def on_connect(self, mqtt_client, userdata, flags, rc): # What to do when reconnected
-        self.mqtt_client.on_message = self.subscrib1 # Call subscrib1 to start reading data when a message is recieved
+        self.mqtt_client.on_message = self.on_message # Call on_message to start reading data when a message is recieved
         self.mqtt_client.subscribe(TOPIC_2) 
         self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
         print("connected")
 
-    def subscrib1(self, mqtt_client, userdata, msg): # What to do when message is recieved
+    def on_message(self, mqtt_client, userdata, msg): # What to do when message is recieved
         try:
             if msg.topic == "DATA": 
                 D = str(msg.payload)[2:-1] # Get rid of excess delimiters
@@ -85,18 +85,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.init_ui()
         self.Alert1.hide() 
         self.label_6.hide()
-        self.mythread1.STATEsignal.connect(self.progress1) # Connect signals from Mainthread to coresponding functions
-        self.mythread1.DATAsignal.connect(self.progress2)
+        self.mythread1.STATEsignal.connect(self.stateDisplay) # Connect signals from Mainthread to coresponding functions
+        self.mythread1.DATAsignal.connect(self.dataDisplay)
         self.mythread1.disconnectSignal.connect(self.alert)
-        self.checkBox.toggled.connect(self.radio4) # When checkbox is clicked call radio 4
+        self.checkBox.toggled.connect(self.hideExtra) # When checkbox is clicked call hideExtra
         self.checkBox_2.stateChanged.connect(self.rec) 
         self.mythread1.STATEsignal.connect(self.record1) # Start recoding
-        self.mythread1.STATEsignal.connect(self.beebv2) # Send state data to beep function
+        self.mythread1.STATEsignal.connect(self.beep2) # Send state data to beep function
 
     def init_ui(self): # Start Mainthread
         self.mythread1.start()
 #------State color set----------
-    def progress1(self, A): # Set state colors
+    def stateDisplay(self, A): # Set state colors
         self.Pressure_Key.setAutoFillBackground(True) # Used for PyQt to set backround colors
         self.Ign_Safety.setAutoFillBackground(True)
         self.MPV_Safety.setAutoFillBackground(True)
@@ -105,7 +105,6 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.ign_state.setAutoFillBackground(True)
         self.ch4_state.setAutoFillBackground(True)
         self.lox_state.setAutoFillBackground(True)
-        MainApp.progress1.A1 = A
         try:
 #-----------------IGN KEY------------------------------------
             if int(A[0]): # Set colors of state displays
@@ -182,7 +181,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         except:
             print('State Error')
 #------Set Progress bar values and Readout values/colors----------
-    def progress2(self, C): # Set progress bars and readouts for pressure data
+    def dataDisplay(self, C): # Set progress bars and readouts for pressure data
         try:
             self.Readout0.display(C[1]) # Display Pessure data in readouts
             self.Readout1.display(C[0])
@@ -198,7 +197,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             c = self.Readout1.palette()
             h = self.Readout2.palette()
             k = self.Readout3.palette()
-            MainApp.progress2.C1 = C
+            MainApp.dataDisplay.C1 = C
 #------HE_BOTTLE-------
             if float(C[1]) >= 4500: # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
@@ -255,7 +254,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             print('Readout Error')
 
 #------Check Box Functions--------
-    def radio4(self): # When checkbox cliked hide uneccesary readouts and reshape display
+    def hideExtra(self): # When checkbox cliked hide uneccesary readouts and reshape display
         self.pstate_label_7.hide()
         self.pstate_label_6.hide()
         self.TReadout.hide()
@@ -276,9 +275,9 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
         self.label_7.move(707, 245)
         self.label_8.move(707, 325)
         if self.checkBox.isChecked() == False:
-            self.radio5()
+            self.showExtra()
 
-    def radio5(self): # When Checkbox unclicked show extra readouts and move all to original spots
+    def showExtra(self): # When Checkbox unclicked show extra readouts and move all to original spots
         self.pstate_label_7.show()
         self.pstate_label_6.show()
         self.TReadout.show()
@@ -312,7 +311,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
             time.sleep(0.25)
             GPIO.output(21,1)
 
-   def beebv2(self, A):
+   def beep2(self, A):
         try:
             global pressKeyFlag
             global ignKeyFlag
@@ -367,7 +366,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow): # PyQT class
 
     def record1(self, A): # A is setup as a signal to execute the function each time a message is recieved
         if self.checkBox_2.isChecked() == True:
-             C = self.progress2.C1 # Get C from function progress2
+             C = self.dataDisplay.C1 # Get C from function dataDisplay
              C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5]) # Seperate values to make final txt file more readable
              A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7]) 
              print('Recording\n'+A+'\n'+C)
