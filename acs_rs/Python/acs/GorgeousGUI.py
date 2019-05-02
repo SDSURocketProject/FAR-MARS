@@ -13,20 +13,20 @@ from PyQt5.QtCore import QThread, pyqtSignal
 import RPi.GPIO as GPIO
 import threading
 
-qtCreatorFile = "RocketGUIv2.ui" # Import .UI file
+qtCreatorFile = "RocketGUIv2.ui"                           # Import .UI file
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile) # Load .UI file
 
-HOST = "192.168.0.10" # Declare connection and topic information
+HOST = "192.168.0.10"                                      # Declare connection and topic information
 port = 1883
 TOPIC_1 = "RELAY"
 TOPIC_2 = "DATA"
 TOPIC_3 = "STATE"
 
-GPIO.setmode(GPIO.BCM) # Setup Pins for Buzzer
+GPIO.setmode(GPIO.BCM)                                     # Setup Pins for Buzzer
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, 1)
 
-pressKeyFlag = 0 # Flags for beeper
+pressKeyFlag = 0                                           # Flags for beeper
 ignKeyFlag = 0
 mpvKeyFlag = 0
 ignSwitchFlag = 0
@@ -38,39 +38,39 @@ he_bottle = static_he_bottle
 he_reg = static_he_reg
 pnu = static_pnu
 
-class mainthread(QThread): # Data and state communications class
-    STATEsignal = pyqtSignal('PyQt_PyObject') # Declare signals to be emmitted from Mainthread to MainApp
+class mainthread(QThread):                                         # Data and state communications class
+    STATEsignal = pyqtSignal('PyQt_PyObject')                      # Declare signals to be emmitted from Mainthread to MainApp
     DATAsignal = pyqtSignal('PyQt_PyObject')
     disconnectSignal = pyqtSignal('PyQt_PyObject')
 
-    def __init__(self): # PyQT initialization function
+    def __init__(self):                                            # PyQT initialization function
         QThread.__init__(self)
         self.connect1()
 
-    def connect1(self): # Connect to RS Pi
+    def connect1(self):                                            # Connect to RS Pi
         self.mqtt_client = mqtt.Client()
-        self.mqtt_client.on_connect = self.on_connect # Does This when connected
-        self.mqtt_client.on_disconnect = self.on_disconnect # Does this when disconnected
-        self.mqtt_client.connect(HOST, port=port, keepalive=4) # Connect to Pi
-        self.mqtt_client.loop_start() # Start Reciving data
+        self.mqtt_client.on_connect = self.on_connect              # Does This when connected
+        self.mqtt_client.on_disconnect = self.on_disconnect        # Does this when disconnected
+        self.mqtt_client.connect(HOST, port=port, keepalive=4)     # Connect to Pi
+        self.mqtt_client.loop_start()                              # Start Reciving data
 
-    def on_disconnect(self, mqtt_client, userdata, flags, rc=0): # What to do when disconnected
+    def on_disconnect(self, mqtt_client, userdata, flags, rc=0):   # What to do when disconnected
         connectionFlag = 0
-        self.disconnectSignal.emit(connectionFlag) # When disconnected send connection flag to alert function
+        self.disconnectSignal.emit(connectionFlag)                 # When disconnected send connection flag to alert function
         print("disconnected") 
 
-    def on_connect(self, mqtt_client, userdata, flags, rc): # What to do when reconnected
-        self.mqtt_client.on_message = self.on_message # Call on_message to start reading data when a message is recieved
+    def on_connect(self, mqtt_client, userdata, flags, rc):        # What to do when reconnected
+        self.mqtt_client.on_message = self.on_message              # Call on_message to start reading data when a message is recieved
         self.mqtt_client.subscribe(TOPIC_2) 
         self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
         print("connected")
 
-    def on_message(self, mqtt_client, userdata, msg): # What to do when message is recieved
+    def on_message(self, mqtt_client, userdata, msg):              # What to do when message is recieved
         try:
             if msg.topic == "DATA": 
-                D = str(msg.payload)[2:-1] # Get rid of excess delimiters
+                D = str(msg.payload)[2:-1]                         # Get rid of excess delimiters
                 C = (D.split(',')[0], D.split(',')[1], D.split(',')[2], D.split(',')[3], D.split(',')[4], D.split(',')[5]) # Tokenizing into array
                 C = ('%4s' % C[0], '%4s' % C[1], '%4s' % C[2], '%4s' % C[3], '%4s' % C[4], '%4s' % C[5]) # Truncating
                 self.DATAsignal.emit(C)
