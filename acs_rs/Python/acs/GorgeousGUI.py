@@ -317,9 +317,9 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             GPIO.output(21, 0)
             time.sleep(0.25)
             GPIO.output(21,1)
-        if x == 2:
+        if x == 3:
             GPIO.output(21, 0)
-            time.sleep(5)
+            time.sleep(.5)
             GPIO.output(21,1)
 
     def beep1(self, A):                               # Beep calling function for state data
@@ -367,37 +367,37 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             newPnu = float(C[2])
             if newHeBottle > static_he_bottle:
                 if newHeBottle > he_bottle:
-                    self.beepCall(3)
+                    self.beep(3)
                     he_bottle = float('inf')
                 else:
                     pass
             if newHeBottle < static_he_bottle:
                 if newHeBottle < he_bottle:
-                    self.beepCall(3)
+                    self.beep(3)
                     he_bottle = float('-inf')
                 else:
                     pass
             if newHeReg > static_he_reg:
                 if newHeReg > he_reg:
-                    self.beepCall(3)
+                    self.beep(3)
                     he_reg = float('inf')
                 else:
                     pass
             if newHeReg < static_he_reg:
                 if newHeReg < he_reg:
-                    self.beepCall(3)
+                    self.beep(3)
                     he_reg = float('-inf')
                 else:
                     pass
             if newPnu > static_pnu:
                 if newPnu > pnu:
-                    self.beepCall(3)
+                    self.beep(3)
                     pnu = float('inf')
                 else:
                     pass
             if newPnu < static_pnu:
                 if newPnu < pnu:
-                    self.beepCall(3)
+                    self.beep(3)
                     pnu = float('-inf')
                 else:
                     pass
