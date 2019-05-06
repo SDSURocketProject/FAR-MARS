@@ -31,7 +31,7 @@ ignKeyFlag = 0
 mpvKeyFlag = 0
 ignSwitchFlag = 0
 mpvSwitchFlag = 0
-static_he_bottle = 6000
+static_he_bottle = 5000
 static_he_reg = 4500
 static_pnu = 165
 he_bottle = static_he_bottle
@@ -206,11 +206,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             k = self.Readout3.palette()
             MainApp.dataDisplay.C1 = C
 #------HE_BOTTLE-------
-            if float(C[1]) >= 4500:                           # Set Progress bar values for pressure data and change readout color based on value
+            if float(C[1]) >= 5000:                           # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
-                self.progressBar0.setValue(4500)
-            if 3500 <= float(C[1]) < 4500:
+                self.progressBar0.setValue(5000)
+            if 3500 <= float(C[1]) < 5000:
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
@@ -280,7 +280,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         self.label_3.move(130, 245)
         self.Readout1.move(20, 250)
         self.label_7.move(707, 245)
-        self.label_8.move(707, 325)
+        self.label_8.move(707, 345)
         if self.checkBox.isChecked() == False:
             self.showExtra()
 
