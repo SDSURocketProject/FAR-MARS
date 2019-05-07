@@ -260,18 +260,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
 #------CH4 Hall Effect------------
-            if float(C[4]) >= 4500:
-                l.setColor(self.ch4_line.backgroundRole(), Qt.blue)
+            if int(C[4]):
+                l.setColor(self.ch4_line.backgroundRole(), Qt.white)
                 self.ch4_line.setPalette(l)
             else:
-                l.setColor(self.lox_line.backgroundRole(), Qt.white)
+                l.setColor(self.lox_line.backgroundRole(), Qt.blue)
                 self.ch4_line.setPalette(l)
 #------LOX Hall Effect------------
-            if float(C[5]) >= 4500:
-                m.setColor(self.lox_line.backgroundRole(), Qt.blue)
+            if int(C[5]):
+                m.setColor(self.lox_line.backgroundRole(), Qt.white)
                 self.lox_line.setPalette(m)
             else:
-                m.setColor(self.lox_line.backgroundRole(), Qt.white)
+                m.setColor(self.lox_line.backgroundRole(), Qt.blue)
                 self.lox_line.setPalette(m)        
         except:
             print('Readout Error')
