@@ -1,4 +1,3 @@
-
 import paho.mqtt.client as mqtt
 import time
 import threading
@@ -135,17 +134,14 @@ while(1):
 			pressure_3 = formula(v3, p3_max_pressure, p3_volt_range_low, p3_volt_range_high, 0)
 
 		v4 = DAQC.getADC(0,4)
-		if type(p3_max_pressure) == type('str'):
-                        pressure_4 = '0'
-                else:
-                        pressure_4 = formula(v4, p3_max_pressure, p3_volt_range_low, p3_volt_range_high,0)
+		ch4_hall
 
 		v5 = DAQC.getADC(0,5)
-		temp0 = v5
+		lox_hall = v5
 
-		f2.write('{}, {}, {}, {}, {}, {}, {}, {}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),pressure_0,pressure_1,pressure_2,pressure_3,pressure_4,temp0))
-		client.publish(TOPIC_2,b'{},{},{},{},{},{}'.format(pressure_0,pressure_1,pressure_2,pressure_3,pressure_4,temp0))
-		print('{}, {}, {}, {}, {}, {}\r'.format(pressure_0,pressure_1,pressure_2,pressure_3,pressure_4,temp0))
+		f2.write('{}, {}, {}, {}, {}, {}, {}, {}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),pressure_0,pressure_1,pressure_2,pressure_3,ch4_hall,lox_hall))
+		client.publish(TOPIC_2,b'{},{},{},{},{},{}'.format(pressure_0,pressure_1,pressure_2,pressure_3,ch4_hall,lox_hall))
+		print('{}, {}, {}, {}, {}, {}\r'.format(pressure_0,pressure_1,pressure_2,pressure_3,ch4_hall,lox_hall))
 
 		time.sleep(0.1)
 

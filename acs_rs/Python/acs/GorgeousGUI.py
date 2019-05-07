@@ -194,16 +194,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             self.Readout1.display(C[0])
             self.Readout2.display(C[2])
             self.Readout3.display(C[3])
-            self.TReadout_2.display(C[4])
-            self.TReadout.display(C[5])
             self.Readout0.setAutoFillBackground(True)
             self.Readout1.setAutoFillBackground(True)
             self.Readout2.setAutoFillBackground(True)
             self.Readout3.setAutoFillBackground(True)
+            self.ch4_line.setAutoFillBackground(True)
+            self.lox_line.setAutoFillBackground(True)
             p = self.Readout0.palette()
             c = self.Readout1.palette()
             h = self.Readout2.palette()
             k = self.Readout3.palette()
+            l = self.ch4_line.palette()
+            m = self.lox_line.palette()
             MainApp.dataDisplay.C1 = C
 #------HE_BOTTLE-------
             if float(C[1]) >= 5000:                           # Set Progress bar values for pressure data and change readout color based on value
@@ -257,15 +259,25 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 k.setColor(self.Readout3.backgroundRole(), Qt.white)
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
+#------CH4 Hall Effect------------
+            if float(C[4]) >= 4500:
+                l.setColor(self.ch4_line.backgroundRole(), Qt.blue)
+                self.ch4_line.setPalette(l)
+            else:
+                l.setColor(self.lox_line.backgroundRole(), Qt.white)
+                self.ch4_line.setPalette(l)
+#------LOX Hall Effect------------
+            if float(C[5]) >= 4500:
+                m.setColor(self.lox_line.backgroundRole(), Qt.blue)
+                self.lox_line.setPalette(m)
+            else:
+                m.setColor(self.lox_line.backgroundRole(), Qt.white)
+                self.lox_line.setPalette(m)        
         except:
             print('Readout Error')
 
 #------Check Box Functions--------
     def hideExtra(self):                                        # When checkbox cliked hide uneccesary readouts and reshape display
-        self.pstate_label_7.hide()
-        self.pstate_label_6.hide()
-        self.TReadout.hide()
-        self.TReadout_2.hide()
         self.beepCall(1)
         self.progressBar3.hide()
         self.pstate_label_5.hide()
@@ -285,10 +297,6 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             self.showExtra()
 
     def showExtra(self):                                        # When Checkbox unclicked show extra readouts and move all to original spots
-        self.pstate_label_7.show()
-        self.pstate_label_6.show()
-        self.TReadout.show()
-        self.TReadout_2.show()
         self.progressBar3.show()
         self.pstate_label_5.show()
         self.Readout3.show()
