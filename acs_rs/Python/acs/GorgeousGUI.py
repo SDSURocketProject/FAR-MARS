@@ -414,11 +414,8 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
     def record1(self, A):                        # A is setup as a signal to execute the function each time a message is recieved
         if self.checkBox_2.isChecked():
             C = self.dataDisplay.C1              # Get C from function dataDisplay
-            sep = ', '
-            C = str(C[0], C[1], C[2], C[3], C[4], C[5])              # Seperate values to make final txt file more readable
-            A = str(A[0], A[1], A[2], A[3], A[4], A[5], A[6], A[7])
-            C = sep.join(C)
-            A = sep.join(A)
+            C = ', '.join(C)                     # Seperate values to make final txt file more readable
+            A = ', '.join(A)
             print('Recording\n'+A+'\n'+C)
             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
 
