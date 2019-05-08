@@ -1,8 +1,3 @@
-﻿/**
- * Control Software Main Window
- *
- * @author Zack Mudd <zmudd@sdsu.edu>
- */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

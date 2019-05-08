@@ -112,17 +112,17 @@
   </action>
   <action name="actionFullscreen">
    <property name="text">
-    <string>&amp;Fullscreen</string>
+    <string>Fullscreen</string>
    </property>
   </action>
   <action name="actionMinimize">
    <property name="text">
-    <string>&amp;Minimize</string>
+    <string>Minimize</string>
    </property>
   </action>
   <action name="actionWhats_New">
    <property name="text">
-    <string>&amp;Whats New?</string>
+    <string>Whats New?</string>
    </property>
   </action>
  </widget>
