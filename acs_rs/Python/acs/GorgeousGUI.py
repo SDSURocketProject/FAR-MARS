@@ -212,7 +212,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(5000)
-            elif 3500 <= float(C[1]) < 5000:
+            elif float(C[1]) >= 3500:
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
@@ -225,7 +225,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
-            elif 3500 <= float(C[0]) < 4500:
+            elif float(C[0]) >= 3500:
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
