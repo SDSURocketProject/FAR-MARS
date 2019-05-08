@@ -260,18 +260,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 self.Readout3.setPalette(k)
                 self.progressBar3.setValue(float(C[3]))
 #------CH4 Hall Effect------------
-            if int(C[4]):
-                l.setColor(self.ch4_line.backgroundRole(), Qt.white)
+            if float(C[4]) >= 4500:
+                l.setColor(self.ch4_line.backgroundRole(), Qt.blue)
                 self.ch4_line.setPalette(l)
             else:
-                l.setColor(self.lox_line.backgroundRole(), Qt.blue)
+                l.setColor(self.lox_line.backgroundRole(), Qt.white)
                 self.ch4_line.setPalette(l)
 #------LOX Hall Effect------------
-            if int(C[5]):
-                m.setColor(self.lox_line.backgroundRole(), Qt.white)
+            if float(C[5]) >= 4500:
+                m.setColor(self.lox_line.backgroundRole(), Qt.blue)
                 self.lox_line.setPalette(m)
             else:
-                m.setColor(self.lox_line.backgroundRole(), Qt.blue)
+                m.setColor(self.lox_line.backgroundRole(), Qt.white)
                 self.lox_line.setPalette(m)        
         except:
             pass
@@ -358,7 +358,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         except:
             pass
 
-    def beep2(self, C):                # Beep calling function for pressure data
+    def beep2(self, C):            # Beep calling function for pressure data
         global he_bottle           # Changes with every call
         global he_reg              # "    "
         global pnu                 # "    "
@@ -369,22 +369,22 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             newHeBottle = float(C[1])
             newHeReg = float(C[0])
             newPnu = float(C[2])
-            if newHeBottle > static_he_bottle && newHeBottle > he_bottle:
+            if newHeBottle > static_he_bottle and newHeBottle > he_bottle:
                 self.beep(1)
                 he_bottle = float('inf')
-            if newHeBottle < static_he_bottle && newHeBottle < he_bottle:
+            if newHeBottle < static_he_bottle and newHeBottle < he_bottle:
                 self.beep(1)
                 he_bottle = float('-inf')
-            if newHeReg > static_he_reg && newHeReg > he_reg:
+            if newHeReg > static_he_reg and newHeReg > he_reg:
                 self.beep(1)
                 he_reg = float('inf')
-            if newHeReg < static_he_reg && newHeReg < he_reg:
+            if newHeReg < static_he_reg and newHeReg < he_reg:
                 self.beep(1)
                 he_reg = float('-inf')
-            if newPnu > static_pnu && newPnu > pnu:
+            if newPnu > static_pnu and newPnu > pnu:
                 self.beep(1)
                 pnu = float('inf')
-            if newPnu < static_pnu && newPnu < pnu:
+            if newPnu < static_pnu and newPnu < pnu:
                 self.beep(1)
                 pnu = float('-inf')
         except:
@@ -401,23 +401,26 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
 #--------Recording Functions-----------
     def rec(self):                               # Only called when checkbox changes state
         if self.checkBox_2.isChecked():
-             if not self.lineEdit.text():
-                  fname = 'log.txt'              # Default filename
-             else:
-                  fname = self.lineEdit.text()   # Get name from line edit
-             MainApp.rec.f = open(fname, 'a+')   # Open file for appending, creates if does not exist
-             print('Set Filename')
+            if not self.lineEdit.text():
+                fname = 'log.txt'              # Default filename
+            else:
+                fname = self.lineEdit.text()   # Get name from line edit
+            MainApp.rec.f = open(fname, 'a+')   # Open file for appending, creates if does not exist
+            print('Set Filename')
         else:
-             MainApp.rec.f.close()               # Close the file
-             print('Closed file')
+            MainApp.rec.f.close()               # Close the file
+            print('Closed file')
 
     def record1(self, A):                        # A is setup as a signal to execute the function each time a message is recieved
-        if self.checkBox_2.isChecked() == True:
-             C = self.dataDisplay.C1              # Get C from function dataDisplay
-             C = str(C[0]+', '+C[1]+', '+C[2]+', '+C[3]+', '+C[4]+', '+C[5])              # Seperate values to make final txt file more readable
-             A = str(A[0]+', '+A[1]+', '+A[2]+', '+A[3]+', '+A[4]+', '+A[5]+', '+A[6]+', '+A[7]) 
-             print('Recording\n'+A+'\n'+C)
-             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
+        if self.checkBox_2.isChecked():
+            C = self.dataDisplay.C1              # Get C from function dataDisplay
+            sep = ', '
+            C = str(C[0], C[1], C[2], C[3], C[4], C[5])              # Seperate values to make final txt file more readable
+            A = str(A[0], A[1], A[2], A[3], A[4], A[5], A[6], A[7])
+            C = sep.join(C)
+            A = sep.join(A)
+            print('Recording\n'+A+'\n'+C)
+            self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
 
 def main():
     app = QApplication(sys.argv)        # start PyQT

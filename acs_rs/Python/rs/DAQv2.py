@@ -54,7 +54,7 @@ print("Connection Established")
 
 def formula(data, max_pressure, low_volt, high_volt, tof):
 	volt_range = high_volt - low_volt
-	if tof == 1:
+	if tof:
 		data = data*2
 	result = str((max_pressure/volt_range)*(data-low_volt))
 	return result
@@ -85,22 +85,14 @@ f = open("Cryo4_17.txt", "w+")
 f2 = open("Cryo4_17_2.txt", "w+")
 
 while(1):
-		#r0 - IGN key
-		#r1 - PRESS key
-		#r2 - IGN
-		#r3 - LAUNCH key
-		#r4 - MPV switch
-		#r5 - CH4
-		#r6 - IGN switch
-		#r7 - LOX
-		r0 = compare(3, DAQC.getADC(1,0))
-		r1 = compare(2, DAQC.getADC(1,1))
-		r2 = DAQC.getDINbit(1,0)
-		r3 = compare(2, DAQC.getADC(1,3))
-		r4 = compare(2, DAQC.getADC(1,4))
-		r5 = DAQC.getDINbit(1,1)
-		r6 = compare(3, DAQC.getADC(1,6))
-		r7 = DAQC.getDINbit(1,2)
+		r0 = compare(3, DAQC.getADC(1,0))  # IGN key
+		r1 = compare(2, DAQC.getADC(1,1))  # Press Key
+		r2 = DAQC.getDINbit(1,0)           # IGN state
+		r3 = compare(2, DAQC.getADC(1,3))  # Launch key
+		r4 = compare(2, DAQC.getADC(1,4))  # MPV switch
+		r5 = DAQC.getDINbit(1,1)           # CH4 state
+		r6 = compare(3, DAQC.getADC(1,6))  # IGN switch
+		r7 = DAQC.getDINbit(1,2)           # LOX state
 
 		f.write('{}, {}, {}, {}, {}, {}, {}, {}, {}, {}\n'.format(time.strftime("%H:%M:%S"),time.strftime("%d:%m:%Y"),r0,r1,r2,r3,r4,r5,r6,r7))
 		client.publish(TOPIC_3,b'{},{},{},{},{},{},{},{}'.format(r0,r1,r2,r3,r4,r5,r6,r7))
