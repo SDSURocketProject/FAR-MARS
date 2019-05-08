@@ -317,14 +317,12 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         t1.start()
 
     def beep(self, x):                                # beep for .5 seconds
+        GPIO.output(21, 0)
         if x == 1:
-            GPIO.output(21, 0)
             time.sleep(0.5)
-            GPIO.output(21,1)
         else:
-            GPIO.output(21, 0)
             time.sleep(0.25)
-            GPIO.output(21,1)
+        GPIO.output(21,1)
 
     def beep1(self, A):                               # Beep calling function for state data
         global pressKeyFlag
