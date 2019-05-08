@@ -94,7 +94,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         self.mythread1.STATEsignal.connect(self.stateDisplay) # Connect signals from Mainthread to coresponding functions
         self.mythread1.STATEsignal.connect(self.record1)      # Start recoding
         self.mythread1.STATEsignal.connect(self.beep1)        # Send state data to beep function
-        self.mythread1.DATAsignal.connect(self.beep2)         # Send pressure data to pressure beeb function
+        self.mythread1.DATAsignal.connect(self.beep2)         # Send pressure data to pressure beep function
         self.mythread1.DATAsignal.connect(self.dataDisplay)
         self.mythread1.disconnectSignal.connect(self.alert)
         self.checkBox.toggled.connect(self.hideExtra)         # When checkbox is clicked call hideExtra
