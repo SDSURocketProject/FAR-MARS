@@ -57,11 +57,11 @@ class mainthread(QThread):                                         # Data and st
     def on_disconnect(self, mqtt_client, userdata, flags, rc=0):   # What to do when disconnected
         connectionFlag = 0
         self.disconnectSignal.emit(connectionFlag)                 # When disconnected send connection flag to alert function
-        print("disconnected") 
+        print("disconnected")
 
     def on_connect(self, mqtt_client, userdata, flags, rc):        # What to do when reconnected
         self.mqtt_client.on_message = self.on_message              # Call on_message to start reading data when a message is recieved
-        self.mqtt_client.subscribe(TOPIC_2) 
+        self.mqtt_client.subscribe(TOPIC_2)
         self.mqtt_client.subscribe(TOPIC_3)
         connectionFlag = 1
         self.disconnectSignal.emit(connectionFlag)
@@ -89,7 +89,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         self.setupUi(self) 
         self.mythread1 = mainthread()                         # Threading to Mainthread
         self.init_ui()
-        self.Alert1.hide() 
+        self.Alert1.hide()
         self.label_6.hide()
         self.mythread1.STATEsignal.connect(self.stateDisplay) # Connect signals from Mainthread to coresponding functions
         self.mythread1.STATEsignal.connect(self.record1)      # Start recoding
@@ -186,7 +186,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 p2.setColor(self.lox_state.backgroundRole(), Qt.red)
                 self.lox_state.setPalette(p2)
         except:
-            print('State Error')
+            pass
 #------Set Progress bar values and Readout values/colors----------
     def dataDisplay(self, C):                                 # Set progress bars and readouts for pressure data
         try:
@@ -200,23 +200,23 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             self.Readout3.setAutoFillBackground(True)
             self.ch4_line.setAutoFillBackground(True)
             self.lox_line.setAutoFillBackground(True)
-            p = self.Readout0.palette()
+            p = self.Readout0.palette()                       # Assign pallete atribute of readouts and lines to variables for ease of changing it later
             c = self.Readout1.palette()
             h = self.Readout2.palette()
             k = self.Readout3.palette()
             l = self.ch4_line.palette()
             m = self.lox_line.palette()
-            MainApp.dataDisplay.C1 = C
+            MainApp.dataDisplay.C1 = C                        # Make C and atrribute of dataDisplay too be used with recording functions
 #------HE_BOTTLE-------
             if float(C[1]) >= 5000:                           # Set Progress bar values for pressure data and change readout color based on value
                 p.setColor(self.Readout0.backgroundRole(), Qt.red)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(5000)
-            if 3500 <= float(C[1]) < 5000:
+            elif 3500 <= float(C[1]) < 5000:
                 p.setColor(self.Readout0.backgroundRole(), Qt.green)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
-            if float(C[1]) < 3500:
+            else:
                 p.setColor(self.Readout0.backgroundRole(), Qt.white)
                 self.Readout0.setPalette(p)
                 self.progressBar0.setValue(float(C[1]))
@@ -225,11 +225,11 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 c.setColor(self.Readout1.backgroundRole(), Qt.red)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(4500)
-            if 3500 <= float(C[0]) < 4500:
+            elif 3500 <= float(C[0]) < 4500:
                 c.setColor(self.Readout1.backgroundRole(), Qt.green)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
-            if float(C[0]) < 3500:
+            else:
                 c.setColor(self.Readout1.backgroundRole(), Qt.white)
                 self.Readout1.setPalette(c)
                 self.progressBar1.setValue(float(C[0]))
@@ -238,15 +238,15 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 h.setColor(self.Readout2.backgroundRole(), Qt.red)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
-            if 135 <= float(C[2]) <= 150:
+            elif 135 <= float(C[2]) <= 150:
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
-            if 150 < float(C[2]) <= 165:
+            elif 150 < float(C[2]) <= 165:
                 h.setColor(self.Readout2.backgroundRole(), Qt.green)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(150)
-            if float(C[2]) < 135:
+            else:
                 h.setColor(self.Readout2.backgroundRole(), Qt.white)
                 self.Readout2.setPalette(h)
                 self.progressBar2.setValue(float(C[2]))
@@ -274,7 +274,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 m.setColor(self.lox_line.backgroundRole(), Qt.white)
                 self.lox_line.setPalette(m)        
         except:
-            print('Readout Error')
+            pass
 
 #------Check Box Functions--------
     def hideExtra(self):                                        # When checkbox cliked hide uneccesary readouts and reshape display
@@ -321,22 +321,18 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             GPIO.output(21, 0)
             time.sleep(0.5)
             GPIO.output(21,1)
-        if x == 2:
+        else:
             GPIO.output(21, 0)
             time.sleep(0.25)
             GPIO.output(21,1)
-        if x == 3:
-            GPIO.output(21, 0)
-            time.sleep(.5)
-            GPIO.output(21,1)
 
     def beep1(self, A):                               # Beep calling function for state data
+        global pressKeyFlag
+        global ignKeyFlag
+        global mpvKeyFlag
+        global ignSwitchFlag
+        global mpvSwitchFlag
         try:
-            global pressKeyFlag
-            global ignKeyFlag
-            global mpvKeyFlag
-            global ignSwitchFlag
-            global mpvSwitchFlag
             newPressKey = int(A[1])
             newIgnKey = int(A[0])
             newMpvKey = int(A[3])
@@ -360,59 +356,39 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             ignSwitchFlag = newIgnSwitch
             mpvSwitchFlag = newMpvSwitch
         except:
-            print('State beep Error')
+            pass
 
     def beep2(self, C):                # Beep calling function for pressure data
+        global he_bottle           # Changes with every call
+        global he_reg              # "    "
+        global pnu                 # "    "
+        global static_he_bottle    # Always set to declared value at top
+        global static_he_reg       # "    "
+        global static_pnu          # "    "
         try:
-            global he_bottle           # Changes with every call
-            global he_reg              # "    "
-            global pnu                 # "    "
-            global static_he_bottle    # Always set to declared value at top
-            global static_he_reg       # "    "
-            global static_pnu          # "    "
             newHeBottle = float(C[1])
             newHeReg = float(C[0])
             newPnu = float(C[2])
-            if newHeBottle > static_he_bottle:
-                if newHeBottle > he_bottle:
-                    self.beep(3)
-                    he_bottle = float('inf')
-                else:
-                    pass
-            if newHeBottle < static_he_bottle:
-                if newHeBottle < he_bottle:
-                    self.beep(3)
-                    he_bottle = float('-inf')
-                else:
-                    pass
-            if newHeReg > static_he_reg:
-                if newHeReg > he_reg:
-                    self.beep(3)
-                    he_reg = float('inf')
-                else:
-                    pass
-            if newHeReg < static_he_reg:
-                if newHeReg < he_reg:
-                    self.beep(3)
-                    he_reg = float('-inf')
-                else:
-                    pass
-            if newPnu > static_pnu:
-                if newPnu > pnu:
-                    self.beep(3)
-                    pnu = float('inf')
-                else:
-                    pass
-            if newPnu < static_pnu:
-                if newPnu < pnu:
-                    self.beep(3)
-                    pnu = float('-inf')
-                else:
-                    pass
-            else:
-                pass
+            if newHeBottle > static_he_bottle && newHeBottle > he_bottle:
+                self.beep(1)
+                he_bottle = float('inf')
+            if newHeBottle < static_he_bottle && newHeBottle < he_bottle:
+                self.beep(1)
+                he_bottle = float('-inf')
+            if newHeReg > static_he_reg && newHeReg > he_reg:
+                self.beep(1)
+                he_reg = float('inf')
+            if newHeReg < static_he_reg && newHeReg < he_reg:
+                self.beep(1)
+                he_reg = float('-inf')
+            if newPnu > static_pnu && newPnu > pnu:
+                self.beep(1)
+                pnu = float('inf')
+            if newPnu < static_pnu && newPnu < pnu:
+                self.beep(1)
+                pnu = float('-inf')
         except:
-            print('Data beep error')
+            pass
 #------Disconnected alert-------
     def alert(self, connectionFlag):             # Called when disconnected show alerts
         if connectionFlag == 1:
@@ -424,7 +400,7 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
             self.beepCall(1)
 #--------Recording Functions-----------
     def rec(self):                               # Only called when checkbox changes state
-        if self.checkBox_2.isChecked() == True:
+        if self.checkBox_2.isChecked():
              if not self.lineEdit.text():
                   fname = 'log.txt'              # Default filename
              else:
