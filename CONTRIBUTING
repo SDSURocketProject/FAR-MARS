@@ -29,7 +29,7 @@ The name of your PR should be short and descriptive of the issue your branch add
 	``` 
 	git add <filename(s)>
 	git commit -m <message>
-	git push origin <branchname>
+	git push <branchname>
 	```
 
 - When you're finished making changes to your branch, submit a new pull request to merge your branch into master [here](https://github.com/SDSURocketProject/FAR-MARS/pulls)

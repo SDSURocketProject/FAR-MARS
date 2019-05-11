@@ -7,5 +7,6 @@ Makefile
 *.csv
 controlsoftware
 !controlsoftware/
+controlsoftware/build
 *.pro.user
 *.autosave

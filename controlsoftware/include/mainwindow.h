@@ -8,8 +8,8 @@
 #include <QTimer>
 #include <qcgaugewidget.h>
 #include <time.h>
-#include "csv.h"
 
+#include "csv.h"
 #include "liveplot.h"
 #include "logger.h"
 #include "serial.h"
@@ -28,11 +28,11 @@ public:
 
 private:
 	Ui::mainwindow *ui;
-	void createActions();
-	void getData();
-	void logData();
-	void update_data();
-	void updatePlots();
+	void createActions(void);
+	void getData(void);
+	void logData(void);
+	void update_data(void);
+	void updatePlots(void);
 
 	livePlot *plot;
 
@@ -62,9 +62,9 @@ private:
 
 
 private slots:
-	void onTimer();
+	void onTimer(void);
 	void on_logDataCheckbox_stateChanged(int arg1);
-	void on_livePlotButton_clicked();
+	void on_livePlotButton_clicked(void);
 };
 
 #endif // MAINWINDOW_H

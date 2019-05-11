@@ -32,20 +32,20 @@ SOURCES += \
     serial.cpp \
     qcgaugewidget.cpp \
     liveplot.cpp \
-    com.cpp
+    com.cpp \
 
 HEADERS += \
-        mainwindow.h \
-    logger.h \
-    csv.h \
-    serial.h \
-    qcgaugewidget.h \
-    liveplot.h \
-    com.h \
+        include/mainwindow.h \
+    include/logger.h \
+    include/csv.h \
+    include/serial.h \
+    include/qcgaugewidget.h \
+    include/liveplot.h \
+    include/com.h \
 
 FORMS += \
-        mainwindow.ui \
-    liveplot.ui
+        ui/mainwindow.ui \
+    ui/liveplot.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

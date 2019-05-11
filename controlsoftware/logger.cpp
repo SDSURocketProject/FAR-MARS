@@ -6,7 +6,7 @@
 #include "mainwindow.h"
 
 /**
- * Logger Class Constructor
+ * @brief Logger Class Constructor
  */
 logger::logger(){
 	filename = "test.txt";
@@ -14,10 +14,10 @@ logger::logger(){
 }
 
 /**
- * Set path to log file
+ * @brief Set path to log file
  *
  * @since v0.2.0
- * @param char* path to be used as filename
+ * @param[in] char* path to be used as filename
  */
 void
 logger::setFile(const char *newFilename){
@@ -28,7 +28,7 @@ logger::setFile(const char *newFilename){
 }
 
 /**
- * Open log for writing
+ * @brief Open log for writing
  */
 void
 logger::openFile(){
@@ -40,7 +40,7 @@ logger::openFile(){
 }
 
 /**
- * Close file after writing
+ * @brief Close file after writing
  */
 void
 logger::closeFile(){
@@ -52,7 +52,7 @@ logger::closeFile(){
 }
 
 /**
- * Check if log is currently opened
+ * @brief Check if log is currently opened
  *
  * @return 1 if open, else 0
  */
@@ -62,11 +62,10 @@ logger::isOpen(){
 }
 
 /**
- * Append data to file, generic
- * Spawns a warning popup if the file is not open for writing
+ * @brief Append data to file, generic
  *
- * @param float[] data to be appended to file
- * @param int number of values to parse
+ * @param[in] float[] data to be appended to file
+ * @param[in] int number of values to parse
  */
 void
 logger::appendData(float data[], int vals){
@@ -78,12 +77,11 @@ logger::appendData(float data[], int vals){
 }
 
 /**
- * Append data to file, EOL-defined
- * Spawns a warning popup if the file is not open for writing
+ * @brief Append data to file, EOL-defined
  *
- * @param float[] data to be appended to file
- * @param int number of values to parse
- * @param int append newline to end of data, 1 for yes 0 for no
+ * @param[in] float[] data to be appended to file
+ * @param[in] int number of values to parse
+ * @param[in] int append newline to end of data, 1 for yes 0 for no
  */
 void
 logger::appendData(float data[], int vals, int newLine){
@@ -95,12 +93,11 @@ logger::appendData(float data[], int vals, int newLine){
 }
 
 /**
- * Append data to file, EOL-defined
- * Spawns a warning popup if the file is not open for writing
+ * @brief Append data to file, EOL-defined
  *
- * @param int[] data to be appended to file
- * @param int number of values to parse
- * @param int append newline to end of data, 1 for yes 0 for no
+ * @param[in] int[] data to be appended to file
+ * @param[in] int number of values to parse
+ * @param[in] int append newline to end of data, 1 for yes 0 for no
  */
 void
 logger::appendData(int data[], int vals, int newLine){
@@ -112,12 +109,11 @@ logger::appendData(int data[], int vals, int newLine){
 }
 
 /**
- * Append data to file, EOL-defined
- * Spawns a warning popup if the file is not open for writing
+ * @brief Append data to file, EOL-defined
  *
- * @param long[] timestamp to be appended to file
- * @param int number of values to parse
- * @param int append newline to end of data, 1 for yes 0 for no
+ * @param[in] long[] timestamp to be appended to file
+ * @param[in] int number of values to parse
+ * @param[in] int append newline to end of data, 1 for yes 0 for no
  */
 void
 logger::appendData(long time[], int vals, int newLine){
@@ -129,8 +125,7 @@ logger::appendData(long time[], int vals, int newLine){
 }
 
 /**
- * Append newline to file
- * Spawns a warning popup if the file is not open for writing
+ * @brief Append newline to file
  */
 void
 logger::newLine(){

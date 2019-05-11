@@ -3,7 +3,8 @@
 ## Linux Build Instructions
 
 1. go to <projectroot>/controlsoftware
-1. run `qmake` (qmake may be aliased along the lines of `qmake-qt5` on some systems)
+1. run `mkdir build && cd build`
+1. run `cmake ..`
 1. run `make`
 
 ## Operation of controlsoftware:

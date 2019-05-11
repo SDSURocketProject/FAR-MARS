@@ -9,12 +9,11 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QChartView>
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    mainwindow w;
-    w.show();
+	QApplication a(argc, argv);
+	mainwindow w;
+	w.show();
 
-    return a.exec();
+	return a.exec();
 }

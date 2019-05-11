@@ -6,6 +6,7 @@
 #include <string>
 #include <termios.h>
 #include <unistd.h>
+
 #include "com.h"
 
 struct daqSensors {
@@ -16,15 +17,25 @@ struct daqSensors {
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 } __attribute__((packed));
 
-void parseMessage(char *message, float *output, uint32_t *timestamp);
-void parsePressureMessage(struct daqSensors *message);
-int readMessage(struct daqSensors *message);
+struct daqParsed {
+	uint32_t timestamp;
+	float TC_uaf;
+	uint8_t HALL_methane, HALL_LOX;
+	float BATT_voltage;
+	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
+};
+
+void parseMessage(char*, float*, uint32_t*);
+void parsePressureMessage(struct daqSensors*, struct daqParsed*);
+int readMessage(struct daqSensors*);
+float tc_conv(float);
 int uart_init(void);
 
 
 static int fd;
 static int rate = 0;
 
+#define MESSAGE_BUFFER_SIZE 100
 #define PRESSURE_DIVISION_CONSTANT 4095.0f
 #define PRESSURE_METHANE_MAX_PRESSURE 1500.0f
 #define PRESSURE_LOX_MAX_PRESSURE 1500.0f
@@ -34,6 +45,9 @@ static int rate = 0;
 #define PRESSURE_LOX_BIAS 41.0f
 #define PRESSURE_HELIUM_BIAS 0.0f
 #define PRESSURE_CHAMBER_BIAS 0.0f
+#define BATTERY_DIVISION_CONSTANT 4095.0f
+#define BATTERY_MULTIPLICATION_CONSTANT 4.959f*11.0f
+#define THERMO_DIVISION_CONSTANT 65535.0f
 
 enum pressures {
 	CH4_READING,
