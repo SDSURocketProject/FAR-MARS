@@ -66,11 +66,11 @@ def compare(type_,data):
 	if type_ == 0:
 		return '0'
 	if type_ == 1:
-		return data < 1
+		return int(data < 1)
 	if type_ == 2:
-		return data >= 1
+		return int(data >= 1)
 	if type_ == 3:
-		return data <= 1
+		return int(data <= 1)
 
 f = open("Cryo4_17.txt", "w+")
 f2 = open("Cryo4_17_2.txt", "w+")

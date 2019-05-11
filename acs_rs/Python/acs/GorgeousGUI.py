@@ -85,8 +85,8 @@ class mainthread(QThread):                                         # Data and st
 class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
     def __init__(self, parent=None):                          # Initialization function
         super(MainApp, self).__init__(parent)                 # Set Mainapp as parent
-        QMainWindow.__init__(self) 
-        self.setupUi(self) 
+        QMainWindow.__init__(self)
+        self.setupUi(self)
         self.mythread1 = mainthread()                         # Threading to Mainthread
         self.init_ui()
         self.Alert1.hide()
@@ -98,10 +98,15 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         self.mythread1.DATAsignal.connect(self.dataDisplay)
         self.mythread1.disconnectSignal.connect(self.alert)
         self.checkBox.toggled.connect(self.hideExtra)         # When checkbox is clicked call hideExtra
-        self.checkBox_2.stateChanged.connect(self.rec) 
+        self.checkBox_2.stateChanged.connect(self.rec)
 
     def init_ui(self):                                        # Start Mainthread
         self.mythread1.start()
+
+    def closeEvent(self, event):
+        self.checkBox_2.setChecked == False
+        self.rec.f.close()
+        print('Closed')
 #------State color set----------
     def stateDisplay(self, A):                                # Set state colors
         self.Pressure_Key.setAutoFillBackground(True)         # Used for PyQt to set backround colors
@@ -272,13 +277,13 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
                 self.lox_line.setPalette(m)
             else:
                 m.setColor(self.lox_line.backgroundRole(), Qt.white)
-                self.lox_line.setPalette(m)        
+                self.lox_line.setPalette(m)
         except:
             pass
 
 #------Check Box Functions--------
     def hideExtra(self):                                        # When checkbox cliked hide uneccesary readouts and reshape display
-        self.beepCall(1)
+        self.beep(1)
         self.progressBar3.hide()
         self.pstate_label_5.hide()
         self.Readout3.hide()
@@ -312,10 +317,6 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         self.label_7.move(707, 225)
         self.label_8.move(707, 305)
 #----------Beep functions----------------------------
-    def beepCall(self, x):                            # Thread to beep function
-        t1 = threading.Thread(target = self.beep(x))
-        t1.start()
-
     def beep(self, x):                                # beep for .5 seconds
         GPIO.output(21, 0)
         if x == 1:
@@ -395,24 +396,23 @@ class MainApp(QtWidgets.QMainWindow, Ui_MainWindow):          # PyQT class
         if connectionFlag == 0:
             self.Alert1.show()
             self.label_6.show()
-            self.beepCall(1)
+            self.beep(1)
 #--------Recording Functions-----------
-    def rec(self):                               # Only called when checkbox changes state
+    def rec(self):                              # Only called when checkbox changes state
         if self.checkBox_2.isChecked():
             if not self.lineEdit.text():
-                fname = 'log.txt'              # Default filename
+                fname = 'log.txt'               # Default filename
             else:
-                fname = self.lineEdit.text()   # Get name from line edit
+                fname = self.lineEdit.text()    # Get name from line edit
             MainApp.rec.f = open(fname, 'a+')   # Open file for appending, creates if does not exist
-            print('Set Filename')
         else:
             MainApp.rec.f.close()               # Close the file
             print('Closed file')
 
-    def record1(self, A):                        # A is setup as a signal to execute the function each time a message is recieved
+    def record1(self, A):                       # A is setup as a signal to execute the function each time a message is recieved
         if self.checkBox_2.isChecked():
-            C = self.dataDisplay.C1              # Get C from function dataDisplay
-            C = ', '.join(C)                     # Seperate values to make final txt file more readable
+            C = self.dataDisplay.C1             # Get C from function dataDisplay
+            C = ', '.join(C)                    # Seperate values to make final txt file more readable
             A = ', '.join(A)
             print('Recording\n'+A+'\n'+C)
             self.rec.f.write(time.strftime("%H:%M:%S, "+time.strftime("%d:%m:%Y, ")+A+', '+C+'\n')) # Write to txt file
