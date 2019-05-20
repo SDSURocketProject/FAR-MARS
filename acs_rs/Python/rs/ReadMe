@@ -1,2 +1,2 @@
-Use DAQ for only reading states and PT data,  
+Use DAQv2 for only reading states and PT data,  
 Use DAQRELAY for sending commands and reading data
