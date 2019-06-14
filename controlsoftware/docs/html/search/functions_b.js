@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['parsemessage',['parseMessage',['../serial_8cpp.html#abaff1debd30c6fa0062d7fe961d6b8fe',1,'parseMessage(char *message, float *output, u_int32_t *timestamp):&#160;serial.cpp'],['../serial_8h.html#a668598c8cf6046a4b3ee9736e9667ba1',1,'parseMessage(char *message, float *output, uint32_t *timestamp):&#160;serial.h']]],
-  ['parsepressuremessage',['parsePressureMessage',['../serial_8cpp.html#aa74541c4e9a82ea5f7926d15cb305b38',1,'parsePressureMessage(struct sensorMessage *message):&#160;serial.cpp'],['../serial_8h.html#aa74541c4e9a82ea5f7926d15cb305b38',1,'parsePressureMessage(struct sensorMessage *message):&#160;serial.cpp']]],
-  ['position',['position',['../class_qc_item.html#a7a37ec6e418d1b40651f8d2eb0a15575',1,'QcItem']]]
-];
