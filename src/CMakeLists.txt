@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(controlsoftware)
+project(obc_gui)
 
 
 find_package(Qt5 COMPONENTS Core Gui Widgets Charts)
@@ -32,11 +32,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
-add_executable(controlsoftware main.cpp mainwindow.cpp ${SOURCES} ${HEADER_FILES})
+add_executable(obc_gui main.cpp mainwindow.cpp ${SOURCES} ${HEADER_FILES})
 
-target_include_directories(controlsoftware PUBLIC include/)
+target_include_directories(obc_gui PUBLIC include/)
 
-target_link_libraries(controlsoftware
+target_link_libraries(obc_gui
 	PUBLIC
 	Qt5::Core
 	Qt5::Gui

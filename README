@@ -7,10 +7,10 @@
 1. run `cmake ../src`
 1. run `make`
 
-## Operation of controlsoftware:
+## Operation of OBC GUI:
 
 1. ensure serial cable is available as /dev/ttyUSB0 (this is configurable)
-1. run controlsoftware binary as root
+1. run obc_gui binary as root
 1. put desired filename into box above log data checkbox
 1. click 'log data' checkbox
 1. click the live plot button to toggle the live plot window
