@@ -12,7 +12,7 @@
 struct daqSensors {
 	uint32_t timestamp;
 	int32_t TC_uaf;
-	uint8_t HALL_methane, HALL_LOX;
+	uint8_t HALL_methane, HALL_lox;
 	uint16_t BATT_voltage;
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 } __attribute__((packed));
@@ -20,7 +20,7 @@ struct daqSensors {
 struct daqParsed {
 	uint32_t timestamp;
 	float TC_uaf;
-	uint8_t HALL_methane, HALL_LOX;
+	uint8_t HALL_methane, HALL_lox;
 	float BATT_voltage;
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 };

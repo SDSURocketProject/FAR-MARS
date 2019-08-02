@@ -107,6 +107,8 @@ mainwindow::update_data(){
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
 	ui->batteryLCD->display(battVoltage[0]);
+	ui->HALL_LOX->setChecked(halleffect[LOX_VNT]);
+	ui->HALL_CH4->setChecked(halleffect[CH4_VNT]);
 }
 
 /**
@@ -204,7 +206,7 @@ mainwindow::getData(){
 	pressures[CBR_READING] = readings.PT_chamber;
 	pressures[REG_READING] = readings.PT_heliumReg;
 	halleffect[CH4_VNT]    = readings.HALL_methane;
-	halleffect[LOX_VNT]    = readings.HALL_LOX;
+	halleffect[LOX_VNT]    = readings.HALL_lox;
 	thermo[UAF]            = readings.TC_uaf;
 	battVoltage[0]         = readings.BATT_voltage;
 	timestamp              = readings.timestamp;

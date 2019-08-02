@@ -86,6 +86,20 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+	   <widget class="QPushButton" name="HALL_CH4">
+        <property name="text">
+         <string>HALL_CH4</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="HALL_LOX">
+        <property name="text">
+         <string>HALL_LOX</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>

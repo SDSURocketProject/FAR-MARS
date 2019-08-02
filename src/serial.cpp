@@ -82,6 +82,8 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings){
 	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE)-PRESSURE_CHAMBER_BIAS;
 	readings->BATT_voltage = (voltage/BATTERY_DIVISION_CONSTANT)*BATTERY_MULTIPLICATION_CONSTANT;
 	readings->TC_uaf = tc_conv(1000.0f*(uaf/THERMO_DIVISION_CONSTANT)*1.024f);
+	readings->HALL_methane = message->HALL_methane;
+	readings->HALL_lox = message->HALL_lox;
 	
 	return;
 }
