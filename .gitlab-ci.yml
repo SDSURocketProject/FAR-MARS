@@ -1,0 +1,20 @@
+# use the official gcc image, based on debian
+image: gcc
+
+build:
+  stage: build
+  before_script:
+    - apt update && apt -y -q install cmake qtdeclarative5-dev libqt5charts5-dev
+  script:
+    - mkdir build
+    - cd build
+    - cmake ../src
+    - make
+  artifacts:
+    paths:
+      - build/obc_gui
+  
+test:
+  stage: test
+  script:
+    - test -f build/obc_gui
