@@ -3,6 +3,8 @@ image: gcc
 
 build:
   stage: build
+  before_script:
+    - apt update && apt -y install cmake
   script:
     - mkdir build
     - cd build
