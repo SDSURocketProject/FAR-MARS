@@ -20,13 +20,57 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
-      <item row="4" column="2">
-       <widget class="QLCDNumber" name="chamberLCD"/>
+      <item row="0" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>400</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>HALL_LOX</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="HALL_LOX_BOX">
+          <property name="text">
+           <string>Open</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="livePlotButton">
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="logFileNameBox">
         <property name="text">
-         <string>Open Live Plot</string>
+         <string>log_data.csv</string>
         </property>
        </widget>
       </item>
@@ -46,21 +90,7 @@
         </property>
        </layout>
       </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="logFileNameBox">
-        <property name="text">
-         <string>log_data.csv</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="logDataCheckbox">
-        <property name="text">
-         <string>Log Data</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
+      <item row="3" column="3">
        <widget class="QLabel" name="chamberLabel">
         <property name="text">
          <string>Chamber</string>
@@ -69,12 +99,6 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLCDNumber" name="tcLCD"/>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLCDNumber" name="batteryLCD"/>
       </item>
       <item row="3" column="1">
        <widget class="QLabel" name="batteryLabel">
@@ -86,17 +110,90 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-	   <widget class="QPushButton" name="HALL_CH4">
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="logDataCheckbox">
         <property name="text">
-         <string>HALL_CH4</string>
+         <string>Log Data</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="HALL_LOX">
+      <item row="4" column="0">
+       <widget class="QPushButton" name="livePlotButton">
         <property name="text">
-         <string>HALL_LOX</string>
+         <string>Open Live Plot</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLCDNumber" name="tcLCD"/>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLCDNumber" name="chamberLCD"/>
+      </item>
+      <item row="0" column="3">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>400</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>HALL_CH4</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="HALL_CH4_BOX">
+          <property name="text">
+           <string>Open</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>UAF TC</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLCDNumber" name="batteryLCD"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>

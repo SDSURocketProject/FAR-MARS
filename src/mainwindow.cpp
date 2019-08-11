@@ -107,8 +107,8 @@ mainwindow::update_data(){
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
 	ui->batteryLCD->display(battVoltage[0]);
-	ui->HALL_LOX->setChecked(halleffect[LOX_VNT]);
-	ui->HALL_CH4->setChecked(halleffect[CH4_VNT]);
+	ui->HALL_LOX_BOX->setChecked(halleffect[LOX_VNT]);
+	ui->HALL_CH4_BOX->setChecked(halleffect[CH4_VNT]);
 }
 
 /**
