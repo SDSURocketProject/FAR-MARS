@@ -46,9 +46,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="HALL_LOX_BOX">
+         <widget class="QLabel" name="HALL_LOX_LABEL">
           <property name="text">
-           <string>Open</string>
+           <string>UNINT</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -156,9 +159,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="HALL_CH4_BOX">
+         <widget class="QLabel" name="HALL_CH4_LABEL">
           <property name="text">
-           <string>Open</string>
+           <string>UNINT</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
