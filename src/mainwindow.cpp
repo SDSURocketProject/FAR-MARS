@@ -104,8 +104,16 @@ mainwindow::update_data(){
 	ui->chamberLCD->display(pressures[CBR_READING]);
 	ui->tcLCD->display(thermo[0]);
 	ui->batteryLCD->display(battVoltage[0]);
-	ui->HALL_LOX_LABEL->setText( halleffect[LOX_VNT] ? "OPEN" : "CLOSED" );
-	ui->HALL_CH4_LABEL->setText( halleffect[CH4_VNT] ? "OPEN" : "CLOSED" );
+
+	QPalette lox_palette = ui->hall_lox_status->palette();
+	lox_palette.setColor(QPalette::Base, halleffect[LOX_VNT] ? Qt::green : Qt::red);
+	ui->hall_lox_status->setPalette(lox_palette);
+	ui->hall_lox_status->setText( halleffect[LOX_VNT] ? "OPEN" : "CLOSED" );
+
+	QPalette ch4_palette = ui->hall_ch4_status->palette();
+	ch4_palette.setColor(QPalette::Base, halleffect[LOX_VNT] ? Qt::green : Qt::red);
+	ui->hall_ch4_status->setPalette(ch4_palette);
+	ui->hall_ch4_status->setText( halleffect[LOX_VNT] ? "OPEN" : "CLOSED" );
 }
 
 /**
