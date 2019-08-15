@@ -51,9 +51,9 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 	lox = (float)*(u_int16_t*)(message+7);
 	helium = (float)*(u_int16_t*)(message+9);
 
-	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	methane = (methane/PRESSURE_DIVISION_CONSTANT)*4.5f-0.5f;
 	output[0] = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
-	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-1.0f;
 	output[1] = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
 	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
 	return;
