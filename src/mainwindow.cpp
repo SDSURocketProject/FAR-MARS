@@ -111,9 +111,9 @@ mainwindow::update_data(){
 	ui->hall_lox_status->setText( halleffect[LOX_VNT] ? "OPEN" : "CLOSED" );
 
 	QPalette ch4_palette = ui->hall_ch4_status->palette();
-	ch4_palette.setColor(QPalette::Base, halleffect[LOX_VNT] ? Qt::green : Qt::red);
+	ch4_palette.setColor(QPalette::Base, halleffect[CH4_VNT] ? Qt::green : Qt::red);
 	ui->hall_ch4_status->setPalette(ch4_palette);
-	ui->hall_ch4_status->setText( halleffect[LOX_VNT] ? "OPEN" : "CLOSED" );
+	ui->hall_ch4_status->setText( halleffect[CH4_VNT] ? "OPEN" : "CLOSED" );
 }
 
 /**
