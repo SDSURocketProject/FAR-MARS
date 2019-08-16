@@ -158,6 +158,7 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
 		log.setFile(filename);
 		start = std::chrono::high_resolution_clock::now();
 		log.openFile();
+		struct timespec spec;
 		return;
 	}
 	log.closeFile();
@@ -170,10 +171,11 @@ mainwindow::on_logDataCheckbox_stateChanged(int arg1)
  */
 void
 mainwindow::logData(){
-	long time[1];
-	struct timespec spec;
-	clock_gettime(CLOCK_REALTIME, &spec);
-	time[0] = spec.tv_nsec / 1000000l;
+	std::chrono::milliseconds ms = std::chrono::duration_cast< std::chrono::milliseconds >(
+			std::chrono::system_clock::now().time_since_epoch()
+			);
+
+	long time[] = {(long)ms.count()};
 
 	getData();
 
