@@ -8,8 +8,7 @@
  * @brief Format floats as csv with no newline
  *
  * @since v0.2.0
- * @param[in] float[] floats to format
- * @param[in] int number of values to process
+ * @param[in] float[] floats to format * @param[in] int number of values to process
  * @return csv formatted string
  */
 std::string
@@ -40,12 +39,12 @@ std::string
 csvformat(long data[], int vals){
 	std::string csv;
 	int items = vals;
-	for (int i = 0; i < items; i++){
+	for (int i = 0; i <= items; i++){
 		char buf[100];
 		sprintf(buf, "%ld", data[i]);
 		std::string str(buf);
 		csv.append(str);
-		if (i < items-1){
+		if (i <= items){
 			csv.append(",");
 		}
 	}
