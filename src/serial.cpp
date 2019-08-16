@@ -38,9 +38,7 @@ float abvz_coef[]{
  */
 void
 parseMessage(char *message, float *output, u_int32_t *timestamp){
-	//printf("%u\n", (u_int32_t)*(message+1));
 	*timestamp = 0;
-	//*timestamp = *(u_int32_t*)message+1;
 	*timestamp |= *(u_int8_t*)(message+1);
 	*timestamp |= *(u_int8_t*)(message+2)<<8;
 	*timestamp |= *(u_int8_t*)(message+3)<<16;
