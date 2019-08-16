@@ -204,7 +204,6 @@ mainwindow::getData(){
 
 	parsePressureMessage(&message, &readings);
 	
-	//printf("%i\n", message.timestamp);
 	pressures[CH4_READING] = readings.PT_methane;
 	pressures[LOX_READING] = readings.PT_LOX;
 	pressures[HEL_READING] = readings.PT_helium;
@@ -215,7 +214,6 @@ mainwindow::getData(){
 	thermo[UAF]            = readings.TC_uaf;
 	battVoltage[0]         = readings.BATT_voltage;
 	timestamp              = readings.timestamp;
-	printf("BATT: %f\n", battVoltage[0]);
 	update_data();
 }
 
