@@ -71,6 +71,9 @@
             <bold>true</bold>
            </font>
           </property>
+          <property name="text">
+           <string>UNINT</string>
+          </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
@@ -204,6 +207,9 @@
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="text">
+           <string>UNINT</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
