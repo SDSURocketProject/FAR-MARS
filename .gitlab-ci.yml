@@ -1,20 +1,25 @@
-# use the official gcc image, based on debian
-image: gcc
+image: fedora
 
 build:
   stage: build
   before_script:
-    - apt update && apt -y -q install cmake qtdeclarative5-dev libqt5charts5-dev
+    - dnf install -q -y cmake make gcc qt5-qtbase-devel qt5-qtcharts-devel
   script:
-    - mkdir build
-    - cd build
-    - cmake ../src
+    - cmake src
     - make
   artifacts:
     paths:
-      - build/obc_gui
+      - obc_gui
   
-test:
-  stage: test
+package:
+  stage: deploy
+  before_script:
+    - dnf install -q -y rpm-build
   script:
-    - test -f build/obc_gui
+    - mkdir -p $HOME/rpmbuild/SPECS
+    - cp package/obc_gui.spec $HOME/rpmbuild/SPECS/obc_gui.spec
+    - rpmbuild -bb $HOME/rpmbuild/SPECS/obc_gui.spec
+    - cp $HOME/rpmbuild/RPMS/x86_64/* package/
+  artifacts:
+    paths:
+      - package/*.rpm
