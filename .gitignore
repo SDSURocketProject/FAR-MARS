@@ -5,8 +5,6 @@ moc_*
 ui_*.h
 Makefile
 *.csv
-controlsoftware
-!controlsoftware/
-controlsoftware/build
+build/
 *.pro.user
 *.autosave
