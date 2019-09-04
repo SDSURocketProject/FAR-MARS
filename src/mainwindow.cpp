@@ -142,7 +142,6 @@ mainwindow::onTimer(){
 void
 mainwindow::on_boardSelectionComboBox_currentIndexChanged(int index) {
 	board_selection = index;
-	}
 }
 
 /**
@@ -217,7 +216,7 @@ mainwindow::getData(){
 	parsePressureMessage(&message, &readings, board_selection);
 
 	pressures[CH4_READING] = readings.PT_methane;
-	pressures[LOX_READING] = readings.PT_LOX;
+	pressures[LOX_READING] = readings.PT_lox;
 	pressures[HEL_READING] = readings.PT_helium;
 	pressures[CBR_READING] = readings.PT_chamber;
 	pressures[REG_READING] = readings.PT_heliumReg;

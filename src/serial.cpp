@@ -1,7 +1,7 @@
 #include "serial.h"
 
 /* range: -270.00 to 0.00 C */
-float subz_coef_primary[] = {
+float subz_coef[] = {
 	0.0000000E+00,
 	2.5173462E+01,
 	-1.1662878E+00,
@@ -15,35 +15,7 @@ float subz_coef_primary[] = {
 };
 
 /* range: 0.00 to 500.00 C */
-float abvz_coef_primary[]{
-	 0.000000E+00,
-	 2.508355E+01,
-	 7.860106E-02,
-	-2.503131E-01,
-	 8.315270E-02,
-	-1.228034E-02,
-	 9.804036E-04,
-	-4.413030E-05,
-	 1.057734E-06,
-	-1.052755E-08
-};
-
-/* range: -270.00 to 0.00 C */
-float subz_coef_backup_1[] = {
-	0.0000000E+00,
-	2.5173462E+01,
-	-1.1662878E+00,
-	-1.0833638E+00,
-	-8.9773540E-01,
-	-3.7342377E-01,
-	-8.6632643E-02,
-	-1.0450598E-02,
-	-5.1920577E-04,
-	0.0000000E+00
-};
-
-/* range: 0.00 to 500.00 C */
-float abvz_coef_backup_1[]{
+float abvz_coef[]{
 	 0.000000E+00,
 	 2.508355E+01,
 	 7.860106E-02,
@@ -62,7 +34,7 @@ float abvz_coef_backup_1[]{
  * @param[in] char* message to parse
  * @param[out] float* array to put values in
  * @param[out] u_int32_t* uint32 to put timestamp in
- */
+ *
 void
 parseMessage(char *message, float *output, u_int32_t *timestamp){
 	*timestamp = 0;
@@ -83,6 +55,7 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
 	return;
 }
+*/
 
 /**
  * @brief Parse a pressure message from on board computer.
@@ -93,22 +66,38 @@ void
 parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int board_selection){
 	float methane = 0, lox = 0, helium = 0, chamber = 0, voltage = 0, uaf = 0;
 	methane = (float)message->PT_methane;
-	lox = (float)message->PT_LOX;
+	lox = (float)message->PT_lox;
 	helium = (float)message->PT_helium;
 	chamber = (float)message->PT_chamber;
 	voltage = (float)message->BATT_voltage;
 	uaf = (float)message->TC_uaf;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	readings->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
+	readings->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE);
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	readings->PT_LOX = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
-	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
-	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE)-PRESSURE_CHAMBER_BIAS;
+	readings->PT_lox = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE);
+	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE);
+	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE);
 	readings->BATT_voltage = (voltage/BATTERY_DIVISION_CONSTANT)*BATTERY_MULTIPLICATION_CONSTANT;
-	readings->TC_uaf = tc_conv(1000.0f*(uaf/THERMO_DIVISION_CONSTANT)*1.024f, board_selection);
+	readings->TC_uaf = tc_conv(1000.0f*(uaf/THERMO_DIVISION_CONSTANT)*1.024f);
 	readings->HALL_methane = message->HALL_methane;
 	readings->HALL_lox = message->HALL_lox;
+
+	switch (board_selection) {
+		case primary_board:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_PRIMARY;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_PRIMARY;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_PRIMARY;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_PRIMARY;
+		break;
+
+		case backup_board_1:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_BACKUP_1;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_BACKUP_1;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_BACKUP_1;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_BACKUP_1;
+		break;
+	}
 
 	return;
 }
@@ -141,26 +130,14 @@ readMessage(struct daqSensors *message){
 }
 
 float
-tc_conv(float voltage, int board_selection){
+tc_conv(float voltage){
 
 	float temp = 0.0f;
 	float temp2 =  1.0f;
 	int abv = voltage > 1;
 	for (int i = 0; i < 9; i++){
-		switch (board_selection){
-			case primary_board:
-			temp +=  (abv ? abvz_coef_primary[i] : subz_coef_primary[i])*temp2;
-			temp2 *= voltage;
-			break;
-
-			case backup_board_1:
-			temp += (abv ? abvz_coef_backup_1[i] : subz_coef_backup_1[i])*temp2;
-			temp2 *= voltage;
-			break;
-
-			default:
-			return 420.69f;
-		}
+		temp +=  (abv ? abvz_coef[i] : subz_coef[i])*temp2;
+		temp2 *= voltage;
 	}
 	return temp;
 }

@@ -14,7 +14,7 @@ struct daqSensors {
 	int32_t TC_uaf;
 	uint8_t HALL_methane, HALL_lox;
 	uint16_t BATT_voltage;
-	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
+	int16_t PT_methane, PT_lox, PT_helium, PT_chamber, PT_heliumReg;
 } __attribute__((packed));
 
 struct daqParsed {
@@ -22,7 +22,7 @@ struct daqParsed {
 	float TC_uaf;
 	uint8_t HALL_methane, HALL_lox;
 	float BATT_voltage;
-	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
+	int16_t PT_methane, PT_lox, PT_helium, PT_chamber, PT_heliumReg;
 };
 
 enum obc_boards {
@@ -30,10 +30,10 @@ enum obc_boards {
 	backup_board_1,
 };
 
-void parseMessage(char*, float*, uint32_t*);
+//void parseMessage(char*, float*, uint32_t*);
 void parsePressureMessage(struct daqSensors*, struct daqParsed*, int);
 int readMessage(struct daqSensors*);
-float tc_conv(float, int);
+float tc_conv(float);
 int uart_init(void);
 
 
@@ -46,13 +46,19 @@ static int rate = 0;
 #define PRESSURE_LOX_MAX_PRESSURE 3000.0f
 #define PRESSURE_HELIUM_MAX_PRESSURE 5800.0f
 #define PRESSURE_CHAMBER_MAX_PRESSURE 5800.0f
-#define PRESSURE_METHANE_BIAS 0.0f
-#define PRESSURE_LOX_BIAS 380.0f
-#define PRESSURE_HELIUM_BIAS 0.0f
-#define PRESSURE_CHAMBER_BIAS 0.0f
 #define BATTERY_DIVISION_CONSTANT 4095.0f
 #define BATTERY_MULTIPLICATION_CONSTANT 4.959f*11.0f
 #define THERMO_DIVISION_CONSTANT 65535.0f
+
+#define PRESSURE_METHANE_BIAS_PRIMARY 0.0f
+#define PRESSURE_LOX_BIAS_PRIMARY 380.0f
+#define PRESSURE_HELIUM_BIAS_PRIMARY 0.0f
+#define PRESSURE_CHAMBER_BIAS_PRIMARY 0.0f
+
+#define PRESSURE_METHANE_BIAS_BACKUP_1 0.0f
+#define PRESSURE_LOX_BIAS_BACKUP_1 380.0f
+#define PRESSURE_HELIUM_BIAS_BACKUP_1 0.0f
+#define PRESSURE_CHAMBER_BIAS_BACKUP_1 0.0f
 
 enum pressures {
 	CH4_READING,
