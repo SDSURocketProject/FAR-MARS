@@ -20,6 +20,33 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
+      <item row="4" column="1">
+       <widget class="QLCDNumber" name="batteryLCD"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="batteryLabel">
+        <property name="text">
+         <string>Battery</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="logFileNameBox">
+        <property name="text">
+         <string>log_data.csv</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="livePlotButton">
+        <property name="text">
+         <string>Open Live Plot</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -92,14 +119,40 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Board Sel.</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="boardSelectionComboBox">
+          <property name="currentText">
+           <string/>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="logFileNameBox">
-        <property name="text">
-         <string>log_data.csv</string>
+      <item row="4" column="3">
+       <widget class="QLCDNumber" name="chamberLCD"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLCDNumber" name="tcLCD"/>
       </item>
       <item row="0" column="0">
        <layout class="QHBoxLayout" name="data">
@@ -116,46 +169,6 @@
          <number>5</number>
         </property>
        </layout>
-      </item>
-      <item row="3" column="3">
-       <widget class="QLabel" name="chamberLabel">
-        <property name="text">
-         <string>Chamber</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="batteryLabel">
-        <property name="text">
-         <string>Battery</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="logDataCheckbox">
-        <property name="text">
-         <string>Log Data</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="livePlotButton">
-        <property name="text">
-         <string>Open Live Plot</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLCDNumber" name="tcLCD"/>
-      </item>
-      <item row="4" column="3">
-       <widget class="QLCDNumber" name="chamberLCD"/>
       </item>
       <item row="0" column="3">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -241,13 +254,20 @@
         </item>
        </layout>
       </item>
-      <item row="4" column="1">
-       <widget class="QLCDNumber" name="batteryLCD"/>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="logDataCheckbox">
+        <property name="text">
+         <string>Log Data</string>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+      <item row="3" column="3">
+       <widget class="QLabel" name="chamberLabel">
+        <property name="text">
+         <string>Chamber</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>

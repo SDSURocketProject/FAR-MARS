@@ -17,7 +17,11 @@ mainwindow::mainwindow(QWidget *parent) :
 	timer->start(50);
 	logDataBool = 0;
 	plotBool = 0;
+	board_selection = primary_board;
 	serial_timeout = 0;
+
+	QStringList board_options = {"Primary", "Backup 1"};
+	ui->boardSelectionComboBox->addItems(board_options);
 
 	helGauge = new QcGaugeWidget;
 	loxGauge = new QcGaugeWidget;
@@ -135,6 +139,12 @@ mainwindow::onTimer(){
 	}
 }
 
+void
+mainwindow::on_boardSelectionComboBox_currentIndexChanged(int index) {
+	board_selection = index;
+	}
+}
+
 /**
  * @brief Global Log Data Checkbox handler
  * @brief Triggered by state change of Log Data checkbox
@@ -204,8 +214,8 @@ mainwindow::getData(){
 		return;
 	}
 
-	parsePressureMessage(&message, &readings);
-	
+	parsePressureMessage(&message, &readings, board_selection);
+
 	pressures[CH4_READING] = readings.PT_methane;
 	pressures[LOX_READING] = readings.PT_LOX;
 	pressures[HEL_READING] = readings.PT_helium;

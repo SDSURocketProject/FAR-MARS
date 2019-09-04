@@ -25,10 +25,15 @@ struct daqParsed {
 	int16_t PT_methane, PT_LOX, PT_helium, PT_chamber, PT_heliumReg;
 };
 
+enum obc_boards {
+	primary_board,
+	backup_board_1,
+};
+
 void parseMessage(char*, float*, uint32_t*);
-void parsePressureMessage(struct daqSensors*, struct daqParsed*);
+void parsePressureMessage(struct daqSensors*, struct daqParsed*, int);
 int readMessage(struct daqSensors*);
-float tc_conv(float);
+float tc_conv(float, int);
 int uart_init(void);
 
 
