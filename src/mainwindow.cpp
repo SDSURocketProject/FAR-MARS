@@ -17,10 +17,10 @@ mainwindow::mainwindow(QWidget *parent) :
 	timer->start(50);
 	logDataBool = 0;
 	plotBool = 0;
-	board_selection = primary_board;
+	board_selection = alpha_board;
 	serial_timeout = 0;
 
-	QStringList board_options = {"Primary", "Backup 1"};
+	QStringList board_options = {"α: alpha", "β: beta"};
 	ui->boardSelectionComboBox->addItems(board_options);
 
 	helGauge = new QcGaugeWidget;

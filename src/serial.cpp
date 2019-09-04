@@ -84,18 +84,18 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 	readings->HALL_lox = message->HALL_lox;
 
 	switch (board_selection) {
-		case primary_board:
-		readings->PT_methane -= PRESSURE_METHANE_BIAS_PRIMARY;
-		readings->PT_lox -= PRESSURE_LOX_BIAS_PRIMARY;
-		readings->PT_helium -= PRESSURE_HELIUM_BIAS_PRIMARY;
-		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_PRIMARY;
+		case alpha_board:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_ALPHA;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_ALPHA;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_ALPHA;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_ALPHA;
 		break;
 
-		case backup_board_1:
-		readings->PT_methane -= PRESSURE_METHANE_BIAS_BACKUP_1;
-		readings->PT_lox -= PRESSURE_LOX_BIAS_BACKUP_1;
-		readings->PT_helium -= PRESSURE_HELIUM_BIAS_BACKUP_1;
-		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_BACKUP_1;
+		case beta_board:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_BETA;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_BETA;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_BETA;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_BETA;
 		break;
 	}
 

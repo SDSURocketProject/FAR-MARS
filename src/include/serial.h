@@ -26,8 +26,8 @@ struct daqParsed {
 };
 
 enum obc_boards {
-	primary_board,
-	backup_board_1,
+	alpha_board,
+	beta_board,
 };
 
 //void parseMessage(char*, float*, uint32_t*);
@@ -50,15 +50,15 @@ static int rate = 0;
 #define BATTERY_MULTIPLICATION_CONSTANT 4.959f*11.0f
 #define THERMO_DIVISION_CONSTANT 65535.0f
 
-#define PRESSURE_METHANE_BIAS_PRIMARY 0.0f
-#define PRESSURE_LOX_BIAS_PRIMARY 380.0f
-#define PRESSURE_HELIUM_BIAS_PRIMARY 0.0f
-#define PRESSURE_CHAMBER_BIAS_PRIMARY 0.0f
+#define PRESSURE_METHANE_BIAS_ALPHA 0.0f
+#define PRESSURE_LOX_BIAS_ALPHA 380.0f
+#define PRESSURE_HELIUM_BIAS_ALPHA 0.0f
+#define PRESSURE_CHAMBER_BIAS_ALPHA 0.0f
 
-#define PRESSURE_METHANE_BIAS_BACKUP_1 0.0f
-#define PRESSURE_LOX_BIAS_BACKUP_1 380.0f
-#define PRESSURE_HELIUM_BIAS_BACKUP_1 0.0f
-#define PRESSURE_CHAMBER_BIAS_BACKUP_1 0.0f
+#define PRESSURE_METHANE_BIAS_BETA 0.0f
+#define PRESSURE_LOX_BIAS_BETA 380.0f
+#define PRESSURE_HELIUM_BIAS_BETA 0.0f
+#define PRESSURE_CHAMBER_BIAS_BETA 0.0f
 
 enum pressures {
 	CH4_READING,
