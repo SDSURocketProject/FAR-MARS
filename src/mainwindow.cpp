@@ -185,10 +185,11 @@ mainwindow::logData(){
 			);
 
 	long time[] = {(long)ms.count()};
-
+	int boardSelection[] = {board_selection};
 	getData();
 
 	log.appendData(time, 1, 0);
+	log.appendData(boardSelection, 1, 0);
 	log.appendData(pressures, 5, 0);
 	log.appendData(thermo, 1, 0);
 	log.appendData(halleffect, 2, 0);
