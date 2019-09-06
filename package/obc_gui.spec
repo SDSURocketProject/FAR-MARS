@@ -1,7 +1,7 @@
 Name: obc_gui
-Version: 1.1.0
+Version: 2.0.0
 Release: 0
-Summary: OBC-GUI Live Visualization Software
+Summary: OBC-GUI Live Data Visualization Software
 Requires: qt5-qtbase > 5.12
 Requires: qt5-qtcharts > 5.12
 License: MIT
