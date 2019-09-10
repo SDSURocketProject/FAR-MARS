@@ -28,14 +28,13 @@ float abvz_coef[]{
 	-1.052755E-08
 };
 
-
 /**
  * @brief Serial Data Parser
  *
  * @param[in] char* message to parse
  * @param[out] float* array to put values in
  * @param[out] u_int32_t* uint32 to put timestamp in
- */
+ *
 void
 parseMessage(char *message, float *output, u_int32_t *timestamp){
 	*timestamp = 0;
@@ -43,7 +42,7 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 	*timestamp |= *(u_int8_t*)(message+2)<<8;
 	*timestamp |= *(u_int8_t*)(message+3)<<16;
 	*timestamp |= *(u_int8_t*)(message+4)<<24;
-	
+
 	float methane = 0, lox = 0, helium = 0;
 	methane = (float)*(u_int16_t*)(message+5);
 	lox = (float)*(u_int16_t*)(message+7);
@@ -56,6 +55,7 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
 	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
 	return;
 }
+*/
 
 /**
  * @brief Parse a pressure message from on board computer.
@@ -63,26 +63,42 @@ parseMessage(char *message, float *output, u_int32_t *timestamp){
  * @param[in, out] *message Pointer to the message to be parsed.
  */
 void
-parsePressureMessage(struct daqSensors *message, struct daqParsed *readings){
+parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int board_selection){
 	float methane = 0, lox = 0, helium = 0, chamber = 0, voltage = 0, uaf = 0;
 	methane = (float)message->PT_methane;
-	lox = (float)message->PT_LOX;
+	lox = (float)message->PT_lox;
 	helium = (float)message->PT_helium;
 	chamber = (float)message->PT_chamber;
 	voltage = (float)message->BATT_voltage;
 	uaf = (float)message->TC_uaf;
 
 	methane = (methane/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	readings->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
+	readings->PT_methane = (int16_t)((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE);
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
-	readings->PT_LOX = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
-	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
-	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE)-PRESSURE_CHAMBER_BIAS;
+	readings->PT_lox = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE);
+	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE);
+	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE);
 	readings->BATT_voltage = (voltage/BATTERY_DIVISION_CONSTANT)*BATTERY_MULTIPLICATION_CONSTANT;
 	readings->TC_uaf = tc_conv(1000.0f*(uaf/THERMO_DIVISION_CONSTANT)*1.024f);
 	readings->HALL_methane = message->HALL_methane;
 	readings->HALL_lox = message->HALL_lox;
-	
+
+	switch (board_selection) {
+		case alpha_board:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_ALPHA;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_ALPHA;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_ALPHA;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_ALPHA;
+		break;
+
+		case beta_board:
+		readings->PT_methane -= PRESSURE_METHANE_BIAS_BETA;
+		readings->PT_lox -= PRESSURE_LOX_BIAS_BETA;
+		readings->PT_helium -= PRESSURE_HELIUM_BIAS_BETA;
+		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_BETA;
+		break;
+	}
+
 	return;
 }
 
@@ -104,12 +120,12 @@ readMessage(struct daqSensors *message){
 		}
 		messageBuffer[messageBufferIdx++] = in;
 	} while (in != ESCAPE_EOM);
-	
+
 	messageBufferIdx = 0;
 	if (unEscapeBuffer(messageBuffer, MESSAGE_BUFFER_SIZE, (uint8_t *)message, sizeof(struct daqSensors)) < 0) {
 		return -1;
 	}
-	
+
 	return 1;
 }
 
@@ -123,6 +139,7 @@ tc_conv(float voltage){
 		temp +=  (abv ? abvz_coef[i] : subz_coef[i])*temp2;
 		temp2 *= voltage;
 	}
+	return temp;
 }
 
 /**
@@ -164,7 +181,7 @@ uart_init(){
 	tty.c_cc[VMIN]   =  1;                  // read doesn't block
 	tty.c_cc[VTIME]  =  5;                  // 0.5 seconds read timeout
 	tty.c_cflag     |=  CREAD | CLOCAL;     // turn on READ & ignore ctrl lines
-	
+
 	cfmakeraw(&tty);
 
 	tcflush(fd, TCIFLUSH);

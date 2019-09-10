@@ -42,6 +42,7 @@ private:
 	float battVoltage[1];
 
 	int appendNewline;
+	int board_selection;
 	int logCount = 0;
 	int logDataBool;
 	int plotBool;
@@ -65,6 +66,7 @@ private slots:
 	void onTimer(void);
 	void on_logDataCheckbox_stateChanged(int arg1);
 	void on_livePlotButton_clicked(void);
+	void on_boardSelectionComboBox_currentIndexChanged(int);
 };
 
 #endif // MAINWINDOW_H

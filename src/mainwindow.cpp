@@ -17,7 +17,11 @@ mainwindow::mainwindow(QWidget *parent) :
 	timer->start(50);
 	logDataBool = 0;
 	plotBool = 0;
+	board_selection = alpha_board;
 	serial_timeout = 0;
+
+	QStringList board_options = {"α: alpha", "β: beta"};
+	ui->boardSelectionComboBox->addItems(board_options);
 
 	helGauge = new QcGaugeWidget;
 	loxGauge = new QcGaugeWidget;
@@ -135,6 +139,11 @@ mainwindow::onTimer(){
 	}
 }
 
+void
+mainwindow::on_boardSelectionComboBox_currentIndexChanged(int index) {
+	board_selection = index;
+}
+
 /**
  * @brief Global Log Data Checkbox handler
  * @brief Triggered by state change of Log Data checkbox
@@ -176,10 +185,11 @@ mainwindow::logData(){
 			);
 
 	long time[] = {(long)ms.count()};
-
+	int boardSelection[] = {board_selection};
 	getData();
 
 	log.appendData(time, 1, 0);
+	log.appendData(boardSelection, 1, 0);
 	log.appendData(pressures, 5, 0);
 	log.appendData(thermo, 1, 0);
 	log.appendData(halleffect, 2, 0);
@@ -204,10 +214,10 @@ mainwindow::getData(){
 		return;
 	}
 
-	parsePressureMessage(&message, &readings);
-	
+	parsePressureMessage(&message, &readings, board_selection);
+
 	pressures[CH4_READING] = readings.PT_methane;
-	pressures[LOX_READING] = readings.PT_LOX;
+	pressures[LOX_READING] = readings.PT_lox;
 	pressures[HEL_READING] = readings.PT_helium;
 	pressures[CBR_READING] = readings.PT_chamber;
 	pressures[REG_READING] = readings.PT_heliumReg;
