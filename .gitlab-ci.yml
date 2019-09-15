@@ -23,3 +23,16 @@ package:
   artifacts:
     paths:
       - package/*.rpm
+
+deploy:
+    stage: deploy
+#    only:
+#        - master
+    before_script:
+        - mkdir -p ~/.ssh
+        - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        - chmod 600 ~/.ssh/id_rsa
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    script:
+        - scp package/* deployuser@rpm.sdsurocketproject.org:/opt/rpm-repo/
+        - ssh deployuser@rpm.sdsurocketproject.org "createrepo --update /opt/rpm-repo"
