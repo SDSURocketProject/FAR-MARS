@@ -89,6 +89,7 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 		readings->PT_lox -= PRESSURE_LOX_BIAS_ALPHA;
 		readings->PT_helium -= PRESSURE_HELIUM_BIAS_ALPHA;
 		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_ALPHA;
+		readings->PT_chamber *= PRESSURE_CHAMBER_GAIN_CORR_ALPHA;
 		break;
 
 		case beta_board:
@@ -96,6 +97,7 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 		readings->PT_lox -= PRESSURE_LOX_BIAS_BETA;
 		readings->PT_helium -= PRESSURE_HELIUM_BIAS_BETA;
 		readings->PT_chamber -= PRESSURE_CHAMBER_BIAS_BETA;
+		readings->PT_chamber *= PRESSURE_CHAMBER_GAIN_CORR_BETA;
 		break;
 	}
 
