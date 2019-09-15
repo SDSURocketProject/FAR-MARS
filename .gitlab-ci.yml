@@ -26,8 +26,9 @@ package:
 
 deploy:
     stage: deploy
-#    only:
-#        - master
+    only:
+        - master
+    when: manual
     before_script:
         - mkdir -p ~/.ssh
         - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
