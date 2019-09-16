@@ -26,9 +26,10 @@ package:
 
 deploy:
     stage: deploy
-    only:
-        - master
     when: manual
+    needs: [package]
+    dependencies:
+        - package
     before_script:
         - mkdir -p ~/.ssh
         - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
@@ -36,5 +37,5 @@ deploy:
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
         - dnf install -q -y openssh openssh-clients
     script:
-        - scp package/* deployuser@rpm.sdsurocketproject.org:/opt/rpm-repo/
+        - scp package/*.rpm deployuser@rpm.sdsurocketproject.org:/opt/rpm-repo/
         - ssh deployuser@rpm.sdsurocketproject.org "createrepo --update /opt/rpm-repo"
