@@ -28,8 +28,6 @@ deploy:
     stage: deploy
     when: manual
     needs: [package]
-    dependencies:
-        - package
     before_script:
         - mkdir -p ~/.ssh
         - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
