@@ -1,5 +1,10 @@
 image: fedora
 
+stages:
+    - build
+    - package
+    - deploy
+
 build:
   stage: build
   before_script:
@@ -12,7 +17,7 @@ build:
       - obc_gui
   
 package:
-  stage: deploy
+  stage: package
   before_script:
     - dnf install -q -y rpm-build
   script:
@@ -28,6 +33,8 @@ deploy:
     stage: deploy
     when: manual
     needs: [package]
+    dependencies:
+        - package
     before_script:
         - mkdir -p ~/.ssh
         - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
