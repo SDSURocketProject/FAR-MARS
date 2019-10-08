@@ -33,7 +33,6 @@ enum obc_boards {
 //void parseMessage(char*, float*, uint32_t*);
 void parsePressureMessage(struct daqSensors*, struct daqParsed*, int);
 int readMessage(struct daqSensors*);
-float tc_conv(float);
 int uart_init(void);
 
 
