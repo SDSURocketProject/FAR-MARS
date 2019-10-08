@@ -1,62 +1,5 @@
 #include "serial.h"
 
-/* range: -270.00 to 0.00 C */
-float subz_coef[] = {
-	0.0000000E+00,
-	2.5173462E+01,
-	-1.1662878E+00,
-	-1.0833638E+00,
-	-8.9773540E-01,
-	-3.7342377E-01,
-	-8.6632643E-02,
-	-1.0450598E-02,
-	-5.1920577E-04,
-	0.0000000E+00
-};
-
-/* range: 0.00 to 500.00 C */
-float abvz_coef[]{
-	 0.000000E+00,
-	 2.508355E+01,
-	 7.860106E-02,
-	-2.503131E-01,
-	 8.315270E-02,
-	-1.228034E-02,
-	 9.804036E-04,
-	-4.413030E-05,
-	 1.057734E-06,
-	-1.052755E-08
-};
-
-/**
- * @brief Serial Data Parser
- *
- * @param[in] char* message to parse
- * @param[out] float* array to put values in
- * @param[out] u_int32_t* uint32 to put timestamp in
- *
-void
-parseMessage(char *message, float *output, u_int32_t *timestamp){
-	*timestamp = 0;
-	*timestamp |= *(u_int8_t*)(message+1);
-	*timestamp |= *(u_int8_t*)(message+2)<<8;
-	*timestamp |= *(u_int8_t*)(message+3)<<16;
-	*timestamp |= *(u_int8_t*)(message+4)<<24;
-
-	float methane = 0, lox = 0, helium = 0;
-	methane = (float)*(u_int16_t*)(message+5);
-	lox = (float)*(u_int16_t*)(message+7);
-	helium = (float)*(u_int16_t*)(message+9);
-
-	methane = (methane/PRESSURE_DIVISION_CONSTANT)*4.5f-0.5f;
-	output[0] = ((methane/4.0f)*PRESSURE_METHANE_MAX_PRESSURE)-PRESSURE_METHANE_BIAS;
-	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-1.0f;
-	output[1] = ((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE)-PRESSURE_LOX_BIAS;
-	output[2] = ((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE)-PRESSURE_HELIUM_BIAS;
-	return;
-}
-*/
-
 /**
  * @brief Parse a pressure message from on board computer.
  *
@@ -79,7 +22,7 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE);
 	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE);
 	readings->BATT_voltage = (voltage/BATTERY_DIVISION_CONSTANT)*BATTERY_MULTIPLICATION_CONSTANT;
-	readings->TC_uaf = tc_conv(1000.0f*(uaf/THERMO_DIVISION_CONSTANT)*1.024f);
+	readings->TC_uaf = (4.959f * (uaf / 4095.0f) - 1.25f) / 0.005f; /* result in degrees C */
 	readings->HALL_methane = message->HALL_methane;
 	readings->HALL_lox = message->HALL_lox;
 
@@ -129,19 +72,6 @@ readMessage(struct daqSensors *message){
 	}
 
 	return 1;
-}
-
-float
-tc_conv(float voltage){
-
-	float temp = 0.0f;
-	float temp2 =  1.0f;
-	int abv = voltage > 1;
-	for (int i = 0; i < 9; i++){
-		temp +=  (abv ? abvz_coef[i] : subz_coef[i])*temp2;
-		temp2 *= voltage;
-	}
-	return temp;
 }
 
 /**
