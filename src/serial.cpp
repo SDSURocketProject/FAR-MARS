@@ -20,8 +20,8 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 	lox = (lox/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
 	readings->PT_lox = (int16_t)((lox/4.0f)*PRESSURE_LOX_MAX_PRESSURE);
 	readings->PT_helium = (int16_t)((helium/PRESSURE_DIVISION_CONSTANT)*PRESSURE_HELIUM_MAX_PRESSURE);
-	chamber = (chamber/4.0f)*5.0f-0.5f;
-	readings->PT_chamber = (int16_t)((chamber/PRESSURE_DIVISION_CONSTANT)*PRESSURE_CHAMBER_MAX_PRESSURE);
+	chamber = (chamber/PRESSURE_DIVISION_CONSTANT)*5.0f-0.5f;
+	readings->PT_chamber = (int16_t)((chamber/4.0f)*PRESSURE_CHAMBER_MAX_PRESSURE);
 	readings->BATT_voltage = (voltage/BATTERY_DIVISION_CONSTANT)*BATTERY_MULTIPLICATION_CONSTANT;
 	readings->TC_uaf = (4.959f * (uaf / 4095.0f) - 1.25f) / 0.005f; /* result in degrees C */
 	readings->HALL_methane = message->HALL_methane;
