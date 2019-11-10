@@ -490,15 +490,15 @@ QcColorBand::QcColorBand(QObject *parent, int highPres) :
     QPair<QColor,float> pair;
 
     pair.first = Qt::green;
-    pair.second = highPres ? 1000 : 300;
+    pair.second = highPres ? 1000 : 700;
     mBandColors.append(pair);
 
     pair.first = Qt::darkGreen;
-    pair.second = highPres ? 4500 : 1500;
+    pair.second = highPres ? 4500 : 1750;
     mBandColors.append(pair);
 
     pair.first = Qt::red;
-    pair.second = highPres ? 6000 : 2000;
+    pair.second = highPres ? 6000 : 3500;
     mBandColors.append(pair);
 
     setPosition(50);
