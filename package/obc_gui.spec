@@ -1,5 +1,5 @@
 Name: obc_gui
-Version: 3.0.2
+Version: 3.1.0
 Release: 1
 Summary: OBC-GUI Live Data Visualization Software
 Requires: qt5-qtbase > 5.12
