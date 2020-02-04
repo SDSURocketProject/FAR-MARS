@@ -26,6 +26,7 @@ parsePressureMessage(struct daqSensors *message, struct daqParsed *readings, int
 	readings->TC_uaf = (4.959f * (uaf / 4095.0f) - 1.25f) / 0.005f; /* result in degrees C */
 	readings->HALL_methane = message->HALL_methane;
 	readings->HALL_lox = message->HALL_lox;
+	readings->timestamp = message->timestamp;
 
 	switch (board_selection) {
 		case alpha_board:
